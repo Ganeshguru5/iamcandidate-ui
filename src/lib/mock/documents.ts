@@ -62,7 +62,7 @@ export function seedDriveItems(): DriveItem[] {
     file("drv_r3", "Resume_Archive_2024.zip", "drv_resumes", "zip", 2_300_000, 210),
     file("drv_c1", "React_Certificate.pdf", "drv_certs", "pdf", 640_000, 90),
     file("drv_c2", "Google_UX_Design.pdf", "drv_certs", "pdf", 812_000, 150),
-    f("drv_p_pos", "Personal OS", "drv_projects", 5),
+    f("drv_p_pos", "knot", "drv_projects", 5),
     file("drv_p1", "Personal_OS_Architecture.pdf", "drv_p_pos", "pdf", 1_820_000, 5),
     file("drv_p2", "Wireframes.png", "drv_p_pos", "image", 2_100_000, 9),
     file("drv_p3", "Exterva_Pitch_Deck.pdf", "drv_projects", "pdf", 5_600_000, 18),

@@ -18,7 +18,7 @@ const SECTIONS: LegalSection[] = [
     body: (
       <>
         <p>
-          knot (also shown in the app as &ldquo;Personal OS&rdquo;) is a personal workspace for managing a job search:
+          knot is a personal workspace for managing a job search:
           applications, companies, contacts, referrals, interviews, resumes, documents, email, notes, skills,
           certifications and links. It consists of the knot web app, the knot server (API) and the optional knot
           browser extension, together &ldquo;the Service&rdquo;.

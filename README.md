@@ -1,4 +1,4 @@
-# Personal OS — frontend
+# knot — frontend
 
 A personal command center for documents, job search, communication and knowledge.
 

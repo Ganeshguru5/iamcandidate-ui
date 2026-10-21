@@ -120,7 +120,7 @@ function Breadcrumb() {
           <span className="text-muted-foreground/50">/</span>
         </>
       )}
-      <span className="truncate font-medium">{current?.title ?? "Personal OS"}</span>
+      <span className="truncate font-medium">{current?.title ?? "knot"}</span>
     </div>
   )
 }

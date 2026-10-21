@@ -18,8 +18,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Personal OS",
-    template: "%s · Personal OS",
+    default: "knot",
+    template: "%s · knot",
   },
   description: "A personal command center for documents, job search, communication and knowledge.",
 }

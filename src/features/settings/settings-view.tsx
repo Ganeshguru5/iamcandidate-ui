@@ -205,7 +205,7 @@ function AppearanceSection() {
     { value: "system", label: "System", icon: MonitorIcon, preview: "bg-gradient-to-r from-white from-50% to-zinc-900 to-50%" },
   ]
   return (
-    <Panel title="Appearance" description="Choose how Personal OS looks. Your choice is saved on this device.">
+    <Panel title="Appearance" description="Choose how knot looks. Your choice is saved on this device.">
       <div role="radiogroup" aria-label="Theme" className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         {options.map((option) => (
           <button

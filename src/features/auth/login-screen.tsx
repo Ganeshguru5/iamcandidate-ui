@@ -148,7 +148,7 @@ export function LoginScreen() {
         <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
           <p>
             {isApiMode
-              ? "Signed in to the Personal OS API · ask your admin for an account."
+              ? "Signed in to the knot API · ask your admin for an account."
               : "Frontend prototype · all data is mock and stays in your browser."}
           </p>
           <p className="flex gap-3">
@@ -164,7 +164,7 @@ export function LoginScreen() {
           className="absolute inset-0 [background-image:radial-gradient(var(--border)_1px,transparent_1px)] [background-size:20px_20px] opacity-70"
         />
         <div className="relative flex h-full flex-col justify-center px-14">
-          <p className="text-sm font-medium text-brand">Personal OS</p>
+          <p className="text-sm font-medium text-brand">knot</p>
           <h2 className="mt-3 max-w-md text-3xl font-semibold tracking-tight text-balance">
             Your job search, documents and knowledge — in one calm place.
           </h2>

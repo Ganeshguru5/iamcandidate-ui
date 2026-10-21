@@ -23,7 +23,7 @@ import { cn } from "cn"
 import { buttonVariants } from "@/components/ui/button"
 
 export const metadata: Metadata = {
-  title: { absolute: "knot — a personal OS for your job search" },
+  title: { absolute: "knot — your job search, untangled" },
   description:
     "Track applications, referrals, interviews, resumes, documents and notes in one calm place. Capture jobs from any site with the knot browser extension.",
 }

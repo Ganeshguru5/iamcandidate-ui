@@ -76,7 +76,7 @@ export function ConnectDialog({
               </div>
               <DialogTitle>{isGoogle ? "Sign in with Google" : `Connect ${integration.name}`}</DialogTitle>
               <DialogDescription>
-                Personal OS wants to access your {integration.name} account
+                knot wants to access your {integration.name} account
                 {isGoogle && !realGoogle && <> <span className="font-medium text-foreground">ganeshguru@example.com</span></>}.
               </DialogDescription>
             </DialogHeader>

@@ -17,7 +17,7 @@ export function starterLatexResume(profile?: UserProfile): string {
   const name = tex(profile?.name || "Your Name")
   const email = profile?.email || "you@example.com"
   const location = tex(profile?.location || "City, Country")
-  return String.raw`% Personal OS resume — compiled with Tectonic (XeLaTeX).
+  return String.raw`% knot resume — compiled with Tectonic (XeLaTeX).
 % Ctrl+S saves and recompiles. Common packages are available.
 \documentclass[10.5pt]{article}
 

@@ -9,7 +9,7 @@ export function seedTasks(): Task[] {
     { id: "tsk_2", title: "Reply to Apeiron offer", description: "Compare with Nomni timeline before responding.", priority: "high", status: "todo", dueDate: daysFromNow(0, 20), related: { type: "application", id: "app_apeiron_fe", label: "Apeiron — Frontend Engineer" } },
     { id: "tsk_3", title: "Send resume to Anivar for referral", priority: "high", status: "todo", dueDate: daysFromNow(1), related: { type: "contact", id: "ct_anivar", label: "Anivar A Aravind" } },
     { id: "tsk_4", title: "Follow up with Freshworks recruiter", priority: "medium", status: "todo", dueDate: daysFromNow(-1), related: { type: "application", id: "app_fresh_fe", label: "Freshworks — Software Engineer" } },
-    { id: "tsk_5", title: "Finish command palette for Personal OS", priority: "medium", status: "in_progress", dueDate: daysFromNow(3), related: { type: "project", id: "prj_pos", label: "Personal OS" } },
+    { id: "tsk_5", title: "Finish command palette for knot", priority: "medium", status: "in_progress", dueDate: daysFromNow(3), related: { type: "project", id: "prj_pos", label: "knot" } },
     { id: "tsk_6", title: "Write system design notes: rate limiter", priority: "low", status: "todo", dueDate: daysFromNow(5) },
     { id: "tsk_7", title: "Update React Native resume with Expo Router work", priority: "medium", status: "todo", dueDate: daysFromNow(-3) },
     { id: "tsk_8", title: "Research Nomni engineering blog", priority: "low", status: "todo", dueDate: daysFromNow(2), related: { type: "company", id: "cmp_nomni", label: "Nomni" } },

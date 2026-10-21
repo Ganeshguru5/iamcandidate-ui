@@ -53,7 +53,7 @@ export function seedBookmarks(): Bookmark[] {
     b({ id: "bm_8", title: "NeetCode 150", url: "https://neetcode.io/practice", description: "Curated DSA problem list.", tags: ["dsa"], category: "learning", age: 70 }),
     b({ id: "bm_9", title: "Levels.fyi — India", url: "https://levels.fyi", description: "Compensation benchmarks by company and level.", tags: ["salary"], category: "career", age: 15 }),
     b({ id: "bm_10", title: "Tech Interview Handbook", url: "https://techinterviewhandbook.org", description: "Behavioral questions and negotiation guides.", tags: ["interviews"], category: "career", age: 25 }),
-    b({ id: "bm_11", title: "Personal OS repository", url: "https://github.com/ganeshguru/personal-os", description: "Source for this dashboard.", tags: ["personal-os"], category: "projects", age: 5 }),
+    b({ id: "bm_11", title: "knot repository", url: "https://github.com/Ganeshguru5/knot-ui", description: "Source for this dashboard.", tags: ["knot"], category: "projects", age: 5 }),
     b({ id: "bm_12", title: "Refactoring UI", url: "https://refactoringui.com", description: "Practical visual design tactics for developers.", tags: ["design"], category: "resources", age: 120 }),
   ]
 }

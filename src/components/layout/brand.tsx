@@ -23,7 +23,7 @@ export function Brand({ collapsed = false }: { collapsed?: boolean }) {
       <BrandMark />
       {!collapsed && (
         <div className="leading-tight">
-          <p className="text-sm font-semibold tracking-tight">Personal OS</p>
+          <p className="text-sm font-semibold tracking-tight">knot</p>
           <p className="text-[11px] text-muted-foreground">Command center</p>
         </div>
       )}

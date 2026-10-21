@@ -9,7 +9,7 @@ export const mockUser: UserProfile = {
   name: "Ganeshguru",
   email: "demo@example.com",
   role: "Frontend Engineer",
-  bio: "Frontend engineer focused on React, Next.js and React Native. Building calm, fast interfaces — and a personal OS to run my job search.",
+  bio: "Frontend engineer focused on React, Next.js and React Native. Building calm, fast interfaces — and knot, to run my job search.",
   location: "Chennai, India",
 }
 
