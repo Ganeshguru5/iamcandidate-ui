@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useForm } from "react-hook-form"
 import {
@@ -144,11 +145,17 @@ export function LoginScreen() {
             </div>
           </div>
         </div>
-        <p className="text-xs text-muted-foreground">
-          {isApiMode
-            ? "Signed in to the Personal OS API · ask your admin for an account."
-            : "Frontend prototype · all data is mock and stays in your browser."}
-        </p>
+        <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
+          <p>
+            {isApiMode
+              ? "Signed in to the Personal OS API · ask your admin for an account."
+              : "Frontend prototype · all data is mock and stays in your browser."}
+          </p>
+          <p className="flex gap-3">
+            <Link href="/privacy" className="hover:text-foreground">Privacy</Link>
+            <Link href="/terms" className="hover:text-foreground">Terms</Link>
+          </p>
+        </div>
       </div>
 
       <div className="relative hidden overflow-hidden border-l bg-sidebar lg:block">
