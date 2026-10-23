@@ -4,6 +4,7 @@ import {
   Building2Icon,
   CalendarClockIcon,
   CheckCircle2Icon,
+  DownloadIcon,
   FileTextIcon,
   FolderKanbanIcon,
   HandshakeIcon,
@@ -39,6 +40,8 @@ export const ACTIVITY_META: Record<ActivityType, { icon: LucideIcon; tone: Tone;
   project_updated: { icon: FolderKanbanIcon, tone: "blue", label: "Projects" },
   integration_connected: { icon: PlugIcon, tone: "green", label: "Integrations" },
   integration_disconnected: { icon: PlugIcon, tone: "red", label: "Integrations" },
+  integration_synced: { icon: RefreshCwIcon, tone: "teal", label: "Integrations" },
+  data_imported: { icon: DownloadIcon, tone: "blue", label: "Integrations" },
   drive_synced: { icon: RefreshCwIcon, tone: "teal", label: "Integrations" },
   settings_updated: { icon: SettingsIcon, tone: "neutral", label: "Settings" },
 }

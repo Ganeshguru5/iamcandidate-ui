@@ -94,6 +94,8 @@ export const apiClient = {
   post: <T>(path: string, body?: unknown, query?: Query) => request<T>("POST", path, { body, query }),
   put: <T>(path: string, body?: unknown, query?: Query) => request<T>("PUT", path, { body, query }),
   delete: (path: string) => request<void>("DELETE", path),
+  /** DELETE for routes that answer with a body (e.g. the updated status). */
+  deleteJson: <T>(path: string, query?: Query) => request<T>("DELETE", path, { query }),
 }
 
 /** Resolves to `undefined` instead of throwing on 404 (for `get(id)` contracts). */

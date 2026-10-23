@@ -10,6 +10,8 @@ export function useConnectIntegration() {
     onSuccess: (integration) => {
       upsertItem(QK.integrations, integration)
       if (integration.id === "google_drive") invalidateQueriesByPrefix(QK.drive)
+      // Detail pages cache their own status under "integration:<name>".
+      invalidateQueriesByPrefix("integration")
     },
     success: (integration) => `${integration.name} connected successfully.`,
     error: "Connection failed",
@@ -21,6 +23,8 @@ export function useDisconnectIntegration() {
     onSuccess: (integration) => {
       upsertItem(QK.integrations, integration)
       if (integration.id === "google_drive") invalidateQueriesByPrefix(QK.drive)
+      // Detail pages cache their own status under "integration:<name>".
+      invalidateQueriesByPrefix("integration")
     },
     success: (integration) => `${integration.name} disconnected`,
     error: "Couldn't disconnect",
@@ -32,6 +36,8 @@ export function useSyncIntegration() {
     onSuccess: (integration) => {
       upsertItem(QK.integrations, integration)
       if (integration.id === "google_drive") invalidateQueriesByPrefix(QK.drive)
+      // Detail pages cache their own status under "integration:<name>".
+      invalidateQueriesByPrefix("integration")
     },
     success: (integration) => `${integration.name} synced`,
     error: "Sync failed",

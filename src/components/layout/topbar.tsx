@@ -1,6 +1,6 @@
 "use client"
 
-import { Suspense } from "react"
+import { Suspense, useSyncExternalStore, ViewTransition } from "react"
 import { usePathname } from "next/navigation"
 import {
   BriefcaseBusinessIcon,
@@ -39,7 +39,8 @@ export function Topbar({ onOpenMobileNav }: { onOpenMobileNav: () => void }) {
   const { resolvedTheme, setTheme } = useTheme()
 
   return (
-    <header className="sticky top-0 z-30 flex h-14 shrink-0 items-center gap-2 border-b bg-background/85 px-3 backdrop-blur-md supports-backdrop-filter:bg-background/70 sm:px-5">
+    // Toolbar: translucent, page title on the left, controls on the right.
+    <header className="sticky top-0 z-30 flex h-13 shrink-0 items-center gap-2 border-b border-foreground/[0.07] bg-background/75 px-3 backdrop-blur-xl backdrop-saturate-150 sm:px-5">
       <Button variant="ghost" size="icon" className="lg:hidden" onClick={onOpenMobileNav} aria-label="Open navigation">
         <MenuIcon />
       </Button>
@@ -52,12 +53,12 @@ export function Topbar({ onOpenMobileNav }: { onOpenMobileNav: () => void }) {
         <button
           type="button"
           onClick={() => palette.open("search")}
-          className="flex h-8 items-center gap-2 rounded-lg border bg-muted/40 px-2.5 text-sm text-muted-foreground transition-colors hover:bg-muted sm:w-64"
+          className="flex h-8 items-center gap-2 rounded-full border bg-card px-3 text-[13px] text-muted-foreground shadow-xs transition-colors hover:border-brand/40 hover:text-foreground sm:w-64"
         >
-          <SearchIcon className="size-4" />
+          <SearchIcon className="size-3.5" />
           <span className="hidden sm:inline">Search everything…</span>
-          <kbd className="ml-auto hidden rounded border bg-background px-1.5 font-sans text-[10px] font-medium sm:inline">
-            Ctrl K
+          <kbd className="ml-auto hidden rounded-md bg-muted px-1.5 py-0.5 font-sans text-[10px] font-medium text-muted-foreground sm:inline">
+            <ShortcutLabel />
           </kbd>
         </button>
 
@@ -108,19 +109,33 @@ export function Topbar({ onOpenMobileNav }: { onOpenMobileNav: () => void }) {
   )
 }
 
+/** Page title, bold, with its section underneath. */
 function Breadcrumb() {
   const pathname = usePathname()
   const current = findNavItem(pathname)
   const group = NAV_GROUPS.find((g) => current && g.items.includes(current))
+  const title = current?.title ?? "knot"
   return (
-    <div className="hidden min-w-0 items-center gap-1.5 text-sm md:flex">
-      {group?.label && (
-        <>
-          <span className="text-muted-foreground">{group.label}</span>
-          <span className="text-muted-foreground/50">/</span>
-        </>
-      )}
-      <span className="truncate font-medium">{current?.title ?? "knot"}</span>
-    </div>
+    // Keyed by title: a new page's title swaps in with a short vertical slide.
+    <ViewTransition key={title} enter="title-swap" exit="title-swap" default="none">
+      <div className="hidden min-w-0 flex-col leading-tight md:flex">
+        <span className="truncate text-[15px] font-semibold tracking-tight">{title}</span>
+        {group?.label && (
+          <span className="truncate text-[11px] text-muted-foreground">
+            {group.label.charAt(0).toUpperCase() + group.label.slice(1).toLowerCase()}
+          </span>
+        )}
+      </div>
+    </ViewTransition>
   )
+}
+
+/** ⌘K on Apple devices, Ctrl K elsewhere (rendered after mount to avoid a hydration mismatch). */
+function ShortcutLabel() {
+  const isMac = useSyncExternalStore(
+    () => () => {},
+    () => /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent),
+    () => false,
+  )
+  return <>{isMac ? "⌘K" : "Ctrl K"}</>
 }

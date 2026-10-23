@@ -2,7 +2,7 @@
 
 import { templateService } from "@/lib/services"
 import { QK } from "@/lib/store/queries"
-import { removeItem, upsertItem, useMutation } from "@/lib/store/query"
+import { removeItem, setQueryData, upsertItem, useMutation } from "@/lib/store/query"
 import type { EmailTemplateInput, ID } from "@/lib/types"
 
 export function useCreateTemplate() {
@@ -26,6 +26,15 @@ export function useDuplicateTemplate() {
     onSuccess: (template) => upsertItem(QK.templates, template),
     success: (template) => `Created "${template.name}"`,
     error: "Couldn't duplicate template",
+  })
+}
+
+export function useRestoreDefaultTemplates() {
+  return useMutation(() => templateService.restoreDefaults(), {
+    onSuccess: ({ templates }) => setQueryData(QK.templates, () => templates),
+    success: ({ added }) =>
+      added === 0 ? "All default templates are already here" : `Restored ${added} default template${added === 1 ? "" : "s"}`,
+    error: "Couldn't restore the default templates",
   })
 }
 

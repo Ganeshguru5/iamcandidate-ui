@@ -34,7 +34,7 @@ export function UserMenu() {
   const router = useRouter()
   const { data: profile } = useProfile()
   const { theme, setTheme } = useTheme()
-  const name = profile?.name ?? "Ganeshguru"
+  const name = profile?.name ?? "Alex Morgan"
 
   return (
     <DropdownMenu>

@@ -90,7 +90,7 @@ export function ContactFormDialog({
     >
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Field label="Full name" htmlFor="c-name" error={errors.name?.message}>
-          <Input id="c-name" placeholder="Anivar A Aravind" aria-invalid={!!errors.name} {...register("name")} />
+          <Input id="c-name" placeholder="Jordan Reyes" aria-invalid={!!errors.name} {...register("name")} />
         </Field>
         <Field label="Role / title" htmlFor="c-role">
           <Input id="c-role" placeholder="Technical Recruiter" {...register("role")} />

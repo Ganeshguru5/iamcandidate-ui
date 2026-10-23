@@ -11,17 +11,25 @@ interface LoginResponse {
   user: AppUser
 }
 
+function toSession({ token, user }: LoginResponse): Session {
+  return {
+    userId: user.id,
+    email: user.email,
+    name: user.name,
+    role: user.role,
+    token,
+    createdAt: new Date().toISOString(),
+  }
+}
+
 export class ApiAuthService implements AuthService {
   async login(email: string, password: string): Promise<Session> {
-    const { token, user } = await apiClient.post<LoginResponse>("/auth/login", { email, password })
-    return {
-      userId: user.id,
-      email: user.email,
-      name: user.name,
-      role: user.role,
-      token,
-      createdAt: new Date().toISOString(),
-    }
+    return toSession(await apiClient.post<LoginResponse>("/auth/login", { email, password }))
+  }
+
+  /** Uses the current token (sent by apiClient) to get a fresh one. */
+  async refresh(): Promise<Session> {
+    return toSession(await apiClient.post<LoginResponse>("/auth/refresh"))
   }
 
   /** Tokens are stateless; signing out just forgets the token locally. */

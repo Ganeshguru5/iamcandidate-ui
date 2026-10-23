@@ -4,6 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import {
+  HandshakeIcon,
   LinkIcon,
   MailIcon,
   MoreHorizontalIcon,
@@ -39,6 +40,10 @@ import type { Contact } from "@/lib/types"
 import { formatDate, formatRelativeDay, isOverdue } from "@/lib/utils/dates"
 import { hostname, matchesQuery } from "@/lib/utils/format"
 
+import { LinkedInGlyph } from "@/features/integrations/integration-logos"
+import { ReferralFormDialog } from "@/features/referrals/referral-form-dialog"
+import { LinkedInMessageDialog } from "@/features/templates/linkedin-message-dialog"
+
 import { ContactFormDialog } from "./contact-form-dialog"
 import { useDeleteContact } from "./hooks"
 
@@ -59,6 +64,8 @@ export function ContactsView() {
   const [followUpsOnly, setFollowUpsOnly] = useState(false)
   const [editing, setEditing] = useState<Contact | null>(null)
   const [deleting, setDeleting] = useState<Contact | null>(null)
+  const [referring, setReferring] = useState<Contact | null>(null)
+  const [messaging, setMessaging] = useState<Contact | null>(null)
 
   const select = (id: string | null) => {
     const next = new URLSearchParams(params)
@@ -88,9 +95,15 @@ export function ContactsView() {
       <DropdownMenuTrigger render={<Button variant="ghost" size="icon-xs" aria-label={`Actions for ${contact.name}`} />}>
         <MoreHorizontalIcon />
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-40">
+      <DropdownMenuContent align="end" className="w-44">
         <DropdownMenuItem onClick={() => email(contact)}>
           <MailIcon /> Send email
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setMessaging(contact)}>
+          <LinkedInGlyph className="size-4" /> LinkedIn message
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setReferring(contact)}>
+          <HandshakeIcon /> Create referral
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setEditing(contact)}>
           <PencilIcon /> Edit
@@ -218,6 +231,8 @@ export function ContactsView() {
               contact={selected}
               companyName={selected.companyId ? companyById.get(selected.companyId)?.name : undefined}
               onEmail={() => email(selected)}
+              onReferral={() => setReferring(selected)}
+              onLinkedIn={() => setMessaging(selected)}
               onEdit={() => setEditing(selected)}
               onDelete={() => setDeleting(selected)}
             />
@@ -226,6 +241,22 @@ export function ContactsView() {
       </Sheet>
 
       {editing && <ContactFormDialog key={editing.id} open contact={editing} onOpenChange={(o) => !o && setEditing(null)} />}
+      {messaging && (
+        <LinkedInMessageDialog
+          key={messaging.id}
+          contact={messaging}
+          preferCategory={messaging.relationship === "recruiter" ? "outreach" : "referral"}
+          onOpenChange={(o) => !o && setMessaging(null)}
+        />
+      )}
+      {referring && (
+        <ReferralFormDialog
+          key={referring.id}
+          open
+          defaults={{ contactId: referring.id, companyId: referring.companyId }}
+          onOpenChange={(o) => !o && setReferring(null)}
+        />
+      )}
       <ConfirmDialog
         open={!!deleting}
         onOpenChange={(o) => !o && setDeleting(null)}
@@ -245,12 +276,16 @@ function ContactDetail({
   contact,
   companyName,
   onEmail,
+  onReferral,
+  onLinkedIn,
   onEdit,
   onDelete,
 }: {
   contact: Contact
   companyName?: string
   onEmail: () => void
+  onReferral: () => void
+  onLinkedIn: () => void
   onEdit: () => void
   onDelete: () => void
 }) {
@@ -275,6 +310,12 @@ function ContactDetail({
         <div className="mt-3 flex gap-2">
           <Button size="sm" onClick={onEmail}>
             <MailIcon /> Email
+          </Button>
+          <Button size="sm" variant="outline" onClick={onLinkedIn} aria-label="LinkedIn message">
+            <LinkedInGlyph className="size-3.5" /> Message
+          </Button>
+          <Button size="sm" variant="outline" onClick={onReferral}>
+            <HandshakeIcon /> Create referral
           </Button>
           <Button size="sm" variant="outline" onClick={onEdit}>
             <PencilIcon /> Edit

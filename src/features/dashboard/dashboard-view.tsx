@@ -57,7 +57,7 @@ export function DashboardView({ now }: { now: Date }) {
         <div className="space-y-1">
           <p className="text-xs font-medium text-muted-foreground">{todayFormat.format(now)}</p>
           <h1 className="text-2xl font-semibold tracking-tight">
-            {greeting(now)}, {profile?.name ?? "Ganeshguru"}
+            {greeting(now)}, {profile?.name ?? "Alex Morgan"}
           </h1>
           <p className="text-sm text-muted-foreground">Here&apos;s what&apos;s happening across your personal workspace.</p>
         </div>

@@ -44,7 +44,7 @@ import {
   useProjects,
   useTasks,
 } from "@/lib/store/queries"
-import { useIsAdmin } from "@/lib/store/session"
+import { useIsAdmin, useIsAdminRole } from "@/lib/store/session"
 import { useTheme } from "@/lib/store/theme"
 import { applicationStatus, taskPriority } from "@/lib/constants"
 
@@ -126,6 +126,7 @@ function PaletteBody({
   const { openDialog } = useAppDialogs()
   const { resolvedTheme, setTheme } = useTheme()
   const isAdmin = useIsAdmin()
+  const isAdminRole = useIsAdminRole()
   const [search, setSearch] = useState("")
 
   const { data: applications = [] } = useApplications()
@@ -265,7 +266,7 @@ function PaletteBody({
 
   const q = search.trim().toLowerCase()
   const matchingCommands = commands.filter((c) => c.label.toLowerCase().includes(q))
-  const matchingNav = visibleNavItems(NAV_ITEMS, isAdmin).filter((item) => item.title.toLowerCase().includes(q))
+  const matchingNav = visibleNavItems(NAV_ITEMS, { api: isAdmin, any: isAdminRole }).filter((item) => item.title.toLowerCase().includes(q))
 
   return (
     <Command shouldFilter={false} className="rounded-none! p-0">

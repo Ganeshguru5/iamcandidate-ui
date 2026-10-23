@@ -1,14 +1,19 @@
 "use client"
 
-import { Controller, useForm } from "react-hook-form"
+import { Controller, useForm, useWatch } from "react-hook-form"
 import { z } from "zod"
+
+import { useState } from "react"
 
 import { Field, SimpleSelect } from "@/components/shared/form"
 import { FormDialog } from "@/components/shared/form-dialog"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { useUpdateContact } from "@/features/contacts/hooks"
 import { REFERRAL_STATUSES } from "@/lib/constants"
-import { useCompanies, useContacts } from "@/lib/store/queries"
+import { useApplications, useCompanies, useContacts } from "@/lib/store/queries"
 import type { Referral } from "@/lib/types"
 import { fromDateInput, toDateInput } from "@/lib/utils/dates"
 import { zodResolver } from "@/lib/utils/zod-resolver"
@@ -33,21 +38,31 @@ export function ReferralFormDialog({
   open,
   onOpenChange,
   referral,
+  defaults,
 }: {
   open: boolean
   onOpenChange: (open: boolean) => void
   referral?: Referral
+  /** Prefill for a new referral, e.g. when converting a contact into one. */
+  defaults?: { contactId?: string; companyId?: string }
 }) {
   const { data: contacts = [] } = useContacts()
   const { data: companies = [] } = useCompanies()
+  const { data: applications = [] } = useApplications()
   const create = useCreateReferral()
   const update = useUpdateReferral()
+  const updateContact = useUpdateContact()
+  const [applicationId, setApplicationId] = useState("")
+  // Converting a contact: also mark them as a Referral contact (unless they already are).
+  const startContact = contacts.find((c) => c.id === defaults?.contactId)
+  const [markAsReferral, setMarkAsReferral] = useState(true)
+  const offerMark = !referral && !!startContact && startContact.relationship !== "referral"
 
   const { register, control, handleSubmit, setValue, getValues, formState } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
-      contactId: referral?.contactId ?? "",
-      companyId: referral?.companyId ?? "",
+      contactId: referral?.contactId ?? defaults?.contactId ?? "",
+      companyId: referral?.companyId ?? defaults?.companyId ?? "",
       role: referral?.role ?? "",
       jobId: referral?.jobId ?? "",
       jobUrl: referral?.jobUrl ?? "",
@@ -66,8 +81,30 @@ export function ReferralFormDialog({
       followUpDate: fromDateInput(values.followUpDate),
     }
     const result = referral ? await update.mutate(referral.id, input) : await create.mutate(input)
+    if (result && offerMark && markAsReferral && startContact && values.contactId === startContact.id) {
+      await updateContact.mutate(startContact.id, { relationship: "referral" })
+    }
     if (result) onOpenChange(false)
   })
+
+  // Applications at the chosen company first, then the rest.
+  const companyId = useWatch({ control, name: "companyId" })
+  const applicationOptions = [...applications]
+    .sort((a, b) => Number(b.companyId === companyId) - Number(a.companyId === companyId) || b.updatedAt.localeCompare(a.updatedAt))
+    .map((a) => ({
+      value: a.id,
+      label: `${a.role} — ${companies.find((c) => c.id === a.companyId)?.name ?? "Unknown company"}`,
+    }))
+
+  const fillFromApplication = (id: string) => {
+    setApplicationId(id)
+    const app = applications.find((a) => a.id === id)
+    if (!app) return
+    setValue("companyId", app.companyId, { shouldValidate: true })
+    setValue("role", app.role, { shouldValidate: true })
+    setValue("jobId", app.jobId ?? "")
+    setValue("jobUrl", app.jobUrl ?? "", { shouldValidate: true })
+  }
 
   return (
     <FormDialog
@@ -117,6 +154,16 @@ export function ReferralFormDialog({
             )}
           />
         </Field>
+        {!referral && applicationOptions.length > 0 && (
+          <Field label="Fill from application" hint="Copies the company, role and job link." className="sm:col-span-2">
+            <SimpleSelect
+              value={applicationId || undefined}
+              placeholder="Pick a saved application (optional)"
+              onValueChange={fillFromApplication}
+              options={applicationOptions}
+            />
+          </Field>
+        )}
         <Field label="Role" htmlFor="r-role" error={errors.role?.message} className="sm:col-span-2">
           <Input id="r-role" placeholder="Frontend Engineer" aria-invalid={!!errors.role} {...register("role")} />
         </Field>
@@ -147,6 +194,12 @@ export function ReferralFormDialog({
       <Field label="Notes" htmlFor="r-notes">
         <Textarea id="r-notes" rows={2} {...register("notes")} />
       </Field>
+      {offerMark && (
+        <Label className="flex items-center gap-2 text-sm font-normal">
+          <Checkbox checked={markAsReferral} onCheckedChange={(checked) => setMarkAsReferral(checked === true)} />
+          Mark {startContact.name} as a Referral contact
+        </Label>
+      )}
     </FormDialog>
   )
 }

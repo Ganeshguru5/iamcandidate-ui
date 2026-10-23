@@ -39,6 +39,11 @@ export class MockAuthService implements AuthService {
     }
   }
 
+  /** Mock tokens never expire. */
+  async refresh(session: Session): Promise<Session> {
+    return session
+  }
+
   async logout(): Promise<void> {
     await delay(300)
   }
@@ -100,7 +105,7 @@ export class MockIntegrationService implements IntegrationService {
     if (!existing) throw new NotFoundError("Integration", id)
     if (existing.status === "coming_soon") throw new Error(`${existing.name} is not available yet`)
     const account =
-      id === "google_drive" ? "ganeshguru@example.com" : id === "smtp" ? read("smtp").host : undefined
+      id === "google_drive" ? "alexmorgan.example.com" : id === "smtp" ? read("smtp").host : undefined
     const next = integrations.patch(id, {
       status: "connected",
       account,

@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import {
+  ActivityIcon,
   CheckSquareIcon,
   ExternalLinkIcon,
   FolderKanbanIcon,
@@ -33,6 +34,8 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { GitHubActivitySheet, githubRepoFromUrl } from "@/features/integrations/github-activity-sheet"
+import { isApiMode } from "@/lib/api/config"
 import { PROJECT_STATUSES, projectStatus } from "@/lib/constants"
 import { useProjects, useTasks } from "@/lib/store/queries"
 import type { Project, ProjectStatus } from "@/lib/types"
@@ -52,6 +55,7 @@ export function ProjectsView() {
   const [query, setQuery] = useState("")
   const [editing, setEditing] = useState<Project | null>(null)
   const [deleting, setDeleting] = useState<Project | null>(null)
+  const [activityRepo, setActivityRepo] = useState<string | null>(null)
 
   const list = (projects ?? [])
     .filter((p) => (status === "all" ? p.status !== "archived" : p.status === status))
@@ -170,6 +174,15 @@ export function ProjectsView() {
                       <GitBranchIcon className="size-3.5" /> {hostname(project.repository)}
                     </a>
                   )}
+                  {isApiMode && githubRepoFromUrl(project.repository) && (
+                    <button
+                      type="button"
+                      onClick={() => setActivityRepo(githubRepoFromUrl(project.repository) ?? null)}
+                      className="inline-flex items-center gap-1 hover:text-foreground"
+                    >
+                      <ActivityIcon className="size-3.5" /> Activity
+                    </button>
+                  )}
                   {project.deployment && (
                     <a href={project.deployment} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:text-foreground">
                       <GlobeIcon className="size-3.5" /> {hostname(project.deployment)} <ExternalLinkIcon className="size-3" />
@@ -187,6 +200,7 @@ export function ProjectsView() {
         </div>
       )}
 
+      {activityRepo && <GitHubActivitySheet repo={activityRepo} onClose={() => setActivityRepo(null)} />}
       {editing && <ProjectFormDialog key={editing.id} open project={editing} onOpenChange={(o) => !o && setEditing(null)} />}
       <ConfirmDialog
         open={!!deleting}

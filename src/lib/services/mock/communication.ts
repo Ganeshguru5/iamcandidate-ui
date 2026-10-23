@@ -5,6 +5,7 @@ import type {
   ID,
   SmtpConfig,
 } from "@/lib/types"
+import { seedEmailTemplates } from "@/lib/mock/emails"
 import { delay, networkDelay } from "@/lib/utils/delay"
 import { createId } from "@/lib/utils/id"
 
@@ -103,7 +104,14 @@ export class MockTemplateService
     super({
       key: "templates",
       idPrefix: "tpl",
-      build: (input, id, now) => ({ ...input, id, usageCount: 0, createdAt: now, updatedAt: now }),
+      build: (input, id, now) => ({
+        ...input,
+        channel: input.channel ?? "email",
+        id,
+        usageCount: 0,
+        createdAt: now,
+        updatedAt: now,
+      }),
       touch: (_item, now) => ({ updatedAt: now }),
     })
   }
@@ -121,6 +129,18 @@ export class MockTemplateService
       createdAt: now,
       updatedAt: now,
     })
+  }
+
+  /** Mock mode's defaults are the demo templates. */
+  async restoreDefaults() {
+    await networkDelay()
+    const existing = templates.all()
+    const ids = new Set(existing.map((t) => t.id))
+    const key = (t: { channel?: string; name: string }) => `${t.channel ?? "email"}:${t.name.toLowerCase()}`
+    const names = new Set(existing.map(key))
+    const missing = seedEmailTemplates().filter((t) => !ids.has(t.id) && !names.has(key(t)))
+    for (const template of missing) templates.insert({ ...template, usageCount: 0 })
+    return { added: missing.length, templates: templates.all() }
   }
 }
 

@@ -5,6 +5,7 @@
  * interface and be swapped in `./index.ts` without touching any UI code.
  */
 import type {
+  PricingConfig,
   Activity,
   AppNotification,
   AppUser,
@@ -64,6 +65,8 @@ export interface CrudService<T, TInput> {
 
 export interface AuthService {
   login(email: string, password: string): Promise<Session>
+  /** Swaps the session's token for a fresh one (rolling sessions). */
+  refresh(session: Session): Promise<Session>
   logout(): Promise<void>
   changePassword(currentPassword: string, newPassword: string): Promise<void>
 }
@@ -156,6 +159,8 @@ export interface EmailService {
 
 export interface TemplateService extends CrudService<EmailTemplate, EmailTemplateInput> {
   duplicate(id: ID): Promise<EmailTemplate>
+  /** Re-adds any default templates that were deleted; returns the full list. */
+  restoreDefaults(): Promise<{ added: number; templates: EmailTemplate[] }>
 }
 
 export interface SmtpService {
@@ -191,6 +196,17 @@ export interface NotificationService {
   getNotifications(): Promise<AppNotification[]>
   markRead(id: string): Promise<void>
   markAllRead(): Promise<AppNotification[]>
+}
+
+/** Public pricing page; admins edit the plans. */
+export interface PricingService {
+  /** Visible plans, for the public page (no sign-in needed). */
+  getPublic(): Promise<PricingConfig>
+  /** Every plan, including hidden ones (admins). */
+  getAdmin(): Promise<PricingConfig>
+  save(config: PricingConfig): Promise<PricingConfig>
+  /** Back to the built-in plans. */
+  reset(): Promise<PricingConfig>
 }
 
 export interface IntegrationService {

@@ -25,7 +25,7 @@ import {
 } from "@/lib/store/queries"
 import { isApiMode } from "@/lib/api/config"
 import type { ComposeEmailInput, ID } from "@/lib/types"
-import { fillTemplate } from "@/lib/utils/template"
+import { fillTemplate, templateChannel } from "@/lib/utils/template"
 
 import { useSaveDraft, useSendEmail } from "./hooks"
 
@@ -62,7 +62,9 @@ export function ComposeEmailDialog({
   defaults?: ComposeDefaults
 }) {
   const { data: contacts = [] } = useContacts()
-  const { data: templates = [] } = useTemplates()
+  const { data: allTemplates = [] } = useTemplates()
+  // LinkedIn templates are copied into LinkedIn, not emailed.
+  const templates = allTemplates.filter((t) => templateChannel(t) === "email")
   const { data: applications = [] } = useApplications()
   const { data: companies } = useCompanies()
   const { data: profile } = useProfile()

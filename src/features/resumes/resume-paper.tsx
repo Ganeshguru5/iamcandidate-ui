@@ -5,10 +5,10 @@ export function ResumePaper({ resume, profile }: { resume: Resume; profile?: Use
   return (
     <article className="mx-auto w-full max-w-[720px] rounded-lg bg-white p-8 text-[13px] leading-relaxed text-zinc-800 shadow-sm ring-1 ring-black/5 sm:p-10">
       <header className="border-b border-zinc-200 pb-4">
-        <h1 className="text-2xl font-semibold tracking-tight text-zinc-950">{profile?.name ?? "Ganeshguru"}</h1>
+        <h1 className="text-2xl font-semibold tracking-tight text-zinc-950">{profile?.name ?? "Alex Morgan"}</h1>
         <p className="mt-0.5 text-sm font-medium text-zinc-600">{resume.targetRole}</p>
         <p className="mt-1 text-xs text-zinc-500">
-          {profile?.email ?? "demo@example.com"} · {profile?.location ?? "Chennai, India"} · github.com/ganeshguru
+          {profile?.email ?? "demo@example.com"} · {profile?.location ?? "Chennai, India"} · github.com/alexmorgan-demo
         </p>
       </header>
 
@@ -69,7 +69,7 @@ export function ResumePaper({ resume, profile }: { resume: Resume; profile?: Use
 /** Builds a plain-text version for the simulated download. */
 export function resumeToText(resume: Resume, profile?: UserProfile): string {
   const lines = [
-    profile?.name ?? "Ganeshguru",
+    profile?.name ?? "Alex Morgan",
     resume.targetRole,
     `${profile?.email ?? "demo@example.com"} · ${profile?.location ?? ""}`,
     "",

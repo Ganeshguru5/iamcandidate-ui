@@ -1,4 +1,4 @@
-import { BriefcaseIcon, CloudIcon, GitBranchIcon, MailIcon, type LucideIcon } from "lucide-react"
+import { CloudIcon, GitBranchIcon, MailIcon, type LucideIcon } from "lucide-react"
 import { cn } from "cn"
 
 import type { IntegrationId } from "@/lib/types"
@@ -26,7 +26,6 @@ function CalendarGlyph({ className }: { className?: string }) {
 const ICONS: Partial<Record<IntegrationId, LucideIcon>> = {
   smtp: MailIcon,
   github: GitBranchIcon,
-  linkedin: BriefcaseIcon,
   aws: CloudIcon,
 }
 
@@ -38,10 +37,21 @@ export function IntegrationLogo({ id, className }: { id: IntegrationId; classNam
         <DriveGlyph className="size-5" />
       ) : id === "google_calendar" ? (
         <CalendarGlyph className="size-5" />
+      ) : id === "linkedin" ? (
+        <LinkedInGlyph className="size-5 text-[#0A66C2]" />
       ) : Icon ? (
         <Icon className="size-5 text-foreground/80" />
       ) : null}
     </span>
+  )
+}
+
+/** LinkedIn "in" mark (lucide has no brand icons). Uses currentColor. */
+export function LinkedInGlyph({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={cn("size-4", className)} fill="currentColor" aria-hidden>
+      <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.75h4v11H3v-11Zm6.5 0h3.83v1.5h.05c.53-1 1.84-2.06 3.8-2.06 4.06 0 4.82 2.67 4.82 6.15v5.41h-4v-4.8c0-1.15-.02-2.62-1.6-2.62-1.6 0-1.84 1.25-1.84 2.54v4.88h-4v-11Z" />
+    </svg>
   )
 }
 

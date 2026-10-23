@@ -10,6 +10,7 @@ const NAV = [
   { href: "/#features", label: "Features" },
   { href: "/#extension", label: "Extension" },
   { href: "/#security", label: "Security" },
+  { href: "/pricing", label: "Pricing" },
 ]
 
 export function SiteHeader() {

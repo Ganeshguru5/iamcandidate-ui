@@ -9,20 +9,20 @@ type Seed = Omit<DocumentFile, "uploadedAt" | "updatedAt" | "starred" | "source"
 
 export function seedDocuments(): DocumentFile[] {
   const seeds: Seed[] = [
-    { id: "doc_resume_fe", name: "Ganeshguru_Frontend_Resume.pdf", category: "resume", kind: "pdf", sizeBytes: 182_400, age: 2, starred: true, description: "Frontend resume v3.2 — default." },
-    { id: "doc_resume_fs", name: "Ganeshguru_FullStack_Resume.pdf", category: "resume", kind: "pdf", sizeBytes: 196_800, age: 6 },
-    { id: "doc_resume_rn", name: "Ganeshguru_ReactNative_Resume.pdf", category: "resume", kind: "pdf", sizeBytes: 171_200, age: 14 },
+    { id: "doc_resume_fe", name: "Alex_Morgan_Frontend_Resume.pdf", category: "resume", kind: "pdf", sizeBytes: 182_400, age: 2, starred: true, description: "Frontend resume v3.2 — default." },
+    { id: "doc_resume_fs", name: "Alex_Morgan_FullStack_Resume.pdf", category: "resume", kind: "pdf", sizeBytes: 196_800, age: 6 },
+    { id: "doc_resume_rn", name: "Alex_Morgan_ReactNative_Resume.pdf", category: "resume", kind: "pdf", sizeBytes: 171_200, age: 14 },
     { id: "doc_cover", name: "Cover_Letter_Template.docx", category: "resume", kind: "docx", sizeBytes: 38_900, age: 30 },
     { id: "doc_react_cert", name: "React_Certificate.pdf", category: "certificates", kind: "pdf", sizeBytes: 640_000, age: 90, starred: true },
     { id: "doc_google_ux", name: "Google_UIUX_Certificate.pdf", category: "certificates", kind: "pdf", sizeBytes: 812_000, age: 150 },
     { id: "doc_fcc_rwd", name: "FreeCodeCamp_Responsive_Web_Design.pdf", category: "certificates", kind: "pdf", sizeBytes: 402_000, age: 400 },
     { id: "doc_exp_letter", name: "Experience_Letter.pdf", category: "experience", kind: "pdf", sizeBytes: 254_000, age: 45 },
-    { id: "doc_relieving", name: "Relieving_Letter_Brightline.pdf", category: "experience", kind: "pdf", sizeBytes: 221_000, age: 420 },
+    { id: "doc_relieving", name: "Relieving_Letter_CedarPine.pdf", category: "experience", kind: "pdf", sizeBytes: 221_000, age: 420 },
     { id: "doc_payslips", name: "Payslips_2025.zip", category: "experience", kind: "zip", sizeBytes: 3_400_000, age: 60 },
     { id: "doc_passport", name: "Passport_Scan.png", category: "personal", kind: "image", sizeBytes: 1_250_000, age: 200 },
     { id: "doc_degree", name: "Degree_Certificate.pdf", category: "personal", kind: "pdf", sizeBytes: 980_000, age: 500 },
     { id: "doc_pos_arch", name: "Personal_OS_Architecture.pdf", category: "projects", kind: "pdf", sizeBytes: 1_820_000, age: 5, starred: true, source: "drive" },
-    { id: "doc_exterva_deck", name: "Exterva_Pitch_Deck.pdf", category: "projects", kind: "pdf", sizeBytes: 5_600_000, age: 18, source: "drive" },
+    { id: "doc_gigloop_deck", name: "Gigloop_Pitch_Deck.pdf", category: "projects", kind: "pdf", sizeBytes: 5_600_000, age: 18, source: "drive" },
     { id: "doc_salary", name: "Salary_Benchmarks_2026.xlsx", category: "other", kind: "sheet", sizeBytes: 88_000, age: 10 },
     { id: "doc_interview_prep", name: "Interview_Prep_Checklist.docx", category: "other", kind: "docx", sizeBytes: 41_000, age: 3 },
   ]
@@ -65,8 +65,8 @@ export function seedDriveItems(): DriveItem[] {
     f("drv_p_pos", "knot", "drv_projects", 5),
     file("drv_p1", "Personal_OS_Architecture.pdf", "drv_p_pos", "pdf", 1_820_000, 5),
     file("drv_p2", "Wireframes.png", "drv_p_pos", "image", 2_100_000, 9),
-    file("drv_p3", "Exterva_Pitch_Deck.pdf", "drv_projects", "pdf", 5_600_000, 18),
-    file("drv_d1", "Offer_Letter_Apeiron.pdf", "drv_docs", "pdf", 310_000, 1),
+    file("drv_p3", "Gigloop_Pitch_Deck.pdf", "drv_projects", "pdf", 5_600_000, 18),
+    file("drv_d1", "Offer_Letter_Northwind.pdf", "drv_docs", "pdf", 310_000, 1),
     file("drv_d2", "Tax_Declaration_2026.pdf", "drv_docs", "pdf", 145_000, 30),
     file("drv_d3", "Job_Search_Tracker.xlsx", "drv_docs", "sheet", 64_000, 12),
   ]

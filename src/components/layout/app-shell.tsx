@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetDescription, SheetTitle } from "@/components/ui/sheet"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useLocalValue } from "@/lib/store/local-store"
-import { useSession } from "@/lib/store/session"
+import { refreshSessionIfStale, SESSION_PENDING, useSession } from "@/lib/store/session"
 
 import { AppDialogsProvider } from "./app-dialogs"
 import { Brand } from "./brand"
@@ -30,6 +30,17 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     }
   }, [session, router])
 
+  // Keep the session rolling: on load and whenever the tab comes back into view.
+  useEffect(() => {
+    if (session === null || session === SESSION_PENDING) return
+    const refresh = () => {
+      if (document.visibilityState === "visible") void refreshSessionIfStale(session)
+    }
+    refresh()
+    document.addEventListener("visibilitychange", refresh)
+    return () => document.removeEventListener("visibilitychange", refresh)
+  }, [session])
+
   // While hydrating (`pending`) we still render the shell so routes prerender
   // into the static shell; only a confirmed signed-out state is gated.
   if (session === null) {
@@ -39,38 +50,41 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <AppDialogsProvider>
       <CommandPaletteProvider>
-        <div className="flex min-h-dvh w-full">
+        {/* Floating sidebar card on a soft canvas; content sits beside it. */}
+        <div className="flex min-h-dvh w-full bg-[var(--window)]">
           <aside
             className={cn(
-              "sticky top-0 hidden h-dvh shrink-0 flex-col border-r bg-sidebar transition-[width] duration-200 lg:flex",
-              collapsed ? "w-[60px]" : "w-60",
+              "sticky top-0 hidden h-dvh shrink-0 p-2.5 pr-0 transition-[width] duration-200 lg:block",
+              collapsed ? "w-[76px]" : "w-64",
             )}
           >
-            <div className={cn("flex h-14 items-center border-b px-3.5", collapsed && "justify-center px-0")}>
-              <Brand collapsed={collapsed} />
-            </div>
-            <div className="scrollbar-thin min-h-0 flex-1 overflow-y-auto">
-              <SidebarNav collapsed={collapsed} />
-            </div>
-            <div className={cn("border-t p-2", collapsed && "flex justify-center")}>
-              <Button
-                variant="ghost"
-                size={collapsed ? "icon" : "sm"}
-                className={cn("text-muted-foreground", !collapsed && "w-full justify-start")}
-                onClick={() => setCollapsed(!collapsed)}
-                aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-              >
-                {collapsed ? <PanelLeftOpenIcon /> : <PanelLeftCloseIcon />}
-                {!collapsed && "Collapse"}
-              </Button>
+            <div className="glass flex h-full flex-col overflow-hidden rounded-2xl border shadow-[0_1px_2px_rgb(0_0_0/0.04),0_12px_32px_-16px_rgb(0_0_0/0.16)]">
+              <div className={cn("flex h-14 shrink-0 items-center px-4", collapsed && "justify-center px-0")}>
+                <Brand collapsed={collapsed} />
+              </div>
+              <div className="scrollbar-thin min-h-0 flex-1 overflow-y-auto">
+                <SidebarNav collapsed={collapsed} pillMorph />
+              </div>
+              <div className={cn("flex items-center gap-2 border-t p-2.5", collapsed ? "justify-center" : "justify-end")}>
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  className="text-muted-foreground"
+                  onClick={() => setCollapsed(!collapsed)}
+                  aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+                  title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+                >
+                  {collapsed ? <PanelLeftOpenIcon /> : <PanelLeftCloseIcon />}
+                </Button>
+              </div>
             </div>
           </aside>
 
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-            <SheetContent side="left" className="w-72 gap-0 bg-sidebar p-0">
+            <SheetContent side="left" className="glass w-72 gap-0 p-0">
               <SheetTitle className="sr-only">Navigation</SheetTitle>
               <SheetDescription className="sr-only">Main navigation</SheetDescription>
-              <div className="flex h-14 items-center border-b px-4">
+              <div className="flex h-13 items-center px-4">
                 <Brand />
               </div>
               <div className="min-h-0 flex-1 overflow-y-auto">
@@ -79,7 +93,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </SheetContent>
           </Sheet>
 
-          <div className="flex min-w-0 flex-1 flex-col">
+          <div className="flex min-w-0 flex-1 flex-col bg-background lg:ml-2.5 lg:border-l">
             <Topbar onOpenMobileNav={() => setMobileOpen(true)} />
             <main className="mx-auto w-full max-w-[1400px] flex-1 px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
               {children}
@@ -93,15 +107,17 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
 function ShellSkeleton() {
   return (
-    <div className="flex min-h-dvh w-full">
-      <aside className="hidden w-60 shrink-0 flex-col gap-3 border-r bg-sidebar p-4 lg:flex">
-        <Skeleton className="h-7 w-32" />
-        {Array.from({ length: 10 }, (_, i) => (
-          <Skeleton key={i} className="h-6 w-full" />
-        ))}
+    <div className="flex min-h-dvh w-full bg-[var(--window)]">
+      <aside className="hidden h-dvh w-64 shrink-0 p-2.5 pr-0 lg:block">
+        <div className="glass flex h-full flex-col gap-3 rounded-2xl border p-4">
+          <Skeleton className="h-7 w-28" />
+          {Array.from({ length: 10 }, (_, i) => (
+            <Skeleton key={i} className="h-6 w-full" />
+          ))}
+        </div>
       </aside>
-      <div className="flex-1">
-        <div className="h-14 border-b" />
+      <div className="flex-1 bg-background lg:ml-2.5 lg:border-l">
+        <div className="h-13 border-b" />
         <div className="mx-auto max-w-[1400px] px-4 py-8 sm:px-6 lg:px-8">
           <PageSkeleton />
         </div>

@@ -7,6 +7,8 @@
  * OAuth integrations are still mocked (SMTP sending is real). UI code only
  * imports the instances below and never knows which one it got.
  */
+import { ApiPricingService } from "./api/pricing"
+import { MockPricingService } from "./mock/pricing"
 import { isApiMode } from "@/lib/api/config"
 
 import {
@@ -52,6 +54,7 @@ import type {
   DriveService,
   EmailService,
   IntegrationService,
+  PricingService,
   InterviewService,
   NoteService,
   NotificationService,
@@ -125,3 +128,4 @@ export const templateService: TemplateService = pick(() => new ApiTemplateServic
 export const smtpService: SmtpService = pick(() => new ApiSmtpService(), () => new MockSmtpService())
 export const integrationService: IntegrationService = pick(() => new ApiIntegrationService(), () => new MockIntegrationService())
 
+export const pricingService: PricingService = pick(() => new ApiPricingService(), () => new MockPricingService())

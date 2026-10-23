@@ -151,7 +151,7 @@ function ApplicationDetailView({ app }: { app: Application }) {
         templateId: "tpl_followup",
         subject: `Following up — ${app.role}`,
         body: recruiter
-          ? `Hi ${recruiter.name.split(" ")[0]},\n\nI wanted to follow up on my application for the ${app.role} role at ${company?.name ?? "your company"}.\n\nBest,\nGaneshguru`
+          ? `Hi ${recruiter.name.split(" ")[0]},\n\nI wanted to follow up on my application for the ${app.role} role at ${company?.name ?? "your company"}.\n\nBest,\nAlex Morgan`
           : "",
       },
     })

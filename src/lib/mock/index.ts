@@ -13,6 +13,7 @@ import type {
   Interview,
   Note,
   NotificationPreferences,
+  PricingConfig,
   Project,
   Referral,
   Resume,
@@ -33,6 +34,7 @@ import { seedBookmarks, seedCertifications, seedSkills } from "./knowledge"
 import { seedNotes } from "./notes"
 import { seedProjects } from "./projects"
 import { seedReferrals } from "./referrals"
+import { seedPricing } from "./pricing"
 import { seedResumes } from "./resumes"
 import { seedTasks } from "./tasks"
 import { mockNotificationPreferences, mockUser } from "./user"
@@ -62,6 +64,7 @@ export interface MockDatabase {
   smtp: SmtpConfig
   profile: UserProfile
   notificationPreferences: NotificationPreferences
+  pricing: PricingConfig
 }
 
 /** Builds a fresh copy of all seed data with dates relative to "now". */
@@ -88,5 +91,6 @@ export function createSeedDatabase(): MockDatabase {
     smtp: seedSmtpConfig(),
     profile: { ...mockUser },
     notificationPreferences: { ...mockNotificationPreferences },
+    pricing: seedPricing(),
   }
 }

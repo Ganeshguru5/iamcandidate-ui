@@ -29,10 +29,10 @@ export function seedSkills(): Skill[] {
 export function seedCertifications(): Certification[] {
   return [
     { id: "cert_ux", name: "Google UX Design", issuer: "Google · Coursera", issueDate: daysFromNow(-150), credentialId: "GUX-8H2K4L", credentialUrl: "https://coursera.org/verify/GUX-8H2K4L", documentId: "doc_google_ux", skills: ["UX research", "Figma", "Prototyping"] },
-    { id: "cert_rwd", name: "Responsive Web Design", issuer: "freeCodeCamp", issueDate: daysFromNow(-400), credentialId: "fcc-rwd-ganeshguru", credentialUrl: "https://freecodecamp.org/certification/ganeshguru/responsive-web-design", documentId: "doc_fcc_rwd", skills: ["HTML", "CSS", "Flexbox", "Grid"] },
-    { id: "cert_js", name: "JavaScript Algorithms and Data Structures", issuer: "freeCodeCamp", issueDate: daysFromNow(-360), credentialId: "fcc-jsads-ganeshguru", credentialUrl: "https://freecodecamp.org/certification/ganeshguru/javascript-algorithms-and-data-structures", skills: ["JavaScript", "Algorithms"] },
-    { id: "cert_fdl", name: "Front End Development Libraries", issuer: "freeCodeCamp", issueDate: daysFromNow(-320), credentialId: "fcc-fdl-ganeshguru", credentialUrl: "https://freecodecamp.org/certification/ganeshguru/front-end-development-libraries", skills: ["React", "Redux", "Bootstrap"] },
-    { id: "cert_d3", name: "Data Visualization with D3", issuer: "freeCodeCamp", issueDate: daysFromNow(-280), credentialId: "fcc-d3-ganeshguru", credentialUrl: "https://freecodecamp.org/certification/ganeshguru/data-visualization", skills: ["D3", "SVG"] },
+    { id: "cert_rwd", name: "Responsive Web Design", issuer: "freeCodeCamp", issueDate: daysFromNow(-400), credentialId: "fcc-rwd-alexmorgan", credentialUrl: "https://freecodecamp.org/certification/alexmorgan-demo/responsive-web-design", documentId: "doc_fcc_rwd", skills: ["HTML", "CSS", "Flexbox", "Grid"] },
+    { id: "cert_js", name: "JavaScript Algorithms and Data Structures", issuer: "freeCodeCamp", issueDate: daysFromNow(-360), credentialId: "fcc-jsads-alexmorgan", credentialUrl: "https://freecodecamp.org/certification/alexmorgan-demo/javascript-algorithms-and-data-structures", skills: ["JavaScript", "Algorithms"] },
+    { id: "cert_fdl", name: "Front End Development Libraries", issuer: "freeCodeCamp", issueDate: daysFromNow(-320), credentialId: "fcc-fdl-alexmorgan", credentialUrl: "https://freecodecamp.org/certification/alexmorgan-demo/front-end-development-libraries", skills: ["React", "Redux", "Bootstrap"] },
+    { id: "cert_d3", name: "Data Visualization with D3", issuer: "freeCodeCamp", issueDate: daysFromNow(-280), credentialId: "fcc-d3-alexmorgan", credentialUrl: "https://freecodecamp.org/certification/alexmorgan-demo/data-visualization", skills: ["D3", "SVG"] },
     { id: "cert_react", name: "Meta Front-End Developer: React", issuer: "Meta · Coursera", issueDate: daysFromNow(-90), credentialId: "META-RCT-77Q2", credentialUrl: "https://coursera.org/verify/META-RCT-77Q2", documentId: "doc_react_cert", skills: ["React", "Testing"] },
   ]
 }
@@ -53,7 +53,7 @@ export function seedBookmarks(): Bookmark[] {
     b({ id: "bm_8", title: "NeetCode 150", url: "https://neetcode.io/practice", description: "Curated DSA problem list.", tags: ["dsa"], category: "learning", age: 70 }),
     b({ id: "bm_9", title: "Levels.fyi — India", url: "https://levels.fyi", description: "Compensation benchmarks by company and level.", tags: ["salary"], category: "career", age: 15 }),
     b({ id: "bm_10", title: "Tech Interview Handbook", url: "https://techinterviewhandbook.org", description: "Behavioral questions and negotiation guides.", tags: ["interviews"], category: "career", age: 25 }),
-    b({ id: "bm_11", title: "knot repository", url: "https://github.com/Ganeshguru5/knot-ui", description: "Source for this dashboard.", tags: ["knot"], category: "projects", age: 5 }),
+    b({ id: "bm_11", title: "knot repository", url: "https://github.com/knot-demo/knot", description: "Source for this dashboard.", tags: ["knot"], category: "projects", age: 5 }),
     b({ id: "bm_12", title: "Refactoring UI", url: "https://refactoringui.com", description: "Practical visual design tactics for developers.", tags: ["design"], category: "resources", age: 120 }),
   ]
 }

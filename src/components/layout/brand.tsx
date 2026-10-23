@@ -17,7 +17,15 @@ export function BrandMark({ className }: { className?: string }) {
   )
 }
 
-export function Brand({ collapsed = false }: { collapsed?: boolean }) {
+export function Brand({ collapsed = false, compact = false }: { collapsed?: boolean; compact?: boolean }) {
+  if (compact) {
+    return (
+      <div className="flex items-center gap-2">
+        <BrandMark className="size-5 rounded-md [&_svg]:size-3" />
+        <p className="text-[13px] font-semibold tracking-tight">knot</p>
+      </div>
+    )
+  }
   return (
     <div className="flex items-center gap-2.5">
       <BrandMark />

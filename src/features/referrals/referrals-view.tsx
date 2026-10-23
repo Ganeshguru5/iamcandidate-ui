@@ -25,7 +25,9 @@ import { useById, useCompanies, useContacts, useProfile, useReferrals, useTempla
 import type { Referral, ReferralStatus } from "@/lib/types"
 import { formatDate, formatRelativeDay, isOverdue } from "@/lib/utils/dates"
 import { hostname, matchesQuery } from "@/lib/utils/format"
-import { fillTemplate } from "@/lib/utils/template"
+import { LinkedInGlyph } from "@/features/integrations/integration-logos"
+import { LinkedInMessageDialog } from "@/features/templates/linkedin-message-dialog"
+import { fillTemplate, templateChannel } from "@/lib/utils/template"
 
 import { useDeleteReferral, useSetReferralStatus } from "./hooks"
 import { ReferralFormDialog } from "./referral-form-dialog"
@@ -47,6 +49,8 @@ export function ReferralsView() {
   const [creating, setCreating] = useState(false)
   const [editing, setEditing] = useState<Referral | null>(null)
   const [deleting, setDeleting] = useState<Referral | null>(null)
+  const [messaging, setMessaging] = useState<Referral | null>(null)
+  const messagingContact = messaging ? contactById.get(messaging.contactId) : undefined
 
   const filtered = (referrals ?? [])
     .filter(
@@ -58,7 +62,10 @@ export function ReferralsView() {
 
   const requestEmail = (referral: Referral) => {
     const contact = contactById.get(referral.contactId)
-    const template = templates.find((t) => t.id === "tpl_referral") ?? templates.find((t) => t.category === "referral")
+    const emailTemplates = templates.filter((t) => templateChannel(t) === "email")
+    const template =
+      emailTemplates.find((t) => t.id === "tpl_referral" || t.id === "tpl_default_referral_request") ??
+      emailTemplates.find((t) => t.category === "referral")
     const values = {
       name: contact?.name.split(" ")[0],
       company: companyById.get(referral.companyId)?.name,
@@ -88,6 +95,9 @@ export function ReferralsView() {
       <DropdownMenuContent align="end" className="w-48">
         <DropdownMenuItem onClick={() => requestEmail(referral)}>
           <SendIcon /> Email request
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setMessaging(referral)}>
+          <LinkedInGlyph className="size-4" /> LinkedIn message
         </DropdownMenuItem>
         {referral.jobUrl && (
           <DropdownMenuItem render={<a href={referral.jobUrl} target="_blank" rel="noreferrer" />}>
@@ -238,6 +248,19 @@ export function ReferralsView() {
 
       {creating && <ReferralFormDialog open onOpenChange={setCreating} />}
       {editing && <ReferralFormDialog key={editing.id} open referral={editing} onOpenChange={(o) => !o && setEditing(null)} />}
+      {messaging && messagingContact && (
+        <LinkedInMessageDialog
+          key={messaging.id}
+          contact={messagingContact}
+          job={{ companyId: messaging.companyId, role: messaging.role, jobId: messaging.jobId, jobUrl: messaging.jobUrl }}
+          preferCategory="referral"
+          onOpenChange={(o) => !o && setMessaging(null)}
+          onCopied={() => {
+            // Sending the message is the request.
+            if (messaging.status === "not_contacted") void setStatus.mutate(messaging.id, "request_sent")
+          }}
+        />
+      )}
       <ConfirmDialog
         open={!!deleting}
         onOpenChange={(o) => !o && setDeleting(null)}

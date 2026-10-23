@@ -4,7 +4,7 @@ import { daysFromNow } from "@/lib/utils/dates"
 const experience: ResumeExperience[] = [
   {
     id: "exp_1",
-    company: "Apeiron Labs",
+    company: "Northwind Labs",
     title: "Frontend Engineer",
     period: "2023 — Present",
     highlights: [
@@ -15,7 +15,7 @@ const experience: ResumeExperience[] = [
   },
   {
     id: "exp_2",
-    company: "Brightline Studio",
+    company: "Cedar & Pine Studio",
     title: "Software Engineer",
     period: "2021 — 2023",
     highlights: [
@@ -26,7 +26,7 @@ const experience: ResumeExperience[] = [
 ]
 
 const education: ResumeEducation[] = [
-  { id: "edu_1", school: "Anna University", degree: "B.E. Computer Science", period: "2017 — 2021" },
+  { id: "edu_1", school: "State Technical University", degree: "B.E. Computer Science", period: "2017 — 2021" },
 ]
 
 export function seedResumes(): Resume[] {

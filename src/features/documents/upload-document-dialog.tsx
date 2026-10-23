@@ -131,7 +131,7 @@ export function UploadDocumentDialog({
               <button
                 type="button"
                 className="text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground"
-                onClick={() => setFile({ name: "Ganeshguru_Frontend_Resume_v4.pdf", sizeBytes: 188_200 })}
+                onClick={() => setFile({ name: "Alex_Morgan_Frontend_Resume_v4.pdf", sizeBytes: 188_200 })}
               >
                 Use a sample file instead
               </button>

@@ -13,7 +13,6 @@ import {
   LockIcon,
   MailIcon,
   PuzzleIcon,
-  SearchIcon,
   ShieldCheckIcon,
   SparklesIcon,
   type LucideIcon,
@@ -21,6 +20,8 @@ import {
 import { cn } from "cn"
 
 import { buttonVariants } from "@/components/ui/button"
+import { Reveal } from "@/features/marketing/reveal"
+import { AppShowcase, GalleryWindow } from "@/features/marketing/showcase"
 
 export const metadata: Metadata = {
   title: { absolute: "knot — your job search, untangled" },
@@ -33,8 +34,10 @@ export default function LandingPage() {
     <>
       <Hero />
       <Features />
+      <Screenshots />
       <Extension />
       <Security />
+      <PricingTeaser />
       <ClosingCta />
     </>
   )
@@ -54,11 +57,11 @@ function DotGrid({ className }: { className?: string }) {
 
 function SectionHeading({ eyebrow, title, text }: { eyebrow: string; title: string; text: string }) {
   return (
-    <div className="mx-auto max-w-2xl text-center">
+    <Reveal className="mx-auto max-w-2xl text-center">
       <p className="text-sm font-medium text-brand">{eyebrow}</p>
       <h2 className="mt-3 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">{title}</h2>
       <p className="mt-4 text-base text-pretty text-muted-foreground">{text}</p>
-    </div>
+    </Reveal>
   )
 }
 
@@ -76,23 +79,23 @@ function Hero() {
         <div className="mx-auto max-w-3xl text-center">
           <Link
             href="#extension"
-            className="inline-flex items-center gap-2 rounded-full border bg-background/80 py-1 pr-3 pl-1 text-xs text-muted-foreground backdrop-blur transition-colors hover:text-foreground"
+            className="hero-in inline-flex items-center gap-2 rounded-full border bg-background/80 py-1 pr-3 pl-1 text-xs text-muted-foreground backdrop-blur transition-colors hover:text-foreground"
           >
             <span className="rounded-full bg-brand px-2 py-0.5 font-medium text-brand-foreground">New</span>
             Save jobs from any site with Alt+K
             <ArrowRightIcon className="size-3" />
           </Link>
-          <h1 className="mt-6 text-4xl font-semibold tracking-tighter text-balance sm:text-6xl">
+          <h1 className="hero-in mt-6 text-4xl font-semibold tracking-tighter text-balance sm:text-6xl" style={{ "--reveal-delay": "90ms" } as React.CSSProperties}>
             Untangle your job search.
             <span className="block bg-gradient-to-r from-foreground via-brand to-foreground bg-clip-text text-transparent">
               Tie everything together.
             </span>
           </h1>
-          <p className="mx-auto mt-6 max-w-xl text-lg text-pretty text-muted-foreground">
+          <p className="hero-in mx-auto mt-6 max-w-xl text-lg text-pretty text-muted-foreground" style={{ "--reveal-delay": "180ms" } as React.CSSProperties}>
             knot is a personal operating system for applications, referrals, interviews, resumes, documents and
             notes — one calm place instead of twelve tabs and a spreadsheet.
           </p>
-          <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <div className="hero-in mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row" style={{ "--reveal-delay": "270ms" } as React.CSSProperties}>
             <Link href="/dashboard" className={buttonVariants({ size: "lg", className: "h-10 gap-2 px-5" })}>
               Open your workspace <ArrowRightIcon />
             </Link>
@@ -101,111 +104,11 @@ function Hero() {
             </Link>
           </div>
         </div>
-        <ProductPreview />
+        <div className="hero-in" style={{ "--reveal-delay": "380ms" } as React.CSSProperties}>
+          <AppShowcase />
+        </div>
       </div>
     </section>
-  )
-}
-
-const BOARD = [
-  {
-    title: "Wishlist",
-    color: "var(--chart-5)",
-    cards: [
-      { role: "Product Engineer", company: "Linear", meta: "Remote" },
-      { role: "Frontend Developer", company: "Razorpay", meta: "Bengaluru" },
-    ],
-  },
-  {
-    title: "Applied",
-    color: "var(--chart-1)",
-    cards: [
-      { role: "Software Engineer II", company: "Atlassian", meta: "Referral" },
-      { role: "Full-stack Engineer", company: "Postman", meta: "3d ago" },
-      { role: "UI Engineer", company: "Zerodha", meta: "1w ago" },
-    ],
-  },
-  {
-    title: "Interview",
-    color: "var(--chart-2)",
-    cards: [{ role: "Senior Frontend", company: "Stripe", meta: "Thu, 4:30 PM" }],
-  },
-  {
-    title: "Offer",
-    color: "var(--chart-3)",
-    cards: [{ role: "Software Engineer", company: "Vercel", meta: "Decide by Fri" }],
-  },
-]
-
-function ProductPreview() {
-  return (
-    <div className="relative mx-auto mt-16 max-w-5xl">
-      <div
-        aria-hidden
-        className="absolute -inset-x-6 -bottom-6 top-10 rounded-[2rem] bg-gradient-to-b from-brand/20 to-transparent blur-2xl"
-      />
-      <div className="relative overflow-hidden rounded-2xl border bg-card shadow-2xl shadow-foreground/5 ring-1 ring-foreground/5">
-        <div className="flex h-10 items-center gap-2 border-b bg-sidebar px-4">
-          <span className="size-2.5 rounded-full bg-foreground/15" />
-          <span className="size-2.5 rounded-full bg-foreground/15" />
-          <span className="size-2.5 rounded-full bg-foreground/15" />
-          <div className="mx-auto flex h-6 w-full max-w-xs items-center gap-2 rounded-md border bg-background px-2 text-[11px] text-muted-foreground">
-            <SearchIcon className="size-3" /> Search everything
-            <kbd className="ml-auto rounded border px-1 font-mono text-[10px]">⌘K</kbd>
-          </div>
-        </div>
-        <div className="flex">
-          <aside className="hidden w-44 shrink-0 border-r bg-sidebar p-3 md:block">
-            {[
-              { icon: KanbanIcon, label: "Applications", active: true },
-              { icon: HandshakeIcon, label: "Referrals" },
-              { icon: CalendarClockIcon, label: "Interviews" },
-              { icon: FileCodeIcon, label: "Resumes" },
-              { icon: FolderOpenIcon, label: "Documents" },
-              { icon: MailIcon, label: "Email" },
-            ].map((item) => (
-              <div
-                key={item.label}
-                className={cn(
-                  "flex items-center gap-2 rounded-md px-2 py-1.5 text-xs text-muted-foreground",
-                  item.active && "bg-sidebar-accent font-medium text-foreground",
-                )}
-              >
-                <item.icon className="size-3.5" /> {item.label}
-              </div>
-            ))}
-          </aside>
-          <div className="min-w-0 flex-1 p-4">
-            <div className="mb-4 flex items-baseline justify-between">
-              <p className="text-sm font-semibold">Applications</p>
-              <p className="text-[11px] text-muted-foreground">7 active · 1 offer</p>
-            </div>
-            <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-              {BOARD.map((column, index) => (
-                <div key={column.title} className={cn("rounded-xl bg-muted/50 p-2", index > 1 && "hidden lg:block")}>
-                  <div className="mb-2 flex items-center gap-1.5 px-1 text-[11px] font-medium">
-                    <span className="size-1.5 rounded-full" style={{ background: column.color }} />
-                    {column.title}
-                    <span className="ml-auto text-muted-foreground">{column.cards.length}</span>
-                  </div>
-                  <div className="space-y-2">
-                    {column.cards.map((card) => (
-                      <div key={card.role} className="rounded-lg border bg-card p-2.5 shadow-xs">
-                        <p className="truncate text-xs font-medium">{card.role}</p>
-                        <p className="mt-0.5 truncate text-[11px] text-muted-foreground">{card.company}</p>
-                        <p className="mt-2 inline-flex rounded-md bg-muted px-1.5 py-0.5 text-[10px] text-muted-foreground">
-                          {card.meta}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   )
 }
 
@@ -273,9 +176,10 @@ function Features() {
           text="The pieces that usually live in spreadsheets, inboxes and folders — connected, searchable and always in sync."
         />
         <div className="mt-14 grid grid-cols-1 gap-4 md:grid-cols-3">
-          {FEATURES.map((feature) => (
-            <div
+          {FEATURES.map((feature, index) => (
+            <Reveal
               key={feature.title}
+              delay={(index % 3) * 90}
               className={cn(
                 "group relative overflow-hidden rounded-2xl border bg-card p-6 transition-colors hover:border-foreground/15",
                 feature.className,
@@ -290,7 +194,7 @@ function Features() {
               </span>
               <h3 className="relative mt-5 text-base font-semibold tracking-tight">{feature.title}</h3>
               <p className="relative mt-2 text-sm leading-relaxed text-muted-foreground">{feature.text}</p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -313,7 +217,7 @@ function Extension() {
     <section id="extension" className="relative scroll-mt-16 overflow-hidden border-y bg-sidebar py-24">
       <DotGrid className="opacity-60 [mask-image:linear-gradient(to_bottom,transparent,black_30%,black_70%,transparent)]" />
       <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 px-4 sm:px-6 lg:grid-cols-2">
-        <div>
+        <Reveal>
           <p className="inline-flex items-center gap-2 text-sm font-medium text-brand">
             <PuzzleIcon className="size-4" /> Browser extension
           </p>
@@ -339,9 +243,9 @@ function Extension() {
               </li>
             ))}
           </ul>
-        </div>
+        </Reveal>
 
-        <div className="relative flex flex-col items-center gap-8">
+        <Reveal delay={150} className="relative flex flex-col items-center gap-8">
           <div className="flex items-center gap-3">
             <Keycap>Alt</Keycap>
             <span className="text-xl text-muted-foreground">+</span>
@@ -357,7 +261,7 @@ function Extension() {
             <div className="mt-4 space-y-2.5">
               {[
                 ["Role", "Senior Frontend Engineer"],
-                ["Company", "Stripe"],
+                ["Company", "Ledgerline"],
                 ["Location", "Bengaluru · Hybrid"],
                 ["Salary", "Not found on page"],
               ].map(([label, value]) => (
@@ -378,7 +282,7 @@ function Extension() {
               Save to knot
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   )
@@ -419,12 +323,12 @@ function Security() {
           text="Resumes, offer letters and contacts are personal. knot is built so they stay that way."
         />
         <div className="mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border bg-border sm:grid-cols-2 lg:grid-cols-4">
-          {SECURITY.map((item) => (
-            <div key={item.title} className="bg-card p-6">
+          {SECURITY.map((item, index) => (
+            <Reveal key={item.title} delay={index * 80} className="bg-card p-6">
               <item.icon className="size-5 text-brand" />
               <h3 className="mt-4 text-sm font-semibold">{item.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.text}</p>
-            </div>
+            </Reveal>
           ))}
         </div>
         <p className="mt-6 text-center text-sm text-muted-foreground">
@@ -443,12 +347,62 @@ function Security() {
   )
 }
 
+/* ----------------------------------------------------------- screenshots */
+
+// App screens drawn with fictional people and companies.
+const SHOTS = [
+  { screen: "contacts", caption: "Everyone in your search, with follow-up dates" },
+  { screen: "templates", caption: "Email and LinkedIn templates that fill themselves in" },
+  { screen: "resume", caption: "LaTeX resumes, compiled to PDF in the browser" },
+  { screen: "integrations", caption: "Drive, Calendar, GitHub, LinkedIn and S3" },
+] as const
+
+function Screenshots() {
+  return (
+    <section id="tour" className="scroll-mt-16 border-t bg-sidebar/50 py-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <SectionHeading
+          eyebrow="A closer look"
+          title="Calm by design"
+          text="A focused workspace that stays out of your way: everything one click from the sidebar, keyboard shortcuts everywhere, and light and dark modes that follow your system."
+        />
+        <div className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-2">
+          {SHOTS.map((shot, index) => (
+            <figure key={shot.screen}>
+              <GalleryWindow screen={shot.screen} delay={(index % 2) * 120} />
+              <figcaption className="mt-3 text-center text-sm text-muted-foreground">{shot.caption}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* --------------------------------------------------------------- pricing */
+
+function PricingTeaser() {
+  return (
+    <section className="px-4 pb-16 sm:px-6">
+      <Reveal className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-6 rounded-2xl border bg-card p-8 sm:flex-row sm:items-center">
+        <div>
+          <h2 className="text-2xl font-semibold tracking-tight">Start free. Upgrade when your search picks up.</h2>
+          <p className="mt-2 text-sm text-muted-foreground">The Free plan covers a whole job search, extension included.</p>
+        </div>
+        <Link href="/pricing" className={buttonVariants({ variant: "outline", size: "lg", className: "h-10 shrink-0 gap-2 px-5" })}>
+          See pricing <ArrowRightIcon />
+        </Link>
+      </Reveal>
+    </section>
+  )
+}
+
 /* ------------------------------------------------------------------- cta */
 
 function ClosingCta() {
   return (
     <section className="px-4 pb-24 sm:px-6">
-      <div className="relative mx-auto max-w-6xl overflow-hidden rounded-3xl bg-foreground px-6 py-16 text-center text-background sm:px-12">
+      <Reveal className="relative mx-auto max-w-6xl overflow-hidden rounded-3xl bg-foreground px-6 py-16 text-center text-background sm:px-12">
         <div
           aria-hidden
           className="absolute inset-0 opacity-20 [background-image:radial-gradient(currentColor_1px,transparent_1px)] [background-size:22px_22px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]"
@@ -471,7 +425,7 @@ function ClosingCta() {
             Open knot <ArrowRightIcon />
           </Link>
         </div>
-      </div>
+      </Reveal>
     </section>
   )
 }

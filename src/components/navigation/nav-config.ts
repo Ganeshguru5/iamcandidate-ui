@@ -1,6 +1,7 @@
 import {
   ActivityIcon,
   AwardIcon,
+  BadgeDollarSignIcon,
   BookmarkIcon,
   BriefcaseBusinessIcon,
   Building2Icon,
@@ -26,8 +27,8 @@ export interface NavItem {
   title: string
   href: string
   icon: LucideIcon
-  /** Only shown to admins (API mode). */
-  adminOnly?: boolean
+  /** Only shown to admins: `true` needs API mode (user management); "any" also works on demo data. */
+  adminOnly?: boolean | "any"
 }
 
 export interface NavGroup {
@@ -82,6 +83,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { title: "Integrations", href: "/integrations", icon: PlugIcon },
       { title: "Activity", href: "/activity", icon: ActivityIcon },
       { title: "Users", href: "/admin/users", icon: UserCogIcon, adminOnly: true },
+      { title: "Pricing", href: "/admin/pricing", icon: BadgeDollarSignIcon, adminOnly: "any" },
       { title: "Settings", href: "/settings", icon: SettingsIcon },
     ],
   },
@@ -90,8 +92,13 @@ export const NAV_GROUPS: NavGroup[] = [
 export const NAV_ITEMS: NavItem[] = NAV_GROUPS.flatMap((group) => group.items)
 
 /** Hides admin-only entries from everyone else. */
-export function visibleNavItems(items: NavItem[], isAdmin: boolean): NavItem[] {
-  return isAdmin ? items : items.filter((item) => !item.adminOnly)
+export function visibleNavItems(
+  items: NavItem[],
+  admin: { api: boolean; any: boolean },
+): NavItem[] {
+  return items.filter((item) =>
+    item.adminOnly === "any" ? admin.any : item.adminOnly ? admin.api : true,
+  )
 }
 
 export function findNavItem(pathname: string): NavItem | undefined {

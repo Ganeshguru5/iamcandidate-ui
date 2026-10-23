@@ -8,6 +8,8 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
+  --color-window: var(--window);
+  --color-glass: var(--glass);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-geist-sans);
   --color-brand: var(--brand);
@@ -55,86 +57,93 @@
 }
 
 :root {
-  --background: oklch(0.992 0.001 260);
-  --foreground: oklch(0.2 0.012 265);
+  /* knot palette: warm paper neutrals, blue-black ink, deep teal accent. */
+  --background: oklch(0.99 0.004 85);
+  --foreground: oklch(0.22 0.02 250);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.2 0.012 265);
+  --card-foreground: oklch(0.22 0.02 250);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.2 0.012 265);
-  --primary: oklch(0.24 0.014 265);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.965 0.003 265);
-  --secondary-foreground: oklch(0.24 0.014 265);
-  --muted: oklch(0.965 0.003 265);
-  --muted-foreground: oklch(0.53 0.014 265);
-  --accent: oklch(0.955 0.004 265);
-  --accent-foreground: oklch(0.22 0.014 265);
+  --popover-foreground: oklch(0.22 0.02 250);
+  --primary: oklch(0.52 0.1 188);
+  --primary-foreground: oklch(0.99 0.004 85);
+  --secondary: oklch(0.96 0.007 85);
+  --secondary-foreground: oklch(0.26 0.02 250);
+  --muted: oklch(0.962 0.006 85);
+  --muted-foreground: oklch(0.52 0.018 250);
+  --accent: oklch(0.95 0.012 185);
+  --accent-foreground: oklch(0.24 0.02 250);
   --destructive: oklch(0.577 0.215 27);
-  --border: oklch(0.915 0.005 265);
-  --input: oklch(0.905 0.006 265);
-  --ring: oklch(0.56 0.15 255);
-  --brand: oklch(0.55 0.17 255);
-  --brand-foreground: oklch(0.985 0 0);
-  --brand-soft: oklch(0.95 0.03 255);
-  --success: oklch(0.58 0.13 155);
-  --warning: oklch(0.7 0.14 70);
-  --info: oklch(0.58 0.13 240);
-  --chart-1: #1570d1;
-  --chart-2: #da9e3f;
-  --chart-3: #18a7a1;
-  --chart-4: #dd555d;
-  --chart-5: #8160b5;
-  --chart-grid: oklch(0.93 0.004 265);
-  --radius: 0.6rem;
-  --sidebar: oklch(0.982 0.002 265);
-  --sidebar-foreground: oklch(0.3 0.012 265);
-  --sidebar-primary: oklch(0.24 0.014 265);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.945 0.005 265);
-  --sidebar-accent-foreground: oklch(0.2 0.012 265);
-  --sidebar-border: oklch(0.92 0.005 265);
-  --sidebar-ring: oklch(0.56 0.15 255);
+  --border: oklch(0.91 0.008 85);
+  --input: oklch(0.89 0.01 85);
+  --ring: oklch(0.6 0.11 186);
+  --brand: oklch(0.56 0.105 187);
+  --brand-foreground: oklch(0.99 0.004 85);
+  --brand-soft: oklch(0.95 0.03 185);
+  /* The canvas behind the floating sidebar, and its translucent fill. */
+  --window: oklch(0.965 0.008 85);
+  --glass: oklch(0.985 0.006 85 / 0.78);
+  --success: oklch(0.6 0.13 150);
+  --warning: oklch(0.72 0.14 65);
+  --info: oklch(0.58 0.12 235);
+  --chart-1: #0f8a80;
+  --chart-2: #e09a3e;
+  --chart-3: #3f7fd6;
+  --chart-4: #df5a5f;
+  --chart-5: #8a63c4;
+  --chart-grid: oklch(0.93 0.006 85);
+  --radius: 0.65rem;
+  --sidebar: oklch(0.975 0.007 85);
+  --sidebar-foreground: oklch(0.3 0.02 250);
+  --sidebar-primary: oklch(0.52 0.1 188);
+  --sidebar-primary-foreground: oklch(0.99 0.004 85);
+  --sidebar-accent: oklch(0.935 0.03 185);
+  --sidebar-accent-foreground: oklch(0.3 0.07 195);
+  --sidebar-border: oklch(0.91 0.008 85);
+  --sidebar-ring: oklch(0.6 0.11 186);
 }
 
 .dark {
-  --background: oklch(0.165 0.008 265);
-  --foreground: oklch(0.95 0.004 265);
-  --card: oklch(0.195 0.009 265);
-  --card-foreground: oklch(0.95 0.004 265);
-  --popover: oklch(0.205 0.009 265);
-  --popover-foreground: oklch(0.95 0.004 265);
-  --primary: oklch(0.94 0.004 265);
-  --primary-foreground: oklch(0.2 0.012 265);
-  --secondary: oklch(0.25 0.01 265);
-  --secondary-foreground: oklch(0.95 0.004 265);
-  --muted: oklch(0.24 0.01 265);
-  --muted-foreground: oklch(0.69 0.012 265);
-  --accent: oklch(0.255 0.011 265);
-  --accent-foreground: oklch(0.96 0.004 265);
+  /* Deep slate with a bright teal accent. */
+  --background: oklch(0.17 0.012 235);
+  --foreground: oklch(0.95 0.006 220);
+  --card: oklch(0.205 0.014 235);
+  --card-foreground: oklch(0.95 0.006 220);
+  --popover: oklch(0.215 0.014 235);
+  --popover-foreground: oklch(0.95 0.006 220);
+  --primary: oklch(0.76 0.12 180);
+  --primary-foreground: oklch(0.18 0.02 220);
+  --secondary: oklch(0.25 0.014 235);
+  --secondary-foreground: oklch(0.95 0.006 220);
+  --muted: oklch(0.24 0.014 235);
+  --muted-foreground: oklch(0.7 0.014 225);
+  --accent: oklch(0.27 0.03 200);
+  --accent-foreground: oklch(0.96 0.006 220);
   --destructive: oklch(0.68 0.19 22);
   --border: oklch(1 0 0 / 9%);
   --input: oklch(1 0 0 / 13%);
-  --ring: oklch(0.66 0.14 255);
-  --brand: oklch(0.67 0.15 255);
-  --brand-foreground: oklch(0.17 0.01 265);
-  --brand-soft: oklch(0.3 0.06 255);
-  --success: oklch(0.7 0.13 155);
-  --warning: oklch(0.78 0.13 75);
-  --info: oklch(0.7 0.12 240);
-  --chart-1: #3c8ae7;
-  --chart-2: #c0851f;
-  --chart-3: #18a7a1;
-  --chart-4: #d9525a;
-  --chart-5: #8e6ac7;
+  --ring: oklch(0.72 0.12 182);
+  --brand: oklch(0.76 0.12 180);
+  --brand-foreground: oklch(0.18 0.02 220);
+  --brand-soft: oklch(0.3 0.05 190);
+  --window: oklch(0.145 0.012 235);
+  --glass: oklch(0.21 0.016 230 / 0.75);
+  --success: oklch(0.72 0.13 150);
+  --warning: oklch(0.8 0.13 72);
+  --info: oklch(0.72 0.11 235);
+  --chart-1: #2fb3a6;
+  --chart-2: #d49536;
+  --chart-3: #5b95e6;
+  --chart-4: #e0646a;
+  --chart-5: #9b78d4;
   --chart-grid: oklch(1 0 0 / 7%);
-  --sidebar: oklch(0.18 0.008 265);
-  --sidebar-foreground: oklch(0.82 0.008 265);
-  --sidebar-primary: oklch(0.94 0.004 265);
-  --sidebar-primary-foreground: oklch(0.2 0.012 265);
-  --sidebar-accent: oklch(0.25 0.01 265);
-  --sidebar-accent-foreground: oklch(0.96 0.004 265);
+  --sidebar: oklch(0.19 0.014 235);
+  --sidebar-foreground: oklch(0.84 0.01 220);
+  --sidebar-primary: oklch(0.76 0.12 180);
+  --sidebar-primary-foreground: oklch(0.18 0.02 220);
+  --sidebar-accent: oklch(0.29 0.045 195);
+  --sidebar-accent-foreground: oklch(0.9 0.08 180);
   --sidebar-border: oklch(1 0 0 / 8%);
-  --sidebar-ring: oklch(0.66 0.14 255);
+  --sidebar-ring: oklch(0.72 0.12 182);
 }
 
 @layer base {
@@ -158,5 +167,172 @@
   }
   .tabular {
     font-variant-numeric: tabular-nums;
+  }
+  /* Landing page tour: fills a tab's progress bar over one scene. */
+  @keyframes showcase-progress {
+    from {
+      width: 0%;
+    }
+    to {
+      width: 100%;
+    }
+  }
+  /* Translucent, blurred surface for the floating sidebar. */
+  .glass {
+    background-color: var(--glass);
+    backdrop-filter: blur(24px) saturate(1.6);
+    -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Motion                                                              */
+/* ------------------------------------------------------------------ */
+
+:root {
+  --motion-exit: 140ms;
+  --motion-enter: 220ms;
+  --motion-move: 420ms;
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Page transitions (React <ViewTransition> + the View Transitions API).
+   Old pages leave quickly; new ones arrive a beat later and settle gently. */
+::view-transition {
+  /* Clicks during a transition reach the live page. */
+  pointer-events: none;
+}
+
+/* Default: a soft fade-and-rise. */
+::view-transition-old(.page-fade) {
+  animation: var(--motion-exit) ease-in both vt-fade reverse;
+}
+::view-transition-new(.page-fade) {
+  --vt-offset: 12px;
+  animation:
+    var(--motion-enter) ease-out var(--motion-exit) both vt-fade,
+    var(--motion-move) var(--ease-out-soft) both vt-rise;
+}
+
+/* Sidebar order: moving down the list rises in from below, moving up drops in from above. */
+::view-transition-old(.nav-down) {
+  --vt-offset: -24px;
+  animation:
+    var(--motion-exit) ease-in both vt-fade reverse,
+    var(--motion-move) ease-in-out both vt-rise reverse;
+}
+::view-transition-new(.nav-down) {
+  --vt-offset: 24px;
+  animation:
+    var(--motion-enter) ease-out var(--motion-exit) both vt-fade,
+    var(--motion-move) var(--ease-out-soft) both vt-rise;
+}
+::view-transition-old(.nav-up) {
+  --vt-offset: 24px;
+  animation:
+    var(--motion-exit) ease-in both vt-fade reverse,
+    var(--motion-move) ease-in-out both vt-rise reverse;
+}
+::view-transition-new(.nav-up) {
+  --vt-offset: -24px;
+  animation:
+    var(--motion-enter) ease-out var(--motion-exit) both vt-fade,
+    var(--motion-move) var(--ease-out-soft) both vt-rise;
+}
+
+/* The sidebar's current-page pill glides to the new item. */
+::view-transition-group(.pill-morph) {
+  animation-duration: 360ms;
+  animation-timing-function: var(--ease-out-soft);
+}
+
+/* Toolbar title: a quick vertical swap. */
+::view-transition-old(.title-swap) {
+  --vt-offset: -6px;
+  animation:
+    120ms ease-in both vt-fade reverse,
+    120ms ease-in both vt-rise reverse;
+}
+::view-transition-new(.title-swap) {
+  --vt-offset: 6px;
+  animation:
+    200ms ease-out 80ms both vt-fade,
+    260ms var(--ease-out-soft) both vt-rise;
+}
+
+@keyframes vt-fade {
+  from {
+    opacity: 0;
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+@keyframes vt-rise {
+  from {
+    translate: 0 var(--vt-offset, 12px);
+  }
+  to {
+    translate: 0 0;
+  }
+}
+
+/* Scroll reveals and staggered entrances (see <Reveal>). */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+.reveal {
+  opacity: 0;
+}
+.reveal[data-shown="true"] {
+  animation: rise-in 700ms var(--ease-out-soft) both;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+/* Hero entrance on first paint. */
+.hero-in {
+  animation: rise-in 800ms var(--ease-out-soft) both;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+/* Price change on the monthly/yearly toggle. */
+@keyframes price-swap {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.price-swap {
+  display: inline-block;
+  animation: price-swap 320ms var(--ease-out-soft) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+  .reveal,
+  .reveal[data-shown="true"],
+  .hero-in,
+  .price-swap {
+    opacity: 1;
+    animation: none;
   }
 }

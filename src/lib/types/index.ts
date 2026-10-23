@@ -25,6 +25,7 @@ export interface Session {
   userId: ID
   email: string
   token: string
+  /** When `token` was issued (sign-in or the last refresh). */
   createdAt: ISODate
   /** Present in API mode; admins can manage users. */
   role?: UserRole
@@ -337,9 +338,15 @@ export interface ComposeEmailInput {
 
 export type TemplateCategory = "referral" | "outreach" | "follow_up" | "interview" | "other"
 
+/** Email templates are sent from knot; LinkedIn ones are copied into LinkedIn. */
+export type TemplateChannel = "email" | "linkedin"
+
 export interface EmailTemplate extends Entity {
   name: string
   category: TemplateCategory
+  /** Missing on templates from before channels existed: treat as "email". */
+  channel?: TemplateChannel
+  /** Empty for LinkedIn templates. */
   subject: string
   body: string
   usageCount: number
@@ -349,7 +356,7 @@ export interface EmailTemplate extends Entity {
 
 export type EmailTemplateInput = Pick<
   EmailTemplate,
-  "name" | "category" | "subject" | "body"
+  "name" | "category" | "channel" | "subject" | "body"
 >
 
 export type SmtpEncryption = "tls" | "ssl" | "none"
@@ -517,6 +524,8 @@ export type ActivityType =
   | "project_updated"
   | "integration_connected"
   | "integration_disconnected"
+  | "integration_synced"
+  | "data_imported"
   | "drive_synced"
   | "settings_updated"
 
@@ -604,4 +613,173 @@ export interface Integration extends Entity {
   status: IntegrationStatus
   account?: string
   lastSyncedAt?: ISODate
+}
+
+/* ------------------------------------------------------------------ */
+/* Server-side integrations (API mode) — mirror knot-server/src/models */
+/* ------------------------------------------------------------------ */
+
+export interface GoogleDriveStatus {
+  connected: boolean
+  /** Server has Google OAuth credentials configured. */
+  available: boolean
+  account?: string
+  connectedAt?: ISODate
+}
+
+export interface CalendarSyncSummary {
+  synced: number
+  removed: number
+  interviews: number
+  followUps: number
+  tasks: number
+}
+
+export interface GoogleCalendarStatus extends GoogleDriveStatus {
+  lastSyncedAt?: ISODate
+  lastSync?: CalendarSyncSummary
+}
+
+export interface GitHubStatus {
+  connected: boolean
+  account?: string
+  name?: string
+  avatarUrl?: string
+  connectedAt?: ISODate
+}
+
+export interface GitHubRepo {
+  /** "owner/name" */
+  fullName: string
+  name: string
+  description: string
+  url: string
+  homepage?: string
+  private: boolean
+  fork: boolean
+  archived: boolean
+  language?: string
+  topics: string[]
+  stars: number
+  defaultBranch: string
+  pushedAt?: ISODate
+  /** Knot project linked to this repository. */
+  projectId?: ID
+}
+
+export interface GitHubCommit {
+  sha: string
+  message: string
+  author: string
+  date: ISODate
+  url: string
+}
+
+export interface GitHubPullRequest {
+  number: number
+  title: string
+  state: "open" | "closed" | "merged"
+  author: string
+  updatedAt: ISODate
+  url: string
+}
+
+export interface GitHubActivity {
+  repo: GitHubRepo
+  commits: GitHubCommit[]
+  pullRequests: GitHubPullRequest[]
+}
+
+export type LinkedInExportKind = "connections" | "saved_jobs" | "job_applications"
+
+export interface LinkedInImportResult {
+  kind: LinkedInExportKind
+  rows: number
+  created: number
+  skipped: number
+  invalid: number
+  companiesCreated: number
+  sample: string[]
+  dryRun: boolean
+}
+
+export interface LinkedInStatus {
+  lastImportAt?: ISODate
+  imports: Partial<Record<LinkedInExportKind, { at: ISODate; created: number }>>
+}
+
+export interface BackupSummary {
+  at: ISODate
+  dataKey: string
+  documents: number
+  bytes: number
+  failed: number
+}
+
+export interface AwsBackupStatus {
+  connected: boolean
+  bucket?: string
+  region?: string
+  prefix?: string
+  /** Masked, e.g. "…3456". */
+  accessKeyId?: string
+  connectedAt?: ISODate
+  lastBackup?: BackupSummary
+}
+
+export interface AwsBackupInput {
+  bucket: string
+  region: string
+  prefix: string
+  accessKeyId: string
+  /** Empty keeps the saved secret. */
+  secretAccessKey: string
+}
+
+export interface BackupProgress {
+  done: boolean
+  cursor?: string
+  copied: number
+  total: number
+  bytes: number
+  failed: number
+  dataKey: string
+  summary?: BackupSummary
+}
+
+export interface IntegrationsOverview {
+  googleDrive: GoogleDriveStatus
+  googleCalendar: GoogleCalendarStatus
+  github: GitHubStatus
+  linkedin: LinkedInStatus
+  aws: AwsBackupStatus
+}
+
+/* ------------------------------------------------------------------ */
+/* Pricing — mirrors knot-server/src/models                            */
+/* ------------------------------------------------------------------ */
+
+export type PricingCurrency = "INR" | "USD" | "EUR" | "GBP"
+
+export interface PricingPlan {
+  id: ID
+  name: string
+  tagline: string
+  /** Per month, billed monthly; 0 = free. */
+  monthlyPrice: number
+  /** Per month, billed yearly. */
+  yearlyPrice: number
+  features: string[]
+  ctaLabel: string
+  /** A path like /login, a URL, or mailto:. */
+  ctaHref: string
+  highlighted: boolean
+  visible: boolean
+}
+
+export interface PricingConfig {
+  currency: PricingCurrency
+  note: string
+  plans: PricingPlan[]
+  updatedAt?: ISODate
 }
