@@ -783,3 +783,96 @@ export interface PricingConfig {
   plans: PricingPlan[]
   updatedAt?: ISODate
 }
+
+/* ------------------------------------------------------------------ */
+/* Portfolio — mirrors knot-server/src/schemas/portfolio.ts            */
+/* ------------------------------------------------------------------ */
+
+/** A label/value row: the hero readout and agent-skill spec sheets. */
+export interface PortfolioPair {
+  key: string
+  value: string
+}
+
+export interface PortfolioProfile {
+  name: string
+  role: string
+  /** Status line above the name, e.g. "Available for full-time roles". */
+  availability: string
+  intro: string
+  aiHeading: string
+  aiBlurb: string
+  aiSkills: string[]
+  /** "What I actually do" paragraphs. */
+  about: string[]
+  readout: PortfolioPair[]
+  email: string
+  phone: string
+  location: string
+  resumeUrl: string
+  photo: string
+  socials: Array<{ label: string; href: string }>
+  education: { degree: string; school: string; years: string; grade: string }
+  contactTitle: string
+  contactBody: string
+}
+
+export interface PortfolioExperience {
+  title: string
+  company: string
+  location: string
+  /** Date range, e.g. "Aug 2025 — Present". */
+  exp: string
+  description: string
+  image: string
+  skills: string[]
+  current?: boolean
+}
+
+export type PortfolioCardSpan = "md:col-span-2" | "md:col-span-4" | "md:col-span-6"
+
+export interface PortfolioProject {
+  slug: string
+  title: string
+  description: string
+  detail: string[]
+  highlights: string[]
+  image: string
+  href: string
+  /** Link label, e.g. "GitHub" or "Google Play". */
+  meta: string
+  tags: string[]
+  span: PortfolioCardSpan
+  feature?: boolean
+}
+
+export interface PortfolioAgentSkill {
+  name: string
+  tagline: string
+  description: string
+  repo: string
+  install: string
+  version: string
+  license: string
+  spec: PortfolioPair[]
+  tags: string[]
+}
+
+export interface PortfolioTestimonial {
+  quote: string
+  name: string
+  designation: string
+  src: string
+  linkedin: string
+}
+
+/** Everything the portfolio site shows; one DynamoDB item. */
+export interface PortfolioContent {
+  profile: PortfolioProfile
+  experience: PortfolioExperience[]
+  projects: PortfolioProject[]
+  agentSkills: PortfolioAgentSkill[]
+  toolkit: Array<{ group: string; items: string[] }>
+  testimonials: PortfolioTestimonial[]
+  updatedAt?: ISODate
+}

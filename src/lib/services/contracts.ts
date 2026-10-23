@@ -5,6 +5,7 @@
  * interface and be swapped in `./index.ts` without touching any UI code.
  */
 import type {
+  PortfolioContent,
   PricingConfig,
   Activity,
   AppNotification,
@@ -207,6 +208,15 @@ export interface PricingService {
   save(config: PricingConfig): Promise<PricingConfig>
   /** Back to the built-in plans. */
   reset(): Promise<PricingConfig>
+}
+
+/** Ganeshguru's portfolio site content; only the owner's account can save. */
+export interface PortfolioService {
+  /** Null until it has been saved once (the site then shows its built-in content). */
+  get(): Promise<PortfolioContent | null>
+  save(content: PortfolioContent): Promise<PortfolioContent>
+  /** Uploads an image to the public portfolio bucket and returns its URL. */
+  uploadImage(file: File, onProgress?: (percent: number) => void): Promise<string>
 }
 
 export interface IntegrationService {

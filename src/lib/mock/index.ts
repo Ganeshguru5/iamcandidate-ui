@@ -13,6 +13,7 @@ import type {
   Interview,
   Note,
   NotificationPreferences,
+  PortfolioContent,
   PricingConfig,
   Project,
   Referral,
@@ -65,6 +66,8 @@ export interface MockDatabase {
   profile: UserProfile
   notificationPreferences: NotificationPreferences
   pricing: PricingConfig
+  /** Null until saved once, like the API. */
+  portfolio: PortfolioContent | null
 }
 
 /** Builds a fresh copy of all seed data with dates relative to "now". */
@@ -92,5 +95,6 @@ export function createSeedDatabase(): MockDatabase {
     profile: { ...mockUser },
     notificationPreferences: { ...mockNotificationPreferences },
     pricing: seedPricing(),
+    portfolio: null,
   }
 }
