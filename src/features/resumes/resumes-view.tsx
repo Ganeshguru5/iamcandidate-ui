@@ -10,6 +10,7 @@ import {
   DownloadIcon,
   EyeIcon,
   FileTextIcon,
+  GlobeIcon,
   Loader2Icon,
   MoreHorizontalIcon,
   PencilIcon,
@@ -34,13 +35,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useIsPortfolioOwner } from "@/features/portfolio/owner"
 import { documentService } from "@/lib/services"
-import { useApplications, useProfile, useResumes } from "@/lib/store/queries"
+import { useApplications, usePortfolio, useProfile, useResumes } from "@/lib/store/queries"
 import type { Resume } from "@/lib/types"
 import { delay } from "@/lib/utils/delay"
 import { formatDate, timeAgo } from "@/lib/utils/dates"
 
-import { useCreateResume, useDeleteResume, useDuplicateResume, useSetDefaultResume } from "./hooks"
+import {
+  useCreateResume,
+  useDeleteResume,
+  useDuplicateResume,
+  useSetDefaultResume,
+  useSyncResumeToPortfolio,
+} from "./hooks"
 import { starterLatexResume } from "./latex-template"
 import { downloadResume, ResumePaper } from "./resume-paper"
 
@@ -55,12 +63,29 @@ export function ResumesView() {
   const setDefault = useSetDefaultResume()
   const remove = useDeleteResume()
   const create = useCreateResume()
+  const isOwner = useIsPortfolioOwner()
+  const { data: portfolio } = usePortfolio()
+  const syncToPortfolio = useSyncResumeToPortfolio()
 
   const [previewing, setPreviewing] = useState<Resume | null>(null)
   const [deleting, setDeleting] = useState<Resume | null>(null)
   const [downloading, setDownloading] = useState<string | null>(null)
 
   const usage = (id: string) => applications.filter((a) => a.resumeId === id).length
+  const onPortfolio = (resume: Resume) => portfolio?.resume?.resumeId === resume.id
+
+  // The portfolio serves a PDF, so only resumes with one saved to Documents can go there.
+  const sync = (resume: Resume) => {
+    if (!resume.documentId) {
+      toast.info("No saved PDF yet", {
+        description: isLatex(resume)
+          ? "Open the resume and use “Save PDF to Documents”, then sync again."
+          : "Only resumes with a saved PDF can go on the portfolio.",
+      })
+      return
+    }
+    void syncToPortfolio.mutate(resume.id)
+  }
 
   const download = async (resume: Resume) => {
     if (isLatex(resume)) {
@@ -198,6 +223,11 @@ export function ResumesView() {
                         </ToneBadge>
                       )}
                       {isLatex(resume) && <ToneBadge tone="violet">LaTeX</ToneBadge>}
+                      {onPortfolio(resume) && (
+                        <ToneBadge tone="green">
+                          <GlobeIcon className="size-3" /> Portfolio
+                        </ToneBadge>
+                      )}
                     </div>
                     <p className="text-xs text-muted-foreground">Target: {resume.targetRole}</p>
                   </div>
@@ -223,6 +253,11 @@ export function ResumesView() {
                       <DropdownMenuItem disabled={resume.isDefault} onClick={() => void setDefault.mutate(resume.id)}>
                         <StarIcon /> Set as default
                       </DropdownMenuItem>
+                      {isOwner && (
+                        <DropdownMenuItem disabled={syncToPortfolio.isPending} onClick={() => sync(resume)}>
+                          <GlobeIcon /> {onPortfolio(resume) ? "Re-sync to portfolio" : "Sync to portfolio"}
+                        </DropdownMenuItem>
+                      )}
                       <DropdownMenuSeparator />
                       <DropdownMenuItem variant="destructive" disabled={resume.isDefault} onClick={() => setDeleting(resume)}>
                         <Trash2Icon /> Delete

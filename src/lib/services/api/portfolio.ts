@@ -1,5 +1,5 @@
 import { apiClient, uploadToPresignedUrl } from "@/lib/api/client"
-import type { PortfolioContent } from "@/lib/types"
+import type { ID, PortfolioContent } from "@/lib/types"
 
 import type { PortfolioService } from "../contracts"
 
@@ -24,5 +24,9 @@ export class ApiPortfolioService implements PortfolioService {
     )
     await uploadToPresignedUrl(ticket.uploadUrl, file, ticket.headers, onProgress)
     return ticket.url
+  }
+
+  syncResume(resumeId: ID): Promise<PortfolioContent> {
+    return apiClient.post("/admin/portfolio/resume", { resumeId })
   }
 }

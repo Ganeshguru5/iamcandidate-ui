@@ -217,6 +217,8 @@ export interface PortfolioService {
   save(content: PortfolioContent): Promise<PortfolioContent>
   /** Uploads an image to the public portfolio bucket and returns its URL. */
   uploadImage(file: File, onProgress?: (percent: number) => void): Promise<string>
+  /** Publishes a resume's saved PDF as the site's "Download résumé" file. */
+  syncResume(resumeId: ID): Promise<PortfolioContent>
 }
 
 export interface IntegrationService {

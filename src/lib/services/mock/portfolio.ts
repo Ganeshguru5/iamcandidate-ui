@@ -1,8 +1,9 @@
-import type { PortfolioContent } from "@/lib/types"
+import { seedPortfolio } from "@/lib/mock/portfolio"
+import type { ID, PortfolioContent } from "@/lib/types"
 import { networkDelay } from "@/lib/utils/delay"
 
 import type { PortfolioService } from "../contracts"
-import { read, write } from "./db"
+import { collection, read, write } from "./db"
 
 export class MockPortfolioService implements PortfolioService {
   async get(): Promise<PortfolioContent | null> {
@@ -28,5 +29,21 @@ export class MockPortfolioService implements PortfolioService {
     })
     onProgress?.(100)
     return url
+  }
+
+  /** Demo PDFs have no stored file, so only the link is recorded; the URL stays as it was. */
+  async syncResume(resumeId: ID): Promise<PortfolioContent> {
+    await networkDelay()
+    const resume = collection("resumes").find(resumeId)
+    if (!resume) throw new Error("Resume not found")
+    if (!resume.documentId) throw new Error("This resume has no saved PDF yet. Open it and save a PDF to Documents first.")
+    const now = new Date().toISOString()
+    const saved: PortfolioContent = {
+      ...(read("portfolio") ?? seedPortfolio()),
+      resume: { resumeId, title: resume.title, version: resume.version, syncedAt: now },
+      updatedAt: now,
+    }
+    write("portfolio", saved)
+    return saved
   }
 }

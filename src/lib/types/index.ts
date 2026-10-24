@@ -866,6 +866,14 @@ export interface PortfolioTestimonial {
   linkedin: string
 }
 
+/** Which knot resume the site's "Download résumé" links were synced from. */
+export interface PortfolioResumeLink {
+  resumeId: ID
+  title: string
+  version: string
+  syncedAt: ISODate
+}
+
 /** Everything the portfolio site shows; one DynamoDB item. */
 export interface PortfolioContent {
   profile: PortfolioProfile
@@ -874,5 +882,7 @@ export interface PortfolioContent {
   agentSkills: PortfolioAgentSkill[]
   toolkit: Array<{ group: string; items: string[] }>
   testimonials: PortfolioTestimonial[]
+  /** Set by "Sync to portfolio" on a resume; dropped once resumeUrl is edited by hand. */
+  resume?: PortfolioResumeLink
   updatedAt?: ISODate
 }

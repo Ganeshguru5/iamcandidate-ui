@@ -27,7 +27,6 @@ import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
-import { isApiMode } from "@/lib/api/config"
 import { seedPortfolio } from "@/lib/mock/portfolio"
 import { portfolioService } from "@/lib/services"
 import { SESSION_PENDING, useSession } from "@/lib/store/session"
@@ -43,8 +42,7 @@ import type {
 } from "@/lib/types"
 import { timeAgo } from "@/lib/utils/dates"
 
-/** The only account the API lets save the portfolio. */
-const OWNER_EMAIL = "ganeshguru8681@gmail.com"
+import { OWNER_EMAIL, useIsPortfolioOwner } from "./owner"
 
 const PORTFOLIO_URL = (process.env.NEXT_PUBLIC_PORTFOLIO_URL ?? "https://meganeshguru.web.app").replace(/\/+$/, "")
 
@@ -124,10 +122,7 @@ function problems(draft: PortfolioContent): string[] {
 
 export function PortfolioAdmin() {
   const session = useSession()
-  const signedIn = session !== null && session !== SESSION_PENDING
-  // The API only accepts the owner; demo mode lets any admin try it out.
-  const canEdit =
-    signedIn && (isApiMode ? session.email.trim().toLowerCase() === OWNER_EMAIL : session.role === "admin")
+  const canEdit = useIsPortfolioOwner()
 
   const [saved, setSaved] = useState<PortfolioContent | null>(null)
   const [draft, setDraft] = useState<PortfolioContent | null>(null)
@@ -832,7 +827,7 @@ function ProfileEditor({ profile: p, onChange }: { profile: PortfolioProfile; on
         <TextField
           label="Résumé link"
           id="pf-resume"
-          hint="/file.pdf or a full URL"
+          hint="Set by “Sync to portfolio” on a resume, or enter /file.pdf or a full URL"
           value={p.resumeUrl}
           onChange={(resumeUrl) => onChange({ resumeUrl })}
         />

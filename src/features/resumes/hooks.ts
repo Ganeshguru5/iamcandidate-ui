@@ -1,9 +1,9 @@
 "use client"
 
-import { resumeService } from "@/lib/services"
+import { portfolioService, resumeService } from "@/lib/services"
 import { QK } from "@/lib/store/queries"
 import { removeItem, setQueryData, upsertItem, useMutation } from "@/lib/store/query"
-import type { ID, Resume, ResumeInput } from "@/lib/types"
+import type { ID, PortfolioContent, Resume, ResumeInput } from "@/lib/types"
 
 export function useCreateResume() {
   return useMutation((input: ResumeInput) => resumeService.createResume(input), {
@@ -34,6 +34,14 @@ export function useSetDefaultResume() {
     onSuccess: (list) => setQueryData<Resume[]>(QK.resumes, () => list),
     success: "Default resume updated",
     error: "Couldn't set default",
+  })
+}
+
+export function useSyncResumeToPortfolio() {
+  return useMutation((id: ID) => portfolioService.syncResume(id), {
+    onSuccess: (content) => setQueryData<PortfolioContent | null>(QK.portfolio, () => content),
+    success: (content) => `${content.resume?.title ?? "Resume"} is now the download on your portfolio`,
+    error: "Couldn't sync to portfolio",
   })
 }
 

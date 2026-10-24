@@ -17,6 +17,7 @@ import {
   interviewService,
   noteService,
   notificationService,
+  portfolioService,
   projectService,
   referralService,
   resumeService,
@@ -57,6 +58,7 @@ export const QK = {
   profile: "profile",
   notificationPreferences: "notificationPreferences",
   users: "users",
+  portfolio: "portfolio",
 } as const
 
 // Fetchers are module-level so their identity is stable across renders.
@@ -84,6 +86,7 @@ const fetchers = {
   profile: () => settingsService.getProfile(),
   notificationPreferences: () => settingsService.getNotificationPreferences(),
   users: () => userService.list(),
+  portfolio: () => portfolioService.get(),
 }
 
 export const useApplications = () => useQuery(QK.applications, fetchers.applications)
@@ -93,6 +96,7 @@ export const useReferrals = () => useQuery(QK.referrals, fetchers.referrals)
 export const useInterviews = () => useQuery(QK.interviews, fetchers.interviews)
 export const useResumes = () => useQuery(QK.resumes, fetchers.resumes)
 export const useDocuments = () => useQuery(QK.documents, fetchers.documents)
+export const usePortfolio = () => useQuery(QK.portfolio, fetchers.portfolio)
 const driveFetchers = new Map<string, () => Promise<DriveItem[]>>()
 
 /**
