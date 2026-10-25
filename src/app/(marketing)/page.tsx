@@ -2,18 +2,25 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import {
   ArrowRightIcon,
+  BriefcaseBusinessIcon,
   CalendarClockIcon,
   CheckIcon,
+  CheckSquareIcon,
+  ClipboardPasteIcon,
   CommandIcon,
   FileCodeIcon,
   FolderOpenIcon,
   HandshakeIcon,
   HardDriveIcon,
   KanbanIcon,
+  LayoutDashboardIcon,
   LockIcon,
   MailIcon,
+  MenuIcon,
+  MessageSquarePlusIcon,
   PuzzleIcon,
   ShieldCheckIcon,
+  SmartphoneIcon,
   SparklesIcon,
   type LucideIcon,
 } from "lucide-react"
@@ -26,7 +33,7 @@ import { AppShowcase, GalleryWindow } from "@/features/marketing/showcase"
 export const metadata: Metadata = {
   title: { absolute: "knot — your job search, untangled" },
   description:
-    "Track applications, referrals, interviews, resumes, documents and notes in one calm place. Capture jobs from any site with the knot browser extension.",
+    "Track applications, referrals, interviews, resumes, documents and notes in one calm place. Paste a job or profile link into Chat, capture jobs with the browser extension, and install knot on your iPhone.",
 }
 
 export default function LandingPage() {
@@ -36,6 +43,7 @@ export default function LandingPage() {
       <Features />
       <Screenshots />
       <Extension />
+      <Mobile />
       <Security />
       <PricingTeaser />
       <ClosingCta />
@@ -78,11 +86,11 @@ function Hero() {
       <div className="relative mx-auto max-w-6xl px-4 pt-20 pb-16 sm:px-6 sm:pt-28">
         <div className="mx-auto max-w-3xl text-center">
           <Link
-            href="#extension"
+            href="#chat"
             className="hero-in inline-flex items-center gap-2 rounded-full border bg-background/80 py-1 pr-3 pl-1 text-xs text-muted-foreground backdrop-blur transition-colors hover:text-foreground"
           >
             <span className="rounded-full bg-brand px-2 py-0.5 font-medium text-brand-foreground">New</span>
-            Save jobs from any site with Alt+K
+            Paste a job link into Chat — knot fills in the rest
             <ArrowRightIcon className="size-3" />
           </Link>
           <h1 className="hero-in mt-6 text-4xl font-semibold tracking-tighter text-balance sm:text-6xl" style={{ "--reveal-delay": "90ms" } as React.CSSProperties}>
@@ -119,6 +127,8 @@ interface Feature {
   title: string
   text: string
   className?: string
+  /** Anchor for links into this card. */
+  id?: string
 }
 
 const FEATURES: Feature[] = [
@@ -164,6 +174,17 @@ const FEATURES: Feature[] = [
     title: "Keyboard first",
     text: "⌘K jumps anywhere and searches everything. ⌘S saves the note you're writing.",
   },
+  {
+    icon: MessageSquarePlusIcon,
+    title: "Chat that reads links",
+    text: "Paste a job posting from LinkedIn, Greenhouse, Lever, Ashby or Workday — or a LinkedIn or GitHub profile — and check the card before it's saved as an application or contact.",
+    id: "chat",
+  },
+  {
+    icon: ClipboardPasteIcon,
+    title: "A board that follows you",
+    text: "One notepad synced to every device you sign in on, with secrets encrypted in your browser before they're saved.",
+  },
 ]
 
 function Features() {
@@ -179,9 +200,10 @@ function Features() {
           {FEATURES.map((feature, index) => (
             <Reveal
               key={feature.title}
+              id={feature.id}
               delay={(index % 3) * 90}
               className={cn(
-                "group relative overflow-hidden rounded-2xl border bg-card p-6 transition-colors hover:border-foreground/15",
+                "group relative scroll-mt-24 overflow-hidden rounded-2xl border bg-card p-6 transition-colors hover:border-foreground/15",
                 feature.className,
               )}
             >
@@ -282,6 +304,90 @@ function Extension() {
               Save to knot
             </div>
           </div>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
+
+/* ---------------------------------------------------------------- mobile */
+
+const PHONE_TABS = [
+  { icon: LayoutDashboardIcon, label: "Dashboard" },
+  { icon: BriefcaseBusinessIcon, label: "Applications", active: true },
+  { icon: MessageSquarePlusIcon, label: "Chat" },
+  { icon: CheckSquareIcon, label: "Tasks" },
+]
+
+function Mobile() {
+  return (
+    <section id="mobile" className="scroll-mt-16 py-24">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 px-4 sm:px-6 lg:grid-cols-2">
+        <Reveal delay={150} className="order-last flex justify-center lg:order-first">
+          {/* A phone drawn in CSS: the app with its glass tab bar. */}
+          <div className="relative h-[520px] w-[260px] overflow-hidden rounded-[2.75rem] border-[6px] border-foreground/90 bg-background shadow-2xl shadow-foreground/10">
+            <div className="absolute top-2 left-1/2 h-6 w-24 -translate-x-1/2 rounded-full bg-foreground/90" />
+            <div className="space-y-3 px-4 pt-12">
+              <p className="text-sm font-semibold">Applications</p>
+              {[
+                ["Senior Frontend Engineer", "Ledgerline · Hybrid"],
+                ["Product Designer", "Brightwave · Remote"],
+                ["Platform Engineer", "Cobalt Cloud · On-site"],
+                ["Data Analyst", "FreshPath · Remote"],
+              ].map(([role, meta]) => (
+                <div key={role} className="rounded-xl border bg-card p-3">
+                  <p className="text-xs font-medium">{role}</p>
+                  <p className="mt-0.5 text-[10px] text-muted-foreground">{meta}</p>
+                </div>
+              ))}
+            </div>
+            <div className="absolute inset-x-2.5 bottom-3 flex items-center gap-2">
+              <div className="glass-bar grid h-12 flex-1 grid-cols-4 rounded-full p-1">
+                {PHONE_TABS.map((tab) => (
+                  <span
+                    key={tab.label}
+                    className={cn(
+                      "flex min-w-0 flex-col items-center justify-center gap-0.5 rounded-full",
+                      tab.active ? "bg-foreground/[0.07] text-brand" : "text-foreground/70",
+                    )}
+                  >
+                    <tab.icon className="size-3.5" />
+                    <span className="max-w-full truncate text-[7px] font-medium">{tab.label}</span>
+                  </span>
+                ))}
+              </div>
+              <span className="glass-bar flex size-12 shrink-0 items-center justify-center rounded-full">
+                <MenuIcon className="size-4" />
+              </span>
+            </div>
+          </div>
+        </Reveal>
+
+        <Reveal>
+          <p className="inline-flex items-center gap-2 text-sm font-medium text-brand">
+            <SmartphoneIcon className="size-4" /> On your phone
+          </p>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
+            Install knot like an app.
+          </h2>
+          <p className="mt-4 text-base text-pretty text-muted-foreground">
+            Add knot to your iPhone&apos;s home screen from Safari and it opens full screen, with its own icon and
+            launch screen. Your four favourite pages sit in a glass tab bar; everything else is one tap away.
+          </p>
+          <ul className="mt-8 space-y-3">
+            {[
+              "Choose the four tabs in the control centre — saved on each device",
+              "Copy a job link, tap paste in Chat, and it's read for you",
+              "A friendly offline screen instead of an error when you lose signal",
+            ].map((point) => (
+              <li key={point} className="flex items-start gap-3 text-sm">
+                <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-brand/15 text-brand">
+                  <CheckIcon className="size-3" />
+                </span>
+                {point}
+              </li>
+            ))}
+          </ul>
         </Reveal>
       </div>
     </section>

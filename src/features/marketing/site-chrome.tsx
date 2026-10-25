@@ -9,6 +9,7 @@ export const CONTACT_EMAIL = "ganeshguru8681@gmail.com"
 const NAV = [
   { href: "/#features", label: "Features" },
   { href: "/#extension", label: "Extension" },
+  { href: "/#mobile", label: "Mobile" },
   { href: "/#security", label: "Security" },
   { href: "/pricing", label: "Pricing" },
 ]

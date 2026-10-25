@@ -13,17 +13,20 @@ export function Reveal({
   children,
   delay = 0,
   className,
+  id,
   as: Tag = "div",
 }: {
   children: React.ReactNode
   delay?: number
   className?: string
+  id?: string
   as?: "div" | "li" | "section" | "figure"
 }) {
   const [ref, inView] = useInView<HTMLDivElement>(0.15)
   return (
     <Tag
       ref={ref as React.Ref<never>}
+      id={id}
       data-shown={inView}
       className={cn("reveal", className)}
       style={{ "--reveal-delay": `${delay}ms` } as React.CSSProperties}
