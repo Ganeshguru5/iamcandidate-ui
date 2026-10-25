@@ -1,15 +1,15 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { PanelLeftCloseIcon, PanelLeftOpenIcon } from "lucide-react"
 import { cn } from "cn"
 
 import { CommandPaletteProvider } from "@/components/navigation/command-palette"
+import { MobileTabBar } from "@/components/navigation/mobile-tab-bar"
 import { SidebarNav } from "@/components/navigation/sidebar-nav"
 import { PageSkeleton } from "@/components/shared/skeletons"
 import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetDescription, SheetTitle } from "@/components/ui/sheet"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useLocalValue } from "@/lib/store/local-store"
 import { refreshSessionIfStale, SESSION_PENDING, useSession } from "@/lib/store/session"
@@ -22,7 +22,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const router = useRouter()
   const session = useSession()
   const [collapsed, setCollapsed] = useLocalValue<boolean>("pos:sidebar-collapsed", false)
-  const [mobileOpen, setMobileOpen] = useState(false)
 
   useEffect(() => {
     if (session === null) {
@@ -80,26 +79,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </div>
           </aside>
 
-          <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-            <SheetContent side="left" className="glass w-72 gap-0 p-0 pt-safe pb-safe">
-              <SheetTitle className="sr-only">Navigation</SheetTitle>
-              <SheetDescription className="sr-only">Main navigation</SheetDescription>
-              <div className="flex h-13 items-center px-4">
-                <Brand />
-              </div>
-              <div className="min-h-0 flex-1 overflow-y-auto">
-                <SidebarNav onNavigate={() => setMobileOpen(false)} />
-              </div>
-            </SheetContent>
-          </Sheet>
-
-          <div className="pb-safe flex min-w-0 flex-1 flex-col bg-background lg:ml-2.5 lg:border-l">
-            <Topbar onOpenMobileNav={() => setMobileOpen(true)} />
+          {/* Bottom padding: the phone tab bar, or the home indicator. */}
+          <div className="flex min-w-0 flex-1 flex-col bg-background pb-[max(var(--bottom-nav),env(safe-area-inset-bottom))] lg:ml-2.5 lg:border-l">
+            <Topbar />
             <main className="mx-auto w-full max-w-[1400px] flex-1 px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
               {children}
             </main>
           </div>
         </div>
+        <MobileTabBar />
       </CommandPaletteProvider>
     </AppDialogsProvider>
   )

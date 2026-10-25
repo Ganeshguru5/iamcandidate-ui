@@ -192,11 +192,46 @@
       width: 100%;
     }
   }
-  /* Translucent, blurred surface for the floating sidebar. */
+  /* Translucent, blurred surface for the floating sidebar (blur via Tailwind,
+     see .glass-bar). */
   .glass {
     background-color: var(--glass);
-    backdrop-filter: blur(24px) saturate(1.6);
-    -webkit-backdrop-filter: blur(24px) saturate(1.6);
+    @apply backdrop-blur-[24px] backdrop-saturate-[1.6];
+  }
+  /* "Liquid glass" for the phone tab bar and its sheets: a stronger blur,
+     a sheen from the top edge and a hairline highlight. */
+  .glass-bar {
+    background:
+      linear-gradient(180deg, oklch(1 0 0 / 0.42), oklch(1 0 0 / 0.12) 60%),
+      var(--glass);
+    /* Via Tailwind: a hand-written backdrop-filter pair compiles down to the
+       -webkit- form only, which Chromium ignores. */
+    @apply backdrop-blur-[28px] backdrop-saturate-[1.8];
+    border: 1px solid oklch(1 0 0 / 0.55);
+    box-shadow:
+      inset 0 1px 0 oklch(1 0 0 / 0.6),
+      0 10px 30px -8px oklch(0 0 0 / 0.22),
+      0 2px 6px -2px oklch(0 0 0 / 0.1);
+  }
+  .dark .glass-bar {
+    background:
+      linear-gradient(180deg, oklch(1 0 0 / 0.1), oklch(1 0 0 / 0.02) 60%),
+      oklch(0.2 0.014 230 / 0.6);
+    border-color: oklch(1 0 0 / 0.12);
+    box-shadow:
+      inset 0 1px 0 oklch(1 0 0 / 0.12),
+      0 10px 30px -8px oklch(0 0 0 / 0.6);
+  }
+}
+
+/* Space the phone tab bar takes at the bottom of the screen (0 when it isn't
+   shown). Content padding, the chat composer and toasts sit above it. */
+:root {
+  --bottom-nav: 0px;
+}
+@media (width < 64rem) {
+  :root:has([data-tab-bar]) {
+    --bottom-nav: calc(4.25rem + max(0.5rem, env(safe-area-inset-bottom)));
   }
 }
 

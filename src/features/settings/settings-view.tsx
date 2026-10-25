@@ -17,6 +17,7 @@ import {
   RotateCcwIcon,
   SaveIcon,
   ShieldIcon,
+  SmartphoneIcon,
   SunIcon,
   UploadIcon,
   UserIcon,
@@ -26,6 +27,7 @@ import { toast } from "sonner"
 import { z } from "zod"
 import { cn } from "cn"
 
+import { TabBarEditor } from "@/components/navigation/tab-bar-editor"
 import { Field } from "@/components/shared/form"
 import { ConfirmDialog, PersonAvatar } from "@/components/shared/misc"
 import { PageHeader } from "@/components/shared/page-header"
@@ -48,11 +50,12 @@ import { zodResolver } from "@/lib/utils/zod-resolver"
 
 import { SmtpSettings } from "./smtp-settings"
 
-type Section = "profile" | "appearance" | "notifications" | "integrations" | "email" | "security"
+type Section = "profile" | "appearance" | "tabs" | "notifications" | "integrations" | "email" | "security"
 
 const SECTIONS: Array<{ value: Section; label: string; icon: LucideIcon }> = [
   { value: "profile", label: "Profile", icon: UserIcon },
   { value: "appearance", label: "Appearance", icon: PaletteIcon },
+  { value: "tabs", label: "Tab bar", icon: SmartphoneIcon },
   { value: "notifications", label: "Notifications", icon: BellIcon },
   { value: "integrations", label: "Integrations", icon: PlugIcon },
   { value: "email", label: "Email", icon: MailIcon },
@@ -90,6 +93,7 @@ export function SettingsView() {
         <div className="min-w-0 max-w-3xl space-y-6">
           {section === "profile" && <ProfileSection />}
           {section === "appearance" && <AppearanceSection />}
+          {section === "tabs" && <TabBarSection />}
           {section === "notifications" && <NotificationsSection />}
           {section === "integrations" && <IntegrationsSection />}
           {section === "email" && <SmtpSettings />}
@@ -97,6 +101,20 @@ export function SettingsView() {
         </div>
       </div>
     </div>
+  )
+}
+
+/* ------------------------------------------------------------------ */
+
+/** Control centre for the phone tab bar (also under Menu → Edit tabs). */
+function TabBarSection() {
+  return (
+    <Panel
+      title="Tab bar"
+      description="On phones and tablets, the bar at the bottom of the screen shows four pages. Choose them here — saved on this device."
+    >
+      <TabBarEditor />
+    </Panel>
   )
 }
 

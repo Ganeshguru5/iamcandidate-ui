@@ -15,8 +15,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
       <Toaster
         position="bottom-right"
         closeButton
-        offset={{ bottom: "calc(24px + env(safe-area-inset-bottom))" }}
-        mobileOffset={{ bottom: "calc(16px + env(safe-area-inset-bottom))" }}
+        offset={{ bottom: "calc(24px + max(var(--bottom-nav), env(safe-area-inset-bottom)))" }}
+        mobileOffset={{ bottom: "calc(16px + max(var(--bottom-nav), env(safe-area-inset-bottom)))" }}
       />
     </TooltipProvider>
   )
