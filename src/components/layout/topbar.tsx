@@ -40,7 +40,7 @@ export function Topbar({ onOpenMobileNav }: { onOpenMobileNav: () => void }) {
 
   return (
     // Toolbar: translucent, page title on the left, controls on the right.
-    <header className="sticky top-0 z-30 flex h-13 shrink-0 items-center gap-2 border-b border-foreground/[0.07] bg-background/75 px-3 backdrop-blur-xl backdrop-saturate-150 sm:px-5">
+    <header className="pt-safe sticky top-0 z-30 box-content flex h-13 shrink-0 items-center gap-2 border-b border-foreground/[0.07] bg-background/75 px-3 backdrop-blur-xl backdrop-saturate-150 sm:px-5">
       <Button variant="ghost" size="icon" className="lg:hidden" onClick={onOpenMobileNav} aria-label="Open navigation">
         <MenuIcon />
       </Button>

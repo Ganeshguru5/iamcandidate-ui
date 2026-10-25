@@ -72,7 +72,7 @@ export function LoginScreen() {
   const pending = formState.isSubmitting
 
   return (
-    <div className="grid grid-cols-1 min-h-dvh lg:grid-cols-[1fr_1.1fr]">
+    <div className="pt-safe pb-safe px-safe grid grid-cols-1 min-h-dvh lg:grid-cols-[1fr_1.1fr]">
       <div className="flex flex-col px-6 py-8 sm:px-12">
         <Brand />
         <div className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center py-12">

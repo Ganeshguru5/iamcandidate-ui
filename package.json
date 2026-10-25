@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "pwa:assets": "node scripts/generate-pwa-assets.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",

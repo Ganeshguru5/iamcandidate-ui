@@ -51,10 +51,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <AppDialogsProvider>
       <CommandPaletteProvider>
         {/* Floating sidebar card on a soft canvas; content sits beside it. */}
-        <div className="flex min-h-dvh w-full bg-[var(--window)]">
+        <div className="px-safe flex min-h-dvh w-full bg-[var(--window)]">
           <aside
             className={cn(
-              "sticky top-0 hidden h-dvh shrink-0 p-2.5 pr-0 transition-[width] duration-200 lg:block",
+              "sticky top-0 hidden h-dvh shrink-0 p-2.5 pt-[calc(0.625rem+env(safe-area-inset-top))] pr-0 pb-[calc(0.625rem+env(safe-area-inset-bottom))] transition-[width] duration-200 lg:block",
               collapsed ? "w-[76px]" : "w-64",
             )}
           >
@@ -81,7 +81,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </aside>
 
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-            <SheetContent side="left" className="glass w-72 gap-0 p-0">
+            <SheetContent side="left" className="glass w-72 gap-0 p-0 pt-safe pb-safe">
               <SheetTitle className="sr-only">Navigation</SheetTitle>
               <SheetDescription className="sr-only">Main navigation</SheetDescription>
               <div className="flex h-13 items-center px-4">
@@ -93,7 +93,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </SheetContent>
           </Sheet>
 
-          <div className="flex min-w-0 flex-1 flex-col bg-background lg:ml-2.5 lg:border-l">
+          <div className="pb-safe flex min-w-0 flex-1 flex-col bg-background lg:ml-2.5 lg:border-l">
             <Topbar onOpenMobileNav={() => setMobileOpen(true)} />
             <main className="mx-auto w-full max-w-[1400px] flex-1 px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
               {children}
