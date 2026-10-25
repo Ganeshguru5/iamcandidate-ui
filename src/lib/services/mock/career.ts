@@ -6,9 +6,11 @@ import type {
   Company,
   CompanyInput,
   Contact,
+  ContactExtraction,
   ContactInput,
   ID,
   InterviewInput,
+  JobExtraction,
   ReferralInput,
   Resume,
   ResumeInput,
@@ -134,6 +136,50 @@ export class MockApplicationService implements ApplicationService {
       })
     }
   }
+
+  /**
+   * Demo mode has no server to fetch the page, so this only reads what the
+   * link itself says (job board, company from the address).
+   */
+  async extractFromLink(url: string): Promise<JobExtraction> {
+    await networkDelay()
+    let link: URL
+    try {
+      link = new URL(url.trim())
+    } catch {
+      throw new Error("That doesn't look like a link")
+    }
+    const host = link.hostname.replace(/^www\./, "")
+    const segments = link.pathname.split("/").filter(Boolean)
+    const titleCase = (slug = "") => slug.replace(/[-_]+/g, " ").replace(/\w/g, (c) => c.toUpperCase()).trim()
+    const boards: [RegExp, string, () => string][] = [
+      [/lever\.co$/, "Lever", () => titleCase(segments[0])],
+      [/greenhouse\.io$/, "Greenhouse", () => titleCase(segments[0])],
+      [/ashbyhq\.com$/, "Ashby", () => titleCase(segments[0])],
+      [/myworkdayjobs\.com$/, "Workday", () => titleCase(host.split(".")[0])],
+      [/linkedin\.com$/, "LinkedIn", () => ""],
+      [/naukri\.com$/, "Naukri", () => ""],
+      [/(^|\.)indeed\./, "Indeed", () => ""],
+    ]
+    const board = boards.find(([pattern]) => pattern.test(host))
+    return {
+      url: link.toString(),
+      kind: "unknown",
+      site: board?.[1] ?? "",
+      via: "page",
+      job: {
+        role: "",
+        company: board ? board[2]() : titleCase(host.split(".").at(-2)),
+        location: "",
+        workMode: "",
+        salary: "",
+        jobId: "",
+        jobUrl: link.toString(),
+        source: board?.[1] ?? host,
+        description: "",
+      },
+    }
+  }
 }
 
 /* ------------------------------------------------------------------ */
@@ -212,6 +258,42 @@ export class MockContactService implements ContactService {
   async deleteContact(id: ID): Promise<void> {
     await networkDelay()
     contacts.remove(id)
+  }
+
+  /** Demo mode can't fetch pages: only the profile link's own details are used. */
+  async extractFromLink(url: string): Promise<ContactExtraction> {
+    await networkDelay()
+    let link: URL
+    try {
+      link = new URL(url.trim())
+    } catch {
+      throw new Error("That doesn't look like a link")
+    }
+    const host = link.hostname.replace(/^www\./, "")
+    const slug = host.endsWith("linkedin.com") ? (link.pathname.match(/^\/in\/([^/]+)/)?.[1] ?? "") : ""
+    const gitHub = host === "github.com" ? (link.pathname.split("/").filter(Boolean)[0] ?? "") : ""
+    // "priya-raman-1a2b3c" → "Priya Raman"
+    const name = decodeURIComponent(slug)
+      .replace(/-[a-z0-9]*\d[a-z0-9]*$/i, "")
+      .replace(/[-_]+/g, " ")
+      .replace(/\w/g, (c) => c.toUpperCase())
+      .trim()
+    return {
+      url: link.toString(),
+      kind: "unknown",
+      site: slug ? "LinkedIn" : gitHub ? "GitHub" : "",
+      contact: {
+        name: name || gitHub,
+        role: "",
+        company: "",
+        location: "",
+        email: "",
+        phone: "",
+        linkedin: slug ? `https://www.linkedin.com/in/${slug}/` : "",
+        website: slug ? "" : link.toString(),
+        about: "",
+      },
+    }
   }
 }
 

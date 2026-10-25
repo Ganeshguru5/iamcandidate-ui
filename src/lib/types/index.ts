@@ -123,6 +123,30 @@ export interface Application extends Entity {
   updatedAt: ISODate
 }
 
+/** Job details read from a link (POST /applications/extract). Blank = not found. */
+export interface ExtractedJob {
+  role: string
+  company: string
+  location: string
+  workMode: WorkMode | ""
+  salary: string
+  jobId: string
+  jobUrl: string
+  source: string
+  description: string
+}
+
+export interface JobExtraction {
+  url: string
+  /** "job" when a posting was recognised on the page. */
+  kind: "job" | "unknown"
+  /** Job board / ATS ("" when unknown). */
+  site: string
+  /** "api": the job board's API; "page": the page's HTML. */
+  via: "api" | "page"
+  job: ExtractedJob
+}
+
 export type ApplicationInput = Omit<
   Application,
   "id" | "timeline" | "createdAt" | "updatedAt"
@@ -172,6 +196,29 @@ export interface Contact extends Entity {
 }
 
 export type ContactInput = Omit<Contact, "id" | "createdAt">
+
+/** A person read from a profile link (POST /contacts/extract). Blank = not found. */
+export interface ExtractedContact {
+  name: string
+  role: string
+  company: string
+  location: string
+  email: string
+  phone: string
+  linkedin: string
+  website: string
+  /** Short bio / headline. */
+  about: string
+}
+
+export interface ContactExtraction {
+  url: string
+  /** "profile" when a person was recognised on the page. */
+  kind: "profile" | "unknown"
+  /** "LinkedIn", "GitHub" or "" (any other page). */
+  site: string
+  contact: ExtractedContact
+}
 
 export type ReferralStatus =
   | "not_contacted"

@@ -16,6 +16,7 @@ import {
   LayoutDashboardIcon,
   LayoutTemplateIcon,
   MailIcon,
+  MessageSquarePlusIcon,
   PlugIcon,
   SettingsIcon,
   SparklesIcon,
@@ -49,6 +50,7 @@ export const NAV_GROUPS: NavGroup[] = [
     label: "Career",
     items: [
       { title: "Applications", href: "/career/applications", icon: BriefcaseBusinessIcon },
+      { title: "Chat", href: "/career/chat", icon: MessageSquarePlusIcon },
       { title: "Companies", href: "/career/companies", icon: Building2Icon },
       { title: "Contacts", href: "/career/contacts", icon: UsersIcon },
       { title: "Referrals", href: "/career/referrals", icon: HandshakeIcon },

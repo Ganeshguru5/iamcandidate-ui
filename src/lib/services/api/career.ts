@@ -6,10 +6,12 @@ import type {
   Company,
   CompanyInput,
   Contact,
+  ContactExtraction,
   ContactInput,
   ID,
   Interview,
   InterviewInput,
+  JobExtraction,
   Referral,
   ReferralInput,
   Resume,
@@ -50,6 +52,10 @@ export class ApiApplicationService implements ApplicationService {
   deleteApplication(id: ID): Promise<void> {
     return apiClient.delete(`/applications/${enc(id)}`)
   }
+
+  extractFromLink(url: string): Promise<JobExtraction> {
+    return apiClient.post("/applications/extract", { url })
+  }
 }
 
 export class ApiCompanyService implements CompanyService {
@@ -68,6 +74,7 @@ export class ApiContactService implements ContactService {
   createContact = (input: ContactInput) => this.crud.create(input)
   updateContact = (id: ID, patch: Partial<ContactInput>) => this.crud.update(id, patch)
   deleteContact = (id: ID) => this.crud.remove(id)
+  extractFromLink = (url: string): Promise<ContactExtraction> => apiClient.post("/contacts/extract", { url })
 }
 
 export class ApiReferralService extends ApiCrudService<Referral, ReferralInput> {

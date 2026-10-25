@@ -22,6 +22,7 @@ import type {
   ComposeEmailInput,
   DashboardSummary,
   Contact,
+  ContactExtraction,
   ContactInput,
   CreateUserInput,
   DocumentFile,
@@ -32,6 +33,7 @@ import type {
   EmailTemplateInput,
   ID,
   Integration,
+  JobExtraction,
   IntegrationId,
   Interview,
   InterviewInput,
@@ -89,6 +91,8 @@ export interface ApplicationService {
   changeStatus(id: ID, status: ApplicationStatus): Promise<Application>
   addTimelineEvent(id: ID, event: Omit<TimelineEvent, "id">): Promise<Application>
   deleteApplication(id: ID): Promise<void>
+  /** Reads a job posting from a link; nothing is saved. */
+  extractFromLink(url: string): Promise<JobExtraction>
 }
 
 export interface CompanyService {
@@ -105,6 +109,8 @@ export interface ContactService {
   createContact(input: ContactInput): Promise<Contact>
   updateContact(id: ID, patch: Partial<ContactInput>): Promise<Contact>
   deleteContact(id: ID): Promise<void>
+  /** Reads a person from a profile link; nothing is saved. */
+  extractFromLink(url: string): Promise<ContactExtraction>
 }
 
 export type ReferralService = CrudService<Referral, ReferralInput>
