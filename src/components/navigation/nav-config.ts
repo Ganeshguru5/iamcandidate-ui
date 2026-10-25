@@ -7,6 +7,7 @@ import {
   Building2Icon,
   CalendarClockIcon,
   CheckSquareIcon,
+  ClipboardPasteIcon,
   FileTextIcon,
   FolderKanbanIcon,
   FolderOpenIcon,
@@ -68,6 +69,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { title: "Projects", href: "/workspace/projects", icon: FolderKanbanIcon },
       { title: "Tasks", href: "/workspace/tasks", icon: CheckSquareIcon },
       { title: "Notes", href: "/workspace/notes", icon: StickyNoteIcon },
+      { title: "Board", href: "/workspace/board", icon: ClipboardPasteIcon },
     ],
   },
   {

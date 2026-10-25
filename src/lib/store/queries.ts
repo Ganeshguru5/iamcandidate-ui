@@ -5,6 +5,7 @@ import { useMemo } from "react"
 import {
   activityService,
   applicationService,
+  boardService,
   bookmarkService,
   certificationService,
   companyService,
@@ -48,6 +49,7 @@ export const QK = {
   projects: "projects",
   tasks: "tasks",
   notes: "notes",
+  board: "board",
   skills: "skills",
   certifications: "certifications",
   bookmarks: "bookmarks",
@@ -76,6 +78,7 @@ const fetchers = {
   projects: () => projectService.list(),
   tasks: () => taskService.getTasks(),
   notes: () => noteService.list(),
+  board: () => boardService.list(),
   skills: () => skillService.list(),
   certifications: () => certificationService.list(),
   bookmarks: () => bookmarkService.list(),
@@ -118,6 +121,7 @@ export const useSmtpConfig = () => useQuery(QK.smtp, fetchers.smtp)
 export const useProjects = () => useQuery(QK.projects, fetchers.projects)
 export const useTasks = () => useQuery(QK.tasks, fetchers.tasks)
 export const useNotes = () => useQuery(QK.notes, fetchers.notes)
+export const useBoard = () => useQuery(QK.board, fetchers.board)
 export const useSkills = () => useQuery(QK.skills, fetchers.skills)
 export const useCertifications = () => useQuery(QK.certifications, fetchers.certifications)
 export const useBookmarks = () => useQuery(QK.bookmarks, fetchers.bookmarks)

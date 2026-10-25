@@ -1,4 +1,5 @@
 import type {
+  BoardItemInput,
   BookmarkInput,
   CertificationInput,
   ID,
@@ -46,6 +47,17 @@ export class MockNoteService extends MockCrudService<"notes", NoteInput> {
         description: note.title,
         entity: { type: "note", id: note.id },
       }),
+    })
+  }
+}
+
+export class MockBoardService extends MockCrudService<"board", BoardItemInput> {
+  constructor() {
+    super({
+      key: "board",
+      idPrefix: "brd",
+      build: (input, id, now) => ({ ...input, id, createdAt: now, updatedAt: now }),
+      touch: (_item, now) => ({ updatedAt: now }),
     })
   }
 }

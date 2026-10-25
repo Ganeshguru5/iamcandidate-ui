@@ -36,6 +36,7 @@ import {
 } from "./api/system"
 import { ApiAuthService, ApiUserService } from "./api/users"
 import {
+  ApiBoardService,
   ApiBookmarkService,
   ApiCertificationService,
   ApiNoteService,
@@ -47,6 +48,7 @@ import type {
   ActivityService,
   ApplicationService,
   AuthService,
+  BoardService,
   BookmarkService,
   CertificationService,
   CompanyService,
@@ -90,6 +92,7 @@ import {
   MockUserService,
 } from "./mock/system"
 import {
+  MockBoardService,
   MockBookmarkService,
   MockCertificationService,
   MockNoteService,
@@ -117,6 +120,7 @@ export const driveService: DriveService = pick(() => new ApiDriveService(), () =
 export const projectService: ProjectService = pick(() => new ApiProjectService(), () => new MockProjectService())
 export const taskService: TaskService = pick(() => new ApiTaskService(), () => new MockTaskService())
 export const noteService: NoteService = pick(() => new ApiNoteService(), () => new MockNoteService())
+export const boardService: BoardService = pick(() => new ApiBoardService(), () => new MockBoardService())
 export const skillService: SkillService = pick(() => new ApiSkillService(), () => new MockSkillService())
 export const certificationService: CertificationService = pick(() => new ApiCertificationService(), () => new MockCertificationService())
 export const bookmarkService: BookmarkService = pick(() => new ApiBookmarkService(), () => new MockBookmarkService())

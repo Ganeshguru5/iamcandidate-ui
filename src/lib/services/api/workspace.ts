@@ -1,5 +1,7 @@
 import { apiClient, toPatch } from "@/lib/api/client"
 import type {
+  BoardItem,
+  BoardItemInput,
   Bookmark,
   BookmarkInput,
   Certification,
@@ -29,6 +31,12 @@ export class ApiProjectService extends ApiCrudService<Project, ProjectInput> {
 export class ApiNoteService extends ApiCrudService<Note, NoteInput> {
   constructor() {
     super("/notes")
+  }
+}
+
+export class ApiBoardService extends ApiCrudService<BoardItem, BoardItemInput> {
+  constructor() {
+    super("/board")
   }
 }
 

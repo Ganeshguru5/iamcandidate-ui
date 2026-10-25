@@ -445,6 +445,26 @@ export interface Note extends Entity {
 
 export type NoteInput = Pick<Note, "title" | "content" | "category" | "tags" | "favorite">
 
+export type BoardItemKind = "text" | "code" | "link" | "secret"
+export type BoardColor = "default" | "teal" | "amber" | "blue" | "rose" | "violet"
+
+/**
+ * A card on the sync board. For `secret` items `content` holds the envelope
+ * the browser encrypted with the vault passphrase — never the plain value.
+ */
+export interface BoardItem extends Entity {
+  title: string
+  kind: BoardItemKind
+  content: string
+  tags: string[]
+  pinned: boolean
+  color: BoardColor
+  createdAt: ISODate
+  updatedAt: ISODate
+}
+
+export type BoardItemInput = Pick<BoardItem, "title" | "kind" | "content" | "tags" | "pinned" | "color">
+
 /* ------------------------------------------------------------------ */
 /* Knowledge                                                           */
 /* ------------------------------------------------------------------ */

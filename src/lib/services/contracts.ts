@@ -35,6 +35,8 @@ import type {
   IntegrationId,
   Interview,
   InterviewInput,
+  BoardItem,
+  BoardItemInput,
   Note,
   NoteInput,
   NotificationPreferences,
@@ -181,6 +183,7 @@ export interface TaskService {
 }
 
 export type NoteService = CrudService<Note, NoteInput>
+export type BoardService = CrudService<BoardItem, BoardItemInput>
 export type SkillService = CrudService<Skill, SkillInput>
 export type CertificationService = CrudService<Certification, CertificationInput>
 export type BookmarkService = CrudService<Bookmark, BookmarkInput>
