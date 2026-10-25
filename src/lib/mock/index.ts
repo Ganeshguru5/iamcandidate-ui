@@ -11,7 +11,7 @@ import type {
   EmailTemplate,
   Integration,
   Interview,
-  BoardItem,
+  Board,
   Note,
   NotificationPreferences,
   PortfolioContent,
@@ -26,7 +26,6 @@ import type {
 } from "@/lib/types"
 
 import { seedApplications } from "./applications"
-import { seedBoard } from "./board"
 import { seedCompanies } from "./companies"
 import { seedContacts } from "./contacts"
 import { seedDocuments, seedDriveItems } from "./documents"
@@ -59,7 +58,7 @@ export interface MockDatabase {
   projects: Project[]
   tasks: Task[]
   notes: Note[]
-  board: BoardItem[]
+  board: Board
   skills: Skill[]
   certifications: Certification[]
   bookmarks: Bookmark[]
@@ -89,7 +88,7 @@ export function createSeedDatabase(): MockDatabase {
     projects: seedProjects(),
     tasks: seedTasks(),
     notes: seedNotes(),
-    board: seedBoard(),
+    board: { content: "", updatedAt: null },
     skills: seedSkills(),
     certifications: seedCertifications(),
     bookmarks: seedBookmarks(),

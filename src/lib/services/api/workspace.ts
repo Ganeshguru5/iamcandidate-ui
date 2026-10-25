@@ -1,7 +1,6 @@
 import { apiClient, toPatch } from "@/lib/api/client"
 import type {
-  BoardItem,
-  BoardItemInput,
+  Board,
   Bookmark,
   BookmarkInput,
   Certification,
@@ -17,7 +16,7 @@ import type {
   TaskInput,
 } from "@/lib/types"
 
-import type { TaskService } from "../contracts"
+import type { BoardService, TaskService } from "../contracts"
 import { ApiCrudService } from "./crud"
 
 const enc = encodeURIComponent
@@ -34,9 +33,13 @@ export class ApiNoteService extends ApiCrudService<Note, NoteInput> {
   }
 }
 
-export class ApiBoardService extends ApiCrudService<BoardItem, BoardItemInput> {
-  constructor() {
-    super("/board")
+export class ApiBoardService implements BoardService {
+  get(): Promise<Board> {
+    return apiClient.get("/board")
+  }
+
+  save(content: string): Promise<Board> {
+    return apiClient.put("/board", { content })
   }
 }
 

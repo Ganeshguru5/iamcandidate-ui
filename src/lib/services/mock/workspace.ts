@@ -1,5 +1,5 @@
 import type {
-  BoardItemInput,
+  Board,
   BookmarkInput,
   CertificationInput,
   ID,
@@ -12,9 +12,9 @@ import type {
 import { delay, networkDelay } from "@/lib/utils/delay"
 import { createId } from "@/lib/utils/id"
 
-import type { TaskService } from "../contracts"
+import type { BoardService, TaskService } from "../contracts"
 import { MockCrudService } from "./crud"
-import { collection, logActivity, NotFoundError } from "./db"
+import { collection, logActivity, NotFoundError, read, write } from "./db"
 
 const tasks = collection("tasks")
 
@@ -51,14 +51,17 @@ export class MockNoteService extends MockCrudService<"notes", NoteInput> {
   }
 }
 
-export class MockBoardService extends MockCrudService<"board", BoardItemInput> {
-  constructor() {
-    super({
-      key: "board",
-      idPrefix: "brd",
-      build: (input, id, now) => ({ ...input, id, createdAt: now, updatedAt: now }),
-      touch: (_item, now) => ({ updatedAt: now }),
-    })
+export class MockBoardService implements BoardService {
+  async get(): Promise<Board> {
+    await delay(200)
+    return read("board")
+  }
+
+  async save(content: string): Promise<Board> {
+    await networkDelay()
+    const board = { content, updatedAt: new Date().toISOString() }
+    write("board", board)
+    return board
   }
 }
 
