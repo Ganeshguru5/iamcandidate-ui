@@ -159,7 +159,12 @@ function ReviewForm({
   }
 
   const found = extraction.kind === "job"
-  const readFrom = extraction.via === "api" ? `${extraction.site}'s job board` : extraction.site || hostOf(item.url)
+  const readFrom =
+    extraction.via === "text"
+      ? "the text you pasted"
+      : extraction.via === "api"
+        ? `${extraction.site}'s job board`
+        : extraction.site || hostOf(item.url)
 
   return (
     <Bubble wide>
@@ -168,19 +173,23 @@ function ReviewForm({
           <div className="min-w-0 flex-1 space-y-1">
             <div className="flex flex-wrap items-center gap-1.5">
               {extraction.site && <ToneBadge tone="teal">{extraction.site}</ToneBadge>}
-              <a
-                href={item.url}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex min-w-0 items-center gap-1 truncate text-xs text-muted-foreground hover:text-foreground"
-              >
-                {hostOf(item.url)} <ArrowUpRightIcon className="size-3" />
-              </a>
+              {item.url && (
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex min-w-0 items-center gap-1 truncate text-xs text-muted-foreground hover:text-foreground"
+                >
+                  {hostOf(item.url)} <ArrowUpRightIcon className="size-3" />
+                </a>
+              )}
             </div>
             <p className="text-sm text-pretty">
               {found
                 ? `Read from ${readFrom}. Check the details and save.`
-                : isApiMode
+                : extraction.via === "text"
+                  ? "I couldn't tell which job that text is for. Fill in what you know and save."
+                  : isApiMode
                   ? "I couldn't find a job posting on that page. Fill in what you know and save."
                   : "Demo mode can't read pages, so only the link's details are filled in."}
             </p>

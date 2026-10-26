@@ -16,7 +16,8 @@ import { chatStore, useChatItems, type CardItem, type ChatItem } from "./chat-st
 import { ContactReviewCard } from "./contact-review-card"
 import { JobReviewCard } from "./job-review-card"
 import { Bubble } from "./link-card"
-import { findEmails, findLinks, linkKind, MAX_LINKS } from "./links"
+import { looksLikeJobText, parseJobText } from "./job-text"
+import { findEmails, findLinks, linkKind, MAX_LINKS, siteOfLink, withoutLinks } from "./links"
 
 const SITES = "LinkedIn, Greenhouse, Lever, Ashby, Workday, Naukri, Indeed and most company career pages"
 
@@ -76,6 +77,31 @@ export function JobChatView() {
     if (!trimmed || !owner) return
     setText("")
     const links = findLinks(trimmed)
+    // A pasted posting (e.g. copied off Naukri, which can't be fetched): one job card,
+    // with the posting's link, if one came along, kept as its job link.
+    if (looksLikeJobText(withoutLinks(trimmed))) {
+      const url = links.find((link) => linkKind(link) === "job") ?? ""
+      const site = siteOfLink(url)
+      const job = parseJobText(withoutLinks(trimmed))
+      chatStore.add(
+        owner,
+        { id: createId("msg"), type: "user", text: trimmed },
+        {
+          id: createId("job"),
+          type: "job",
+          url,
+          status: "ready",
+          extraction: {
+            url,
+            kind: job.role ? "job" : "unknown",
+            site,
+            via: "text",
+            job: { ...job, jobUrl: url, source: site },
+          },
+        },
+      )
+      return
+    }
     const emails = findEmails(trimmed)
     const replies: ChatItem[] = []
     if (!links.length && !emails.length) {
@@ -178,6 +204,7 @@ export function JobChatView() {
             <div className="space-y-1.5 text-sm">
               <p>Send me a job link — or a few at once — and I&apos;ll pull out the role, company, location, salary and description.</p>
               <p className="text-muted-foreground">Works with {SITES}.</p>
+              <p>If a site won&apos;t let me read a link, copy the job&apos;s text from the page and paste it here instead.</p>
               <p>
                 Paste a LinkedIn or GitHub profile link, or an email address, and I&apos;ll add the person to your
                 contacts.
@@ -249,7 +276,7 @@ export function JobChatView() {
                 send()
               }
             }}
-            placeholder="Paste a job or profile link…"
+            placeholder="Paste a job or profile link, or a job's text…"
             rows={1}
             enterKeyHint="send"
             autoCapitalize="off"

@@ -142,8 +142,8 @@ export interface JobExtraction {
   kind: "job" | "unknown"
   /** Job board / ATS ("" when unknown). */
   site: string
-  /** "api": the job board's API; "page": the page's HTML. */
-  via: "api" | "page"
+  /** "api": the job board's API; "page": the page's HTML; "text": text pasted into the chat. */
+  via: "api" | "page" | "text"
   job: ExtractedJob
 }
 

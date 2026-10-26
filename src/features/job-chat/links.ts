@@ -46,6 +46,24 @@ export function linkKind(value: string): "job" | "contact" {
   return "job"
 }
 
+/** The message with its links and email addresses taken out. */
+export function withoutLinks(text: string): string {
+  return text.replace(LINK_PATTERN, " ").replace(/[^\s<>()"',;:]+@[^\s<>()"',;:]+\.[a-z]{2,}/gi, " ")
+}
+
+/** Job board a link belongs to, for jobs read from pasted text ("" when unknown). */
+export function siteOfLink(value: string | undefined): string {
+  try {
+    const host = new URL(value ?? "").hostname.replace(/^www\./, "")
+    if (host.endsWith("naukri.com")) return "Naukri"
+    if (host.endsWith("linkedin.com")) return "LinkedIn"
+    if (/(^|\.)indeed\./.test(host)) return "Indeed"
+  } catch {
+    // fall through
+  }
+  return ""
+}
+
 /** Email addresses typed in the message (outside of links). */
 export function findEmails(text: string): string[] {
   const withoutLinks = text.replace(LINK_PATTERN, " ")
