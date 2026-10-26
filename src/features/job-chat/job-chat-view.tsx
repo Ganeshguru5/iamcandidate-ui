@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import { ClipboardPasteIcon, Link2Icon, SendHorizontalIcon, Trash2Icon } from "lucide-react"
 import { toast } from "sonner"
 
@@ -140,6 +141,29 @@ export function JobChatView() {
     chatStore.add(owner, { id: createId("msg"), type: "user", text: trimmed }, ...replies, ...accepted)
     for (const card of accepted) if (card.status === "loading") read(card)
   }
+
+  // Shared in: "Share → knot" on Android, or an iOS Shortcut opening
+  // /career/chat?url=…. Sent once, then the URL is cleaned so a reload doesn't resend.
+  const params = useSearchParams()
+  const router = useRouter()
+  const shared = useRef("")
+  useEffect(() => {
+    const url = params.get("url")?.trim() ?? ""
+    const sharedText = params.get("text")?.trim() ?? ""
+    if (!url && !sharedText) {
+      shared.current = ""
+      return
+    }
+    if (!owner) return
+    const key = `${url}\n${sharedText}`
+    if (shared.current === key) return
+    shared.current = key
+    // Android often puts the link in `text`; `title` is just the page's name.
+    send([sharedText, url && !sharedText.includes(url) ? url : ""].filter(Boolean).join("\n"))
+    router.replace("/career/chat")
+    // `send` is recreated each render; this runs once per shared link.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [owner, params, router])
 
   const pasteFromClipboard = async () => {
     try {
