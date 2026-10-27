@@ -400,7 +400,7 @@ const SCENES: Array<{ id: SceneId; tab: string; title: string; caption: string; 
 const SCENE_MS = 5600
 
 /** The hero: the app in a frame, cycling through scenes with progress tabs. */
-export function AppShowcase() {
+export function AppShowcase({ className }: { className?: string }) {
   const reduced = usePrefersReducedMotion()
   const [index, setIndex] = useState(0)
   const [paused, setPaused] = useState(false)
@@ -415,7 +415,7 @@ export function AppShowcase() {
 
   const scene = SCENES[index] ?? SCENES[0]!
   return (
-    <div ref={ref} className="relative mx-auto mt-16 max-w-5xl" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+    <div ref={ref} className={cn("relative mx-auto mt-16 max-w-5xl", className)} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
       <div aria-hidden className="absolute -inset-x-6 -bottom-6 top-10 rounded-[2rem] bg-gradient-to-b from-brand/25 to-transparent blur-2xl" />
       <AppWindow title={`knot — ${scene.title}`} className="relative" bodyClassName="relative">
         <AppFrame scene={scene.id} title={scene.title}>

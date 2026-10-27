@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { ArrowRightIcon } from "lucide-react"
+import { cn } from "cn"
 
 import { BrandMark } from "@/components/layout/brand"
 import { buttonVariants } from "@/components/ui/button"
@@ -7,8 +8,9 @@ import { buttonVariants } from "@/components/ui/button"
 export const CONTACT_EMAIL = "ganeshguru8681@gmail.com"
 
 const NAV = [
+  { href: "/#chat", label: "Chat" },
+  { href: "/#workflows", label: "Workflows" },
   { href: "/#features", label: "Features" },
-  { href: "/#extension", label: "Extension" },
   { href: "/#mobile", label: "Mobile" },
   { href: "/#security", label: "Security" },
   { href: "/pricing", label: "Pricing" },
@@ -27,17 +29,17 @@ export function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-              className="rounded-md px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+              className="rounded-full px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               {item.label}
             </Link>
           ))}
         </nav>
         <div className="flex items-center gap-1.5">
-          <Link href="/login" className={buttonVariants({ variant: "ghost", className: "hidden sm:inline-flex" })}>
+          <Link href="/login" className={cn(buttonVariants({ variant: "outline" }), "hidden rounded-full px-4 sm:inline-flex")}>
             Sign in
           </Link>
-          <Link href="/dashboard" className={buttonVariants({ className: "gap-1.5" })}>
+          <Link href="/dashboard" className={cn(buttonVariants(), "gap-1.5 rounded-full bg-brand px-4 text-brand-foreground hover:bg-brand/90")}>
             Open app <ArrowRightIcon />
           </Link>
         </div>
