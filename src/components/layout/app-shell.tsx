@@ -11,7 +11,7 @@ import { SidebarNav } from "@/components/navigation/sidebar-nav"
 import { PageSkeleton } from "@/components/shared/skeletons"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
-import { CONTACT_EMAIL } from "@/features/marketing/site-chrome"
+import { RequestAccessButton } from "@/features/auth/request-access"
 import { useLocalValue } from "@/lib/store/local-store"
 import { refreshSessionIfStale, SESSION_PENDING, useIsReadOnly, useSession } from "@/lib/store/session"
 
@@ -101,19 +101,18 @@ function ReadOnlyNotice() {
   if (!readOnly) return null
   return (
     <div role="status" className="border-b bg-brand-soft px-4 py-2 text-sm sm:px-6 lg:px-8">
-      <p className="mx-auto flex max-w-[1400px] items-start gap-2">
-        <EyeIcon className="mt-0.5 size-4 shrink-0 text-brand" />
-        <span>
-          <span className="font-medium">Demo account · read-only.</span>{" "}
-          <span className="text-muted-foreground">
-            You can look around, but changes won&apos;t be saved. For your own workspace, contact the admin at{" "}
+      <div className="mx-auto flex max-w-[1400px] flex-wrap items-center gap-x-4 gap-y-2">
+        <p className="flex min-w-0 flex-1 items-start gap-2">
+          <EyeIcon className="mt-0.5 size-4 shrink-0 text-brand" />
+          <span>
+            <span className="font-medium">Demo account · read-only.</span>{" "}
+            <span className="text-muted-foreground">
+              You can look around, but changes won&apos;t be saved. Want your own workspace?
+            </span>
           </span>
-          <a href={`mailto:${CONTACT_EMAIL}`} className="font-medium underline-offset-4 hover:underline">
-            {CONTACT_EMAIL}
-          </a>
-          <span className="text-muted-foreground">.</span>
-        </span>
-      </p>
+        </p>
+        <RequestAccessButton size="sm" className="rounded-full bg-brand px-3.5 text-brand-foreground hover:bg-brand/90" />
+      </div>
     </div>
   )
 }

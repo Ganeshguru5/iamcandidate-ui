@@ -24,6 +24,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { isApiMode } from "@/lib/api/config"
 import { DEMO_CREDENTIALS } from "@/lib/mock"
+import { RequestAccessButton } from "./request-access"
 import { signIn, useSession } from "@/lib/store/session"
 import { zodResolver } from "@/lib/utils/zod-resolver"
 
@@ -145,13 +146,10 @@ export function LoginScreen() {
             </div>
           </div>
 
-          <p className="mt-4 text-sm text-muted-foreground">
-            knot is in development. For early access, contact the admin at{" "}
-            <a href="mailto:ganeshguru8681@gmail.com" className="font-medium text-foreground underline-offset-4 hover:underline">
-              ganeshguru8681@gmail.com
-            </a>
-            .
-          </p>
+          <div className="mt-4 flex items-center justify-between gap-3">
+            <p className="text-sm text-muted-foreground">knot is in development. No account yet?</p>
+            <RequestAccessButton variant="outline" size="sm" />
+          </div>
         </div>
         <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
           <p>

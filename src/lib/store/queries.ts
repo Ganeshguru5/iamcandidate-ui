@@ -60,6 +60,7 @@ export const QK = {
   profile: "profile",
   notificationPreferences: "notificationPreferences",
   users: "users",
+  accessRequests: "accessRequests",
   portfolio: "portfolio",
 } as const
 
@@ -89,6 +90,7 @@ const fetchers = {
   profile: () => settingsService.getProfile(),
   notificationPreferences: () => settingsService.getNotificationPreferences(),
   users: () => userService.list(),
+  accessRequests: () => userService.listAccessRequests(),
   portfolio: () => portfolioService.get(),
 }
 
@@ -134,6 +136,7 @@ export const useNotificationPreferences = () =>
   useQuery(QK.notificationPreferences, fetchers.notificationPreferences)
 
 export const useUsers = () => useQuery(QK.users, fetchers.users)
+export const useAccessRequests = () => useQuery(QK.accessRequests, fetchers.accessRequests)
 
 /** O(1) lookup map for an entity list. */
 export function useById<T extends Entity>(items: T[] | undefined): Map<ID, T> {

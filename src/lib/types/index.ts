@@ -54,6 +54,23 @@ export interface CreateUserInput {
   role: UserRole
 }
 
+/** A pending sign-up from the public form; an admin grants or declines it. */
+export interface AccessRequest {
+  id: ID
+  email: string
+  name: string
+  message?: string
+  createdAt: ISODate
+}
+
+export interface AccessRequestInput {
+  email: string
+  name: string
+  /** What they'll sign in with once access is granted. */
+  password: string
+  message?: string
+}
+
 export interface UpdateUserInput {
   name?: string
   role?: UserRole

@@ -1,5 +1,6 @@
 import { DEMO_CREDENTIALS } from "@/lib/mock"
 import type {
+  AccessRequest,
   Activity,
   AppUser,
   Integration,
@@ -51,6 +52,10 @@ export class MockAuthService implements AuthService {
   async changePassword(): Promise<void> {
     await delay(900) // simulated — the demo password never changes
   }
+
+  async requestAccess(): Promise<void> {
+    throw new Error(API_ONLY)
+  }
 }
 
 const API_ONLY = "User management needs the API backend (NEXT_PUBLIC_API_MODE=api)."
@@ -82,6 +87,18 @@ export class MockUserService implements UserService {
   }
 
   async remove(): Promise<void> {
+    throw new Error(API_ONLY)
+  }
+
+  async listAccessRequests(): Promise<AccessRequest[]> {
+    return []
+  }
+
+  async grantAccess(): Promise<AppUser> {
+    throw new Error(API_ONLY)
+  }
+
+  async declineAccess(): Promise<void> {
     throw new Error(API_ONLY)
   }
 }

@@ -7,6 +7,8 @@
 import type {
   PortfolioContent,
   PricingConfig,
+  AccessRequest,
+  AccessRequestInput,
   Activity,
   AppNotification,
   AppUser,
@@ -73,6 +75,8 @@ export interface AuthService {
   refresh(session: Session): Promise<Session>
   logout(): Promise<void>
   changePassword(currentPassword: string, newPassword: string): Promise<void>
+  /** Public: asks the admin for an account. */
+  requestAccess(input: AccessRequestInput): Promise<void>
 }
 
 /** Admin-only account management (API mode). */
@@ -81,6 +85,10 @@ export interface UserService {
   create(input: CreateUserInput): Promise<AppUser>
   update(id: ID, patch: UpdateUserInput): Promise<AppUser>
   remove(id: ID): Promise<void>
+  listAccessRequests(): Promise<AccessRequest[]>
+  /** Creates the requester's account (role user) with the password they chose. */
+  grantAccess(requestId: ID): Promise<AppUser>
+  declineAccess(requestId: ID): Promise<void>
 }
 
 export interface ApplicationService {

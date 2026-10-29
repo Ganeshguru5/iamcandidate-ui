@@ -1,5 +1,13 @@
 import { apiClient } from "@/lib/api/client"
-import type { AppUser, CreateUserInput, ID, Session, UpdateUserInput } from "@/lib/types"
+import type {
+  AccessRequest,
+  AccessRequestInput,
+  AppUser,
+  CreateUserInput,
+  ID,
+  Session,
+  UpdateUserInput,
+} from "@/lib/types"
 
 import type { AuthService, UserService } from "../contracts"
 
@@ -39,6 +47,10 @@ export class ApiAuthService implements AuthService {
   changePassword(currentPassword: string, newPassword: string): Promise<void> {
     return apiClient.put("/auth/password", { currentPassword, newPassword })
   }
+
+  requestAccess(input: AccessRequestInput): Promise<void> {
+    return apiClient.post("/access-requests", input)
+  }
 }
 
 export class ApiUserService implements UserService {
@@ -56,5 +68,17 @@ export class ApiUserService implements UserService {
 
   remove(id: ID): Promise<void> {
     return apiClient.delete(`/users/${enc(id)}`)
+  }
+
+  listAccessRequests(): Promise<AccessRequest[]> {
+    return apiClient.get("/access-requests")
+  }
+
+  grantAccess(requestId: ID): Promise<AppUser> {
+    return apiClient.post(`/access-requests/${enc(requestId)}/grant`)
+  }
+
+  declineAccess(requestId: ID): Promise<void> {
+    return apiClient.delete(`/access-requests/${enc(requestId)}`)
   }
 }

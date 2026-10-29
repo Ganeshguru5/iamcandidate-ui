@@ -5,13 +5,17 @@ import { Controller, useForm } from "react-hook-form"
 import {
   BanIcon,
   CheckCircle2Icon,
+  CheckIcon,
+  InboxIcon,
   KeyRoundIcon,
+  Loader2Icon,
   MoreHorizontalIcon,
   PencilIcon,
   PlusIcon,
   ShieldIcon,
   Trash2Icon,
   UserCogIcon,
+  XIcon,
 } from "lucide-react"
 import { z } from "zod"
 
@@ -34,10 +38,10 @@ import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import type { Option } from "@/lib/constants"
 import { userService } from "@/lib/services"
-import { QK, useUsers } from "@/lib/store/queries"
+import { QK, useAccessRequests, useUsers } from "@/lib/store/queries"
 import { removeItem, upsertItem, useMutation } from "@/lib/store/query"
 import { useIsAdmin, useSession } from "@/lib/store/session"
-import type { AppUser, CreateUserInput, ID, UpdateUserInput, UserRole } from "@/lib/types"
+import type { AccessRequest, AppUser, CreateUserInput, ID, UpdateUserInput, UserRole } from "@/lib/types"
 import { formatDate, timeAgo } from "@/lib/utils/dates"
 import { matchesQuery } from "@/lib/utils/format"
 import { zodResolver } from "@/lib/utils/zod-resolver"
@@ -115,6 +119,8 @@ function UsersAdmin() {
       >
         <SearchInput value={query} onChange={setQuery} placeholder="Search by name or email…" />
       </PageHeader>
+
+      <AccessRequestsPanel />
 
       {error ? (
         <ErrorState message={error} onRetry={refetch} />
@@ -229,6 +235,88 @@ function UsersAdmin() {
         }}
       />
     </div>
+  )
+}
+
+/* ------------------------------------------------------------------ */
+
+function useGrantAccess() {
+  return useMutation((request: AccessRequest) => userService.grantAccess(request.id), {
+    onSuccess: (user, request) => {
+      upsertItem(QK.users, user, "end")
+      removeItem(QK.accessRequests, request.id)
+    },
+    success: (user) => `${user.name} can now sign in`,
+    error: "Couldn't grant access",
+  })
+}
+
+function useDeclineAccess() {
+  return useMutation((request: AccessRequest) => userService.declineAccess(request.id), {
+    onSuccess: (_, request) => removeItem(QK.accessRequests, request.id),
+    success: "Request declined",
+    error: "Couldn't decline the request",
+  })
+}
+
+/** Sign-ups from the public form. Shown only while some are waiting. */
+function AccessRequestsPanel() {
+  const { data: requests } = useAccessRequests()
+  const grant = useGrantAccess()
+  const decline = useDeclineAccess()
+  const [busyId, setBusyId] = useState<ID | null>(null)
+
+  if (!requests?.length) return null
+
+  const run = async (request: AccessRequest, action: typeof grant | typeof decline) => {
+    setBusyId(request.id)
+    await action.mutate(request)
+    setBusyId(null)
+  }
+
+  return (
+    <section aria-labelledby="access-requests-title" className="mb-6 overflow-hidden rounded-xl border bg-card">
+      <div className="flex items-center gap-2 border-b px-4 py-3">
+        <InboxIcon className="size-4 text-brand" />
+        <h2 id="access-requests-title" className="text-sm font-semibold">
+          Access requests
+        </h2>
+        <ToneBadge tone="teal">{requests.length}</ToneBadge>
+        <p className="ml-auto hidden text-xs text-muted-foreground sm:block">
+          Granting creates a regular account with the password they chose.
+        </p>
+      </div>
+      <ul className="divide-y">
+        {requests.map((request) => {
+          const busy = busyId === request.id
+          return (
+            <li key={request.id} className="flex flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center">
+              <div className="flex min-w-0 flex-1 items-start gap-2.5">
+                <PersonAvatar name={request.name} className="size-7" />
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-medium">
+                    {request.name}
+                    <span className="ml-1.5 text-xs font-normal text-muted-foreground">{timeAgo(request.createdAt)}</span>
+                  </p>
+                  <p className="truncate text-xs text-muted-foreground">{request.email}</p>
+                  {request.message && (
+                    <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{request.message}</p>
+                  )}
+                </div>
+              </div>
+              <div className="flex shrink-0 gap-2 sm:ml-auto">
+                <Button variant="outline" size="sm" disabled={busy} onClick={() => void run(request, decline)}>
+                  <XIcon /> Decline
+                </Button>
+                <Button size="sm" disabled={busy} onClick={() => void run(request, grant)}>
+                  {busy ? <Loader2Icon className="animate-spin" /> : <CheckIcon />} Grant access
+                </Button>
+              </div>
+            </li>
+          )
+        })}
+      </ul>
+    </section>
   )
 }
 
