@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 
 import { Providers } from "@/components/providers/providers"
-import { earlyAccessInitScript } from "@/features/marketing/early-access-banner"
 import { SPLASH_SCREENS } from "@/lib/pwa/splash-screens"
 import { themeInitScript } from "@/lib/store/theme"
 
@@ -55,7 +54,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-        <script dangerouslySetInnerHTML={{ __html: earlyAccessInitScript }} />
       </head>
       <body className="min-h-full" suppressHydrationWarning>
         <Providers>{children}</Providers>
