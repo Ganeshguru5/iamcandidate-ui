@@ -30,6 +30,8 @@ export interface Session {
   /** Present in API mode; admins can manage users. */
   role?: UserRole
   name?: string
+  /** API mode: the account can look around but not change anything (the demo). */
+  readOnly?: boolean
 }
 
 /** A login account (admin-managed in API mode). */
@@ -39,6 +41,7 @@ export interface AppUser {
   name: string
   role: UserRole
   disabled: boolean
+  readOnly?: boolean
   lastLoginAt?: ISODate
   createdAt: ISODate
   updatedAt: ISODate

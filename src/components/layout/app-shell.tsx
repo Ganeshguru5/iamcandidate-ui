@@ -2,7 +2,7 @@
 
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { PanelLeftCloseIcon, PanelLeftOpenIcon } from "lucide-react"
+import { EyeIcon, PanelLeftCloseIcon, PanelLeftOpenIcon } from "lucide-react"
 import { cn } from "cn"
 
 import { CommandPaletteProvider } from "@/components/navigation/command-palette"
@@ -11,8 +11,9 @@ import { SidebarNav } from "@/components/navigation/sidebar-nav"
 import { PageSkeleton } from "@/components/shared/skeletons"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
+import { CONTACT_EMAIL } from "@/features/marketing/site-chrome"
 import { useLocalValue } from "@/lib/store/local-store"
-import { refreshSessionIfStale, SESSION_PENDING, useSession } from "@/lib/store/session"
+import { refreshSessionIfStale, SESSION_PENDING, useIsReadOnly, useSession } from "@/lib/store/session"
 
 import { AppDialogsProvider } from "./app-dialogs"
 import { Brand } from "./brand"
@@ -82,6 +83,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           {/* Bottom padding: the phone tab bar, or the home indicator. */}
           <div className="flex min-w-0 flex-1 flex-col bg-background pb-[max(var(--bottom-nav),env(safe-area-inset-bottom))] lg:ml-2.5 lg:border-l">
             <Topbar />
+            <ReadOnlyNotice />
             <main className="mx-auto w-full max-w-[1400px] flex-1 px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
               {children}
             </main>
@@ -90,6 +92,29 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <MobileTabBar />
       </CommandPaletteProvider>
     </AppDialogsProvider>
+  )
+}
+
+/** Shown to the demo account: it can browse everything, but the API rejects changes. */
+function ReadOnlyNotice() {
+  const readOnly = useIsReadOnly()
+  if (!readOnly) return null
+  return (
+    <div role="status" className="border-b bg-brand-soft px-4 py-2 text-sm sm:px-6 lg:px-8">
+      <p className="mx-auto flex max-w-[1400px] items-start gap-2">
+        <EyeIcon className="mt-0.5 size-4 shrink-0 text-brand" />
+        <span>
+          <span className="font-medium">Demo account · read-only.</span>{" "}
+          <span className="text-muted-foreground">
+            You can look around, but changes won&apos;t be saved. For your own workspace, contact the admin at{" "}
+          </span>
+          <a href={`mailto:${CONTACT_EMAIL}`} className="font-medium underline-offset-4 hover:underline">
+            {CONTACT_EMAIL}
+          </a>
+          <span className="text-muted-foreground">.</span>
+        </span>
+      </p>
+    </div>
   )
 }
 

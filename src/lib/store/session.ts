@@ -31,6 +31,12 @@ export function useIsAdminRole(): boolean {
   return session !== null && session !== SESSION_PENDING && session.role === "admin"
 }
 
+/** The signed-in account can read but not change anything (the API rejects writes). */
+export function useIsReadOnly(): boolean {
+  const session = useSession()
+  return session !== null && session !== SESSION_PENDING && session.readOnly === true
+}
+
 export async function signIn(email: string, password: string): Promise<Session> {
   const session = await authService.login(email, password)
   writeLocal(SESSION_KEY, session)

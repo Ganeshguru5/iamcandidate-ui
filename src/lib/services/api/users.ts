@@ -17,6 +17,7 @@ function toSession({ token, user }: LoginResponse): Session {
     email: user.email,
     name: user.name,
     role: user.role,
+    ...(user.readOnly ? { readOnly: true } : {}),
     token,
     createdAt: new Date().toISOString(),
   }
