@@ -401,3 +401,8 @@
     animation: none;
   }
 }
+
+/* Set before paint by earlyAccessInitScript once the banner is dismissed. */
+[data-early-access="hidden"] .early-access-banner {
+  display: none;
+}

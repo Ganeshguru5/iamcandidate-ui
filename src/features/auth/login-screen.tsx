@@ -144,6 +144,14 @@ export function LoginScreen() {
               </Button>
             </div>
           </div>
+
+          <p className="mt-4 text-sm text-muted-foreground">
+            knot is in development. For early access, contact the admin at{" "}
+            <a href="mailto:ganeshguru8681@gmail.com" className="font-medium text-foreground underline-offset-4 hover:underline">
+              ganeshguru8681@gmail.com
+            </a>
+            .
+          </p>
         </div>
         <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
           <p>
