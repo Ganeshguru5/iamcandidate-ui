@@ -612,15 +612,11 @@ function ClosingCta() {
             Turn your job search into a routine
           </h2>
           <p className="mx-auto mt-4 max-w-lg text-base text-pretty text-muted-foreground">
-            Bring your applications, people and paperwork into one place — and spend the saved time preparing. Start
-            free, upgrade when your search picks up.
+            Bring your applications, people and paperwork into one place — and spend the saved time preparing.
           </p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Link href="/dashboard" className={cn(buttonVariants({ size: "lg" }), PILL)}>
               Open knot <ArrowRightIcon />
-            </Link>
-            <Link href="/pricing" className={cn(buttonVariants({ variant: "outline", size: "lg" }), PILL)}>
-              See pricing
             </Link>
           </div>
         </div>

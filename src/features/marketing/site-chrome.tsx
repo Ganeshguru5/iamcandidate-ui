@@ -13,7 +13,6 @@ const NAV = [
   { href: "/#features", label: "Features" },
   { href: "/#mobile", label: "Mobile" },
   { href: "/#security", label: "Security" },
-  { href: "/pricing", label: "Pricing" },
 ]
 
 export function SiteHeader() {

@@ -1,11 +1,9 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import Link from "next/link"
 import {
   ArrowDownIcon,
   ArrowUpIcon,
-  ExternalLinkIcon,
   Loader2Icon,
   PlusIcon,
   RotateCcwIcon,
@@ -136,7 +134,7 @@ export function PricingAdmin() {
       })
       setSaved(next)
       setDraft(next)
-      toast.success("Pricing saved. The pricing page is updated.")
+      toast.success("Pricing saved..")
     } catch (caught) {
       toast.error("Couldn't save pricing", { description: caught instanceof Error ? caught.message : undefined })
     } finally {
@@ -150,14 +148,11 @@ export function PricingAdmin() {
         title="Pricing"
         description={
           saved?.updatedAt
-            ? `Plans shown on the public pricing page. Last saved ${timeAgo(saved.updatedAt)}.`
-            : "Plans shown on the public pricing page. Showing the built-in defaults."
+            ? `Pricing plans (the public pricing page is hidden for now). Last saved ${timeAgo(saved.updatedAt)}.`
+            : "Pricing plans (the public pricing page is hidden for now). Showing the built-in defaults."
         }
         actions={
           <>
-            <Button variant="outline" nativeButton={false} render={<Link href="/pricing" target="_blank" />}>
-              <ExternalLinkIcon /> View page
-            </Button>
             <Button variant="outline" onClick={() => setResetting(true)}>
               <RotateCcwIcon /> Reset
             </Button>
