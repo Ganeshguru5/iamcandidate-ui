@@ -14,7 +14,7 @@ import type {
 } from "@/lib/types"
 
 /**
- * Server-side integrations beyond Drive and SMTP. They need the knot-server
+ * Server-side integrations beyond Drive and SMTP. They need the iamcandidate-server
  * backend (API mode); in mock mode their pages explain that instead.
  */
 export const integrationsApi = {

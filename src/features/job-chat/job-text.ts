@@ -1,7 +1,7 @@
 import type { ExtractedJob, WorkMode } from "@/lib/types"
 
 /**
- * Reads a job from text copied off a posting (for sites knot can't fetch,
+ * Reads a job from text copied off a posting (for sites iamcandidate can't fetch,
  * like Naukri). Labelled lines ("Location: Pune") win; otherwise the block
  * above the description is read the way job boards lay it out: title,
  * company, then experience / salary / location lines. Anything unsure is

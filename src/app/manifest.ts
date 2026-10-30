@@ -3,8 +3,8 @@ import type { MetadataRoute } from "next"
 export default function manifest(): MetadataRoute.Manifest {
   return {
     id: "/",
-    name: "knot",
-    short_name: "knot",
+    name: "iamcandidate",
+    short_name: "iamcandidate",
     description: "A personal command center for documents, job search, communication and knowledge.",
     start_url: "/dashboard",
     scope: "/",
@@ -18,7 +18,7 @@ export default function manifest(): MetadataRoute.Manifest {
       { src: "/icons/icon-512.png", sizes: "512x512", type: "image/png", purpose: "any" },
       { src: "/icons/maskable-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
     ],
-    // "Share → knot" on Android: the shared link or text opens in Chat (iOS
+    // "Share → iamcandidate" on Android: the shared link or text opens in Chat (iOS
     // has no share targets for web apps; a Shortcut can open the same URL).
     share_target: {
       action: "/career/chat",

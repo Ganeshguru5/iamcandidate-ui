@@ -11,7 +11,7 @@ import { isOverdue, isToday, startOfDay, toDateInput } from "@/lib/utils/dates"
 
 /**
  * Dashboard aggregation for mock mode. The API backend computes the same
- * summary server-side (knot-server `dashboard.service.ts`).
+ * summary server-side (iamcandidate-server `dashboard.service.ts`).
  */
 const DAY = 86_400_000
 const CHART_WEEKS = 10

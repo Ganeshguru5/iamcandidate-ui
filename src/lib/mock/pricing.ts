@@ -1,6 +1,6 @@
 import type { PricingConfig } from "@/lib/types"
 
-/** Same defaults as knot-server's src/lib/default-pricing.ts. */
+/** Same defaults as iamcandidate-server's src/lib/default-pricing.ts. */
 export function seedPricing(): PricingConfig {
   return {
     currency: "INR",
@@ -57,7 +57,7 @@ export function seedPricing(): PricingConfig {
           "Priority support",
         ],
         ctaLabel: "Contact us",
-        ctaHref: "mailto:hello@example.com?subject=knot%20Coach",
+        ctaHref: "mailto:hello@example.com?subject=iamcandidate%20Coach",
         highlighted: false,
         visible: true,
       },

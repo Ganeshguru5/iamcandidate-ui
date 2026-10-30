@@ -1,7 +1,7 @@
 /**
  * Service registry — the single swap point between mock and real backends.
  *
- * `NEXT_PUBLIC_API_MODE=api` routes the data services to the knot-server
+ * `NEXT_PUBLIC_API_MODE=api` routes the data services to the iamcandidate-server
  * REST API (`./api`); anything else keeps the in-browser mocks (`./mock`), so
  * the app still works with no backend. In API mode, Google Drive and the other
  * OAuth integrations are still mocked (SMTP sending is real). UI code only
@@ -108,7 +108,7 @@ function pick<T>(api: () => NoInfer<T>, mock: () => NoInfer<T>): T {
   return isApiMode ? api() : mock()
 }
 
-// Data services — backed by knot-server in API mode.
+// Data services — backed by iamcandidate-server in API mode.
 export const applicationService: ApplicationService = pick(() => new ApiApplicationService(), () => new MockApplicationService())
 export const companyService: CompanyService = pick(() => new ApiCompanyService(), () => new MockCompanyService())
 export const contactService: ContactService = pick(() => new ApiContactService(), () => new MockContactService())

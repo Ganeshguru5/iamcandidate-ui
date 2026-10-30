@@ -109,7 +109,7 @@ function Breadcrumb() {
   const pathname = usePathname()
   const current = findNavItem(pathname)
   const group = NAV_GROUPS.find((g) => current && g.items.includes(current))
-  const title = current?.title ?? "knot"
+  const title = current?.title ?? "iamcandidate"
   return (
     // Keyed by title: a new page's title swaps in with a short vertical slide.
     <ViewTransition key={title} enter="title-swap" exit="title-swap" default="none">

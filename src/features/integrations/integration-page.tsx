@@ -89,8 +89,8 @@ export function ApiOnlyNotice({ name }: { name: string }) {
   return (
     <EmptyState
       icon={ServerIcon}
-      title={`${name} needs the knot server`}
-      description="This prototype is running on demo data. Set NEXT_PUBLIC_API_MODE=api and connect to knot-server to use this integration."
+      title={`${name} needs the iamcandidate server`}
+      description="This prototype is running on demo data. Set NEXT_PUBLIC_API_MODE=api and connect to iamcandidate-server to use this integration."
     />
   )
 }

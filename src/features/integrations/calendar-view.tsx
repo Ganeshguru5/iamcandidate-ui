@@ -103,7 +103,7 @@ function CalendarConnected() {
             <div>
               <p className="font-medium">Connect your Google account</p>
               <p className="mt-1 text-sm text-muted-foreground">
-                knot asks only to manage calendar events. It can&apos;t read your email or Drive through this connection.
+                iamcandidate asks only to manage calendar events. It can&apos;t read your email or Drive through this connection.
               </p>
               {!status.available && (
                 <p className="mt-2 text-sm text-destructive">
@@ -157,7 +157,7 @@ function CalendarConnected() {
           ))}
         </ul>
         <p className="mt-4 text-xs text-muted-foreground">
-          Past items, cancelled interviews, done tasks and closed referrals are removed from your calendar on the next sync. Edit details in knot: changes made in Google Calendar are overwritten.
+          Past items, cancelled interviews, done tasks and closed referrals are removed from your calendar on the next sync. Edit details in iamcandidate: changes made in Google Calendar are overwritten.
         </p>
       </Panel>
 
@@ -187,11 +187,11 @@ function DisconnectDialog({ onClose, onDone }: { onClose: () => void; onDone: (s
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Disconnect Google Calendar?</DialogTitle>
-          <DialogDescription>knot will stop updating your calendar and its access will be revoked.</DialogDescription>
+          <DialogDescription>iamcandidate will stop updating your calendar and its access will be revoked.</DialogDescription>
         </DialogHeader>
         <Label className="flex items-start gap-2 text-sm font-normal">
           <Checkbox checked={removeEvents} onCheckedChange={(checked) => setRemoveEvents(checked === true)} />
-          Also remove the events knot added to my calendar
+          Also remove the events iamcandidate added to my calendar
         </Label>
         <DialogFooter>
           <Button variant="outline" onClick={onClose} disabled={disconnect.isPending}>

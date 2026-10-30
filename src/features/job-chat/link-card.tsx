@@ -104,7 +104,7 @@ export function SavedCard({ title, href }: { title?: string; href: string }) {
   )
 }
 
-/** Amber "already in knot" notice with a link to the existing record. */
+/** Amber "already in iamcandidate" notice with a link to the existing record. */
 export function DuplicateNotice({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex items-start gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-sm">

@@ -1,7 +1,7 @@
 /**
  * Which backend the service layer talks to:
  * - `mock` (default): in-browser mock services, no backend needed.
- * - `api`: the AWS SAM backend (knot-server) at `NEXT_PUBLIC_API_URL`.
+ * - `api`: the AWS SAM backend (iamcandidate-server) at `NEXT_PUBLIC_API_URL`.
  *
  * Both are inlined at build time (see `.env.example`).
  */

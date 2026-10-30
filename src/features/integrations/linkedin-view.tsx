@@ -47,7 +47,7 @@ export function LinkedInView() {
       <IntegrationPageHeader
         id="linkedin"
         title="LinkedIn"
-        description="Bring your LinkedIn connections, saved jobs and job applications into knot from LinkedIn's data export."
+        description="Bring your LinkedIn connections, saved jobs and job applications into iamcandidate from LinkedIn's data export."
       />
       {isApiMode ? <LinkedInImport /> : <ApiOnlyNotice name="LinkedIn import" />}
     </div>
@@ -137,7 +137,7 @@ function LinkedInImport() {
             <li>Unzip it and choose the CSV files here.</li>
           </ol>
           <p className="mt-3 text-xs text-muted-foreground">
-            LinkedIn doesn&apos;t let other apps read your connections or saved jobs directly, so the export is the way in. Importing again skips anything already in knot.
+            LinkedIn doesn&apos;t let other apps read your connections or saved jobs directly, so the export is the way in. Importing again skips anything already in iamcandidate.
           </p>
         </Panel>
         <Panel title="Imported so far">
@@ -161,7 +161,7 @@ function LinkedInImport() {
           <div className="flex gap-3">
             <PuzzleIcon className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
             <p className="text-sm text-muted-foreground">
-              For live capture, use the <span className="text-foreground">knot browser extension</span>: save the job you&apos;re viewing, or add someone as a referral straight from their LinkedIn profile.
+              For live capture, use the <span className="text-foreground">iamcandidate browser extension</span>: save the job you&apos;re viewing, or add someone as a referral straight from their LinkedIn profile.
             </p>
           </div>
         </Panel>
@@ -192,7 +192,7 @@ function UploadCard({ upload, onImport, onRemove }: { upload: Upload; onImport: 
                     <CheckCircle2Icon className="size-4" /> Imported {result.created} {kind.creates}
                   </span>
                 ) : result.created === 0 ? (
-                  <span className="text-muted-foreground">Nothing new to import — everything here is already in knot.</span>
+                  <span className="text-muted-foreground">Nothing new to import — everything here is already in iamcandidate.</span>
                 ) : (
                   <>
                     Will add <span className="font-medium">{result.created}</span> {kind.creates}
@@ -201,7 +201,7 @@ function UploadCard({ upload, onImport, onRemove }: { upload: Upload; onImport: 
               </p>
               <p className="mt-0.5 text-xs text-muted-foreground">
                 {result.rows} row{result.rows === 1 ? "" : "s"}
-                {result.skipped > 0 && ` · ${result.skipped} already in knot`}
+                {result.skipped > 0 && ` · ${result.skipped} already in iamcandidate`}
                 {result.invalid > 0 && ` · ${result.invalid} incomplete`}
                 {result.companiesCreated > 0 && ` · ${result.companiesCreated} new compan${result.companiesCreated === 1 ? "y" : "ies"}`}
               </p>
@@ -216,7 +216,7 @@ function UploadCard({ upload, onImport, onRemove }: { upload: Upload; onImport: 
                 </ul>
               )}
               {upload.state !== "done" && result.kind !== "connections" && result.created > 0 && (
-                <p className="mt-2 text-xs text-muted-foreground">LinkedIn&apos;s export has no work mode or location, so they&apos;re set to On-site and empty. Edit them in knot if needed.</p>
+                <p className="mt-2 text-xs text-muted-foreground">LinkedIn&apos;s export has no work mode or location, so they&apos;re set to On-site and empty. Edit them in iamcandidate if needed.</p>
               )}
             </>
           )}

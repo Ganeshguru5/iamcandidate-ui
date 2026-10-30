@@ -181,7 +181,7 @@ export class ApiIntegrationService implements IntegrationService {
         await integrationsApi.aws.disconnect()
         break
       case "linkedin":
-        throw new Error("LinkedIn imports can't be disconnected. Delete imported items in knot instead.")
+        throw new Error("LinkedIn imports can't be disconnected. Delete imported items in iamcandidate instead.")
     }
     return this.integration(id)
   }

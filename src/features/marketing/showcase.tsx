@@ -50,7 +50,7 @@ export function useInView<T extends Element>(threshold = 0.25) {
   return [ref, inView] as const
 }
 
-/** An app frame: the knot mark, the screen title and a sync indicator. */
+/** An app frame: the iamcandidate mark, the screen title and a sync indicator. */
 export function AppWindow({
   title,
   children,
@@ -417,7 +417,7 @@ export function AppShowcase({ className }: { className?: string }) {
   return (
     <div ref={ref} className={cn("relative mx-auto mt-16 max-w-5xl", className)} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
       <div aria-hidden className="absolute -inset-x-6 -bottom-6 top-10 rounded-[2rem] bg-gradient-to-b from-brand/25 to-transparent blur-2xl" />
-      <AppWindow title={`knot — ${scene.title}`} className="relative" bodyClassName="relative">
+      <AppWindow title={`iamcandidate — ${scene.title}`} className="relative" bodyClassName="relative">
         <AppFrame scene={scene.id} title={scene.title}>
           <div key={scene.id} className="h-full animate-in fade-in duration-500">
             <scene.Component active={inView} reduced={reduced} />
@@ -627,7 +627,7 @@ export function GalleryWindow({
       className={cn("transition-all duration-700 ease-out motion-reduce:transition-none", shown ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0", className)}
       style={{ transitionDelay: `${delay}ms` }}
     >
-      <AppWindow title={`knot — ${title}`} className="transition-transform duration-500 hover:-translate-y-1">
+      <AppWindow title={`iamcandidate — ${title}`} className="transition-transform duration-500 hover:-translate-y-1">
         <div className="flex h-[300px] bg-background">
           <aside className="hidden w-36 shrink-0 p-1.5 sm:block">
             <div className="glass flex h-full flex-col rounded-xl border p-1.5">

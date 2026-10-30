@@ -12,7 +12,7 @@ const WORKFLOWS = [
     id: "contacts",
     tab: "Keep people warm",
     title: "Every recruiter and referrer, with a date to follow up",
-    text: "Contacts link to the applications they touch. knot reminds you who to nudge and when, so a good referral never goes quiet.",
+    text: "Contacts link to the applications they touch. iamcandidate reminds you who to nudge and when, so a good referral never goes quiet.",
     points: ["Follow-up dates on every contact", "Referrals tied to the role they're for", "Add a LinkedIn profile from Chat"],
     screen: "contacts",
   },

@@ -9,7 +9,7 @@ export function seedTasks(): Task[] {
     { id: "tsk_2", title: "Reply to Northwind offer", description: "Compare with Hearthly timeline before responding.", priority: "high", status: "todo", dueDate: daysFromNow(0, 20), related: { type: "application", id: "app_northwind_fe", label: "Northwind — Frontend Engineer" } },
     { id: "tsk_3", title: "Send resume to Jordan for referral", priority: "high", status: "todo", dueDate: daysFromNow(1), related: { type: "contact", id: "ct_jordan", label: "Jordan Reyes" } },
     { id: "tsk_4", title: "Follow up with Freshpath recruiter", priority: "medium", status: "todo", dueDate: daysFromNow(-1), related: { type: "application", id: "app_freshpath_fe", label: "Freshpath — Software Engineer" } },
-    { id: "tsk_5", title: "Finish command palette for knot", priority: "medium", status: "in_progress", dueDate: daysFromNow(3), related: { type: "project", id: "prj_pos", label: "knot" } },
+    { id: "tsk_5", title: "Finish command palette for iamcandidate", priority: "medium", status: "in_progress", dueDate: daysFromNow(3), related: { type: "project", id: "prj_pos", label: "iamcandidate" } },
     { id: "tsk_6", title: "Write system design notes: rate limiter", priority: "low", status: "todo", dueDate: daysFromNow(5) },
     { id: "tsk_7", title: "Update React Native resume with Expo Router work", priority: "medium", status: "todo", dueDate: daysFromNow(-3) },
     { id: "tsk_8", title: "Research Hearthly engineering blog", priority: "low", status: "todo", dueDate: daysFromNow(2), related: { type: "company", id: "cmp_hearthly", label: "Hearthly" } },

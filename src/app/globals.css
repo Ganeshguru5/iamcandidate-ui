@@ -70,7 +70,7 @@
 }
 
 :root {
-  /* knot palette: warm paper neutrals, blue-black ink, deep teal accent. */
+  /* iamcandidate palette: warm paper neutrals, blue-black ink, deep teal accent. */
   --background: oklch(0.99 0.004 85);
   --foreground: oklch(0.22 0.02 250);
   --card: oklch(1 0 0);

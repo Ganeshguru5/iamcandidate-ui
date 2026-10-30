@@ -142,7 +142,7 @@ export function JobChatView() {
     for (const card of accepted) if (card.status === "loading") read(card)
   }
 
-  // Shared in: "Share → knot" on Android, or an iOS Shortcut opening
+  // Shared in: "Share → iamcandidate" on Android, or an iOS Shortcut opening
   // /career/chat?url=…. Sent once, then the URL is cleaned so a reload doesn't resend.
   const params = useSearchParams()
   const router = useRouter()
@@ -211,7 +211,7 @@ export function JobChatView() {
     <div className="mx-auto -mb-6 flex min-h-[calc(100dvh-3.25rem-1px-env(safe-area-inset-top)-max(var(--bottom-nav),env(safe-area-inset-bottom))-1.5rem)] w-full max-w-3xl flex-col lg:-mb-8 lg:min-h-[calc(100dvh-3.25rem-1px-env(safe-area-inset-top)-max(var(--bottom-nav),env(safe-area-inset-bottom))-2rem)]">
       <PageHeader
         title="Chat"
-        description="Paste a job or profile link. knot reads it, you check the details, and it's saved to Applications or Contacts."
+        description="Paste a job or profile link. iamcandidate reads it, you check the details, and it's saved to Applications or Contacts."
         actions={
           items.length > 0 && (
             <Button variant="ghost" size="sm" className="text-muted-foreground" onClick={() => chatStore.clear()}>

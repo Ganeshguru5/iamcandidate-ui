@@ -2,7 +2,7 @@ import { API_URL } from "./config"
 import { clearSession, getSessionToken } from "./session-token"
 
 /**
- * Centralized HTTP client for the knot-server API. Every response uses the
+ * Centralized HTTP client for the iamcandidate-server API. Every response uses the
  * envelope `{ success, data, meta? }` / `{ success: false, error }`; this
  * client unwraps it and throws {@link ApiError} with a user-readable message.
  */

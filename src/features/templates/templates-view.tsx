@@ -78,7 +78,7 @@ const CHANNELS: Array<{
     value: "email",
     label: "Email",
     icon: MailIcon,
-    description: "Emails you send from knot, with variables like {{name}} and {{company}} that fill themselves in.",
+    description: "Emails you send from iamcandidate, with variables like {{name}} and {{company}} that fill themselves in.",
   },
   {
     value: "linkedin",

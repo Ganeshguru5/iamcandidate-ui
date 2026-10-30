@@ -5,8 +5,8 @@ import { LegalDocument, type LegalSection } from "@/features/marketing/legal-doc
 import { CONTACT_EMAIL } from "@/features/marketing/site-chrome"
 
 export const metadata: Metadata = {
-  title: { absolute: "Privacy policy · knot" },
-  description: "What knot collects, why, where it is stored and the choices you have.",
+  title: { absolute: "Privacy policy · iamcandidate" },
+  description: "What iamcandidate collects, why, where it is stored and the choices you have.",
 }
 
 const mail = <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
@@ -18,9 +18,9 @@ const SECTIONS: LegalSection[] = [
     body: (
       <>
         <p>
-          knot is a personal workspace for managing a job search:
+          iamcandidate is a personal workspace for managing a job search:
           applications, companies, contacts, referrals, interviews, resumes, documents, email, notes, skills,
-          certifications and links. It consists of the knot web app, the knot server (API) and the optional knot
+          certifications and links. It consists of the iamcandidate web app, the iamcandidate server (API) and the optional iamcandidate
           browser extension, together &ldquo;the Service&rdquo;.
         </p>
         <p>
@@ -61,7 +61,7 @@ const SECTIONS: LegalSection[] = [
         <p>
           If you connect Google Drive, we request the <code>drive.readonly</code>, <code>openid</code> and{" "}
           <code>email</code> scopes. We store an encrypted refresh token and your Google email address, list files
-          only when you browse them in knot, and copy a file into knot only when you choose to import it. We never
+          only when you browse them in iamcandidate, and copy a file into iamcandidate only when you choose to import it. We never
           write to, modify or delete anything in your Drive.
         </p>
         <h3>Browser extension</h3>
@@ -174,7 +174,7 @@ const SECTIONS: LegalSection[] = [
     body: (
       <>
         <p>
-          knot does not use advertising or tracking cookies. The web app uses your browser&apos;s local storage for
+          iamcandidate does not use advertising or tracking cookies. The web app uses your browser&apos;s local storage for
           your session token, theme and layout preferences. The extension stores its session token, server settings
           and an unsaved draft in the browser&apos;s extension storage. Sessions expire after 12 hours, and signing out
           removes them.
@@ -215,7 +215,7 @@ const SECTIONS: LegalSection[] = [
           <li>ask us for a copy of your data, a correction, or deletion of your account by writing to {mail}.</li>
         </ul>
         <p>
-          You can also revoke knot&apos;s access to Google at{" "}
+          You can also revoke iamcandidate&apos;s access to Google at{" "}
           <a href="https://myaccount.google.com/permissions" target="_blank" rel="noreferrer">
             myaccount.google.com/permissions
           </a>
@@ -268,11 +268,11 @@ export default function PrivacyPage() {
       intro={
         <p>
           Your workspace holds personal things — your resume, your contacts, your plans. This policy explains what
-          knot collects, why, where it is kept and how you stay in control.
+          iamcandidate collects, why, where it is kept and how you stay in control.
         </p>
       }
       highlights={[
-        "We collect only what you put in knot, plus what's needed to run it.",
+        "We collect only what you put in iamcandidate, plus what's needed to run it.",
         "We never sell your data, show you ads or use third-party trackers.",
         "Files are private and encrypted; secrets are encrypted with AES-256-GCM.",
         "Google Drive access is read-only, and the extension reads a page only when you open it.",

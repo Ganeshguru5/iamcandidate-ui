@@ -405,7 +405,7 @@ export interface ComposeEmailInput {
 
 export type TemplateCategory = "referral" | "outreach" | "follow_up" | "interview" | "other"
 
-/** Email templates are sent from knot; LinkedIn ones are copied into LinkedIn. */
+/** Email templates are sent from iamcandidate; LinkedIn ones are copied into LinkedIn. */
 export type TemplateChannel = "email" | "linkedin"
 
 export interface EmailTemplate extends Entity {
@@ -690,7 +690,7 @@ export interface Integration extends Entity {
 }
 
 /* ------------------------------------------------------------------ */
-/* Server-side integrations (API mode) — mirror knot-server/src/models */
+/* Server-side integrations (API mode) — mirror iamcandidate-server/src/models */
 /* ------------------------------------------------------------------ */
 
 export interface GoogleDriveStatus {
@@ -737,7 +737,7 @@ export interface GitHubRepo {
   stars: number
   defaultBranch: string
   pushedAt?: ISODate
-  /** Knot project linked to this repository. */
+  /** iamcandidate project linked to this repository. */
   projectId?: ID
 }
 
@@ -830,7 +830,7 @@ export interface IntegrationsOverview {
 }
 
 /* ------------------------------------------------------------------ */
-/* Pricing — mirrors knot-server/src/models                            */
+/* Pricing — mirrors iamcandidate-server/src/models                            */
 /* ------------------------------------------------------------------ */
 
 export type PricingCurrency = "INR" | "USD" | "EUR" | "GBP"
@@ -859,7 +859,7 @@ export interface PricingConfig {
 }
 
 /* ------------------------------------------------------------------ */
-/* Portfolio — mirrors knot-server/src/schemas/portfolio.ts            */
+/* Portfolio — mirrors iamcandidate-server/src/schemas/portfolio.ts            */
 /* ------------------------------------------------------------------ */
 
 /** A label/value row: the hero readout and agent-skill spec sheets. */
@@ -940,7 +940,7 @@ export interface PortfolioTestimonial {
   linkedin: string
 }
 
-/** Which knot resume the site's "Download résumé" links were synced from. */
+/** Which iamcandidate resume the site's "Download résumé" links were synced from. */
 export interface PortfolioResumeLink {
   resumeId: ID
   title: string

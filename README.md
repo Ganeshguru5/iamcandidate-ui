@@ -1,4 +1,4 @@
-# knot — frontend
+# iamcandidate — frontend
 
 A personal command center for documents, job search, communication and knowledge.
 
@@ -16,7 +16,7 @@ The service layer runs against one of two backends, chosen at build time (copy `
 | `NEXT_PUBLIC_API_MODE` | Data comes from |
 | --- | --- |
 | `mock` (default) | In-browser mocks persisted to `localStorage` — no backend needed. |
-| `api` | The AWS SAM backend in [`../knot-server`](../knot-server/README.md) at `NEXT_PUBLIC_API_URL`. |
+| `api` | The AWS SAM backend in [`../iamcandidate-server`](../iamcandidate-server/README.md) at `NEXT_PUBLIC_API_URL`. |
 
 In `api` mode, applications, companies, contacts, referrals, interviews, resumes, documents (real S3
 uploads via presigned URLs), projects, tasks, notes, skills, certifications, links, activity,
@@ -40,7 +40,7 @@ src/
   lib/
     types/        domain models
     mock/         centralized seed data (dates relative to "now")
-    api/          HTTP client for knot-server (envelope unwrapping, errors, presigned uploads)
+    api/          HTTP client for iamcandidate-server (envelope unwrapping, errors, presigned uploads)
     analytics/    dashboard aggregation used by the mock dashboard service
     services/     contracts.ts (interfaces) · api/ + mock/ (implementations) · index.ts (swap point)
     store/        shared query cache, session, theme, local preferences

@@ -136,15 +136,15 @@ export function seedPortfolio(): PortfolioContent {
     ],
     projects: [
       {
-        slug: "knot",
-        title: "knot — Job Search Command Centre",
+        slug: "iamcandidate",
+        title: "iamcandidate — Job Search Command Centre",
         description:
           "A personal operating system for a job search: applications, contacts, referrals, interviews, LaTeX resumes, documents and email in one place — on the web, in a browser extension and installed on iPhone.",
         detail: [
-          "knot replaces the spreadsheet, the inbox folders and the twelve open tabs that a job search usually turns into. Applications move through a Kanban pipeline with a timeline of every status change and follow-up, and contacts, referrals, interviews and documents hang off the right application.",
-          "Getting data in is the hard part, so knot reads it for you. A Chrome extension (Alt+K) pulls the role, company, location, salary and description from LinkedIn, Naukri, Indeed and the major applicant tracking systems. In the app, a Chat screen does the same from a pasted link — using Greenhouse, Lever, Ashby and Workday's public job APIs, LinkedIn's public pages and schema.org data — and turns LinkedIn or GitHub profile links into contacts. Every result lands on a review card first, with duplicate detection, so nothing is saved blindly.",
+          "iamcandidate replaces the spreadsheet, the inbox folders and the twelve open tabs that a job search usually turns into. Applications move through a Kanban pipeline with a timeline of every status change and follow-up, and contacts, referrals, interviews and documents hang off the right application.",
+          "Getting data in is the hard part, so iamcandidate reads it for you. A Chrome extension (Alt+K) pulls the role, company, location, salary and description from LinkedIn, Naukri, Indeed and the major applicant tracking systems. In the app, a Chat screen does the same from a pasted link — using Greenhouse, Lever, Ashby and Workday's public job APIs, LinkedIn's public pages and schema.org data — and turns LinkedIn or GitHub profile links into contacts. Every result lands on a review card first, with duplicate detection, so nothing is saved blindly.",
           "The backend is serverless on AWS: Lambda functions behind API Gateway, a single-table DynamoDB design and private S3 storage with presigned links. SMTP passwords and Google tokens are encrypted with AES-256-GCM, and the link reader refuses private and cloud-metadata addresses on every redirect so it can't be turned into a proxy.",
-          "On the phone, knot installs from Safari as a progressive web app with its own icon, launch screens and offline screen. A floating glass tab bar holds four pages you choose in a control centre, with everything else one tap away.",
+          "On the phone, iamcandidate installs from Safari as a progressive web app with its own icon, launch screens and offline screen. A floating glass tab bar holds four pages you choose in a control centre, with everything else one tap away.",
         ],
         highlights: [
           "Serverless AWS backend (Lambda, API Gateway, DynamoDB, S3) defined in SAM",

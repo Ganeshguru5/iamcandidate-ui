@@ -22,7 +22,7 @@ import { formatBytes } from "@/lib/utils/format"
 import { ApiOnlyNotice, IntegrationPageHeader, IQK, useAwsStatus } from "./integration-page"
 
 function policyFor(bucket: string, prefix: string) {
-  const path = `${prefix.replace(/^\/+|\/+$/g, "")}${prefix ? "/" : ""}knot-backup/*`
+  const path = `${prefix.replace(/^\/+|\/+$/g, "")}${prefix ? "/" : ""}iamcandidate-backup/*`
   return JSON.stringify(
     {
       Version: "2012-10-17",
@@ -71,7 +71,7 @@ function AwsBackup() {
       <IntegrationPageHeader
         id="aws"
         title="AWS S3 backup"
-        description="Keep your own copy of everything in knot: a JSON export of all your data plus every document file, in an S3 bucket you control."
+        description="Keep your own copy of everything in iamcandidate: a JSON export of all your data plus every document file, in an S3 bucket you control."
         connected={status?.connected}
         actions={
           status?.connected && !editing ? (
@@ -106,7 +106,7 @@ function AwsBackup() {
         open={disconnecting}
         onOpenChange={setDisconnecting}
         title="Disconnect S3 backup?"
-        description="knot forgets the access key. Backups already in your bucket stay there."
+        description="iamcandidate forgets the access key. Backups already in your bucket stay there."
         confirmLabel="Disconnect"
         onConfirm={() => disconnect.mutate()}
       />
@@ -133,7 +133,7 @@ function BucketForm({
   const [copied, setCopied] = useState(false)
   const save = useMutation((input: AwsBackupInput) => integrationsApi.aws.connect(input), {
     onSuccess: onSaved,
-    success: "Bucket connected — knot wrote a test file to it",
+    success: "Bucket connected — iamcandidate wrote a test file to it",
     error: "Couldn't connect the bucket",
   })
   const set = (key: keyof AwsBackupInput) => (event: React.ChangeEvent<HTMLInputElement>) =>
@@ -151,12 +151,12 @@ function BucketForm({
           }}
         >
           <Field label="Bucket" htmlFor="aws-bucket">
-            <Input id="aws-bucket" required value={values.bucket} onChange={set("bucket")} placeholder="my-knot-backups" />
+            <Input id="aws-bucket" required value={values.bucket} onChange={set("bucket")} placeholder="my-iamcandidate-backups" />
           </Field>
           <Field label="Region" htmlFor="aws-region">
             <Input id="aws-region" required value={values.region} onChange={set("region")} placeholder="ap-south-1" />
           </Field>
-          <Field label="Folder (optional)" htmlFor="aws-prefix" hint="Backups go under <folder>/knot-backup/." className="sm:col-span-2">
+          <Field label="Folder (optional)" htmlFor="aws-prefix" hint="Backups go under <folder>/iamcandidate-backup/." className="sm:col-span-2">
             <Input id="aws-prefix" value={values.prefix} onChange={set("prefix")} placeholder="personal" />
           </Field>
           <Field
@@ -169,7 +169,7 @@ function BucketForm({
           <Field
             label="Secret access key"
             htmlFor="aws-secret"
-            hint={status.connected ? "Leave empty to keep the saved secret." : "Stored encrypted on the knot server."}
+            hint={status.connected ? "Leave empty to keep the saved secret." : "Stored encrypted on the iamcandidate server."}
           >
             <Input id="aws-secret" type="password" autoComplete="off" value={values.secretAccessKey} onChange={set("secretAccessKey")} />
           </Field>
@@ -186,7 +186,7 @@ function BucketForm({
         </form>
       </Panel>
       <Panel
-        title="Create a key for knot"
+        title="Create a key for iamcandidate"
         description="Use an IAM user that can only write backups. Not your root keys."
         action={
           <Button
@@ -285,7 +285,7 @@ function BackupPanel({ status, onStatus }: { status: AwsBackupStatus; onStatus: 
         <DetailList>
           <DetailRow label="Location">
             <code className="text-xs break-all">
-              s3://{status.bucket}/{status.prefix}knot-backup/
+              s3://{status.bucket}/{status.prefix}iamcandidate-backup/
             </code>
           </DetailRow>
           <DetailRow label="Region">{status.region}</DetailRow>
