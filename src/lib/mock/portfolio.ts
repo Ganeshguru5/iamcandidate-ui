@@ -152,7 +152,7 @@ export function seedPortfolio(): PortfolioContent {
           "LaTeX resume editor compiled to PDF, Google Drive import and SMTP email templates",
           "Installable iPhone app (PWA) with a customisable glass tab bar and offline support",
         ],
-        image: "/Images/knot.png",
+        image: "/Images/iamcandidate.png",
         href: "https://knot-ui-eight.vercel.app",
         meta: "Live app",
         tags: ["Next.js", "TypeScript", "AWS Lambda", "DynamoDB", "PWA"],
