@@ -16,7 +16,7 @@ import {
 } from "lucide-react"
 import { z } from "zod"
 
-import { Brand } from "@/components/layout/brand"
+import { Brand, BrandName } from "@/components/layout/brand"
 import { Field } from "@/components/shared/form"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -147,14 +147,14 @@ export function LoginScreen() {
           </div>
 
           <div className="mt-4 flex items-center justify-between gap-3">
-            <p className="text-sm text-muted-foreground">iamcandidate is in development. No account yet?</p>
+            <p className="text-sm text-muted-foreground">IamCandidate is in development. No account yet?</p>
             <RequestAccessButton variant="outline" size="sm" />
           </div>
         </div>
         <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
           <p>
             {isApiMode
-              ? "Signed in to the iamcandidate API · ask your admin for an account."
+              ? "Signed in to the IamCandidate API · ask your admin for an account."
               : "Frontend prototype · all data is mock and stays in your browser."}
           </p>
           <p className="flex gap-3">
@@ -170,7 +170,7 @@ export function LoginScreen() {
           className="absolute inset-0 [background-image:radial-gradient(var(--border)_1px,transparent_1px)] [background-size:20px_20px] opacity-70"
         />
         <div className="relative flex h-full flex-col justify-center px-14">
-          <p className="text-sm font-medium text-brand">iamcandidate</p>
+          <BrandName className="block text-sm font-semibold tracking-tight" />
           <h2 className="mt-3 max-w-md text-3xl font-semibold tracking-tight text-balance">
             Your job search, documents and knowledge — in one calm place.
           </h2>

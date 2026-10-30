@@ -1,4 +1,4 @@
-# iamcandidate — frontend
+# IamCandidate — frontend
 
 A personal command center for documents, job search, communication and knowledge.
 

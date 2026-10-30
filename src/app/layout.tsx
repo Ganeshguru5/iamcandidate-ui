@@ -19,16 +19,16 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "iamcandidate",
-    template: "%s · iamcandidate",
+    default: "IamCandidate",
+    template: "%s · IamCandidate",
   },
   description: "A personal command center for documents, job search, communication and knowledge.",
-  applicationName: "iamcandidate",
+  applicationName: "IamCandidate",
   // Installed to the iOS home screen: full screen, content drawn under the
   // status bar (see the safe-area padding in the shell and headers).
   appleWebApp: {
     capable: true,
-    title: "iamcandidate",
+    title: "IamCandidate",
     statusBarStyle: "black-translucent",
     startupImage: SPLASH_SCREENS,
   },

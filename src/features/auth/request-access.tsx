@@ -77,7 +77,7 @@ function RequestAccessFields({ form, idPrefix }: { form: UseFormReturn<Values>; 
         <Input id={id("confirm")} type="password" autoComplete="new-password" {...register("confirm")} />
       </Field>
       <Field label="Anything to add? (optional)" htmlFor={id("message")} error={errors.message?.message}>
-        <Textarea id={id("message")} rows={3} placeholder="What you'd like to use iamcandidate for" {...register("message")} />
+        <Textarea id={id("message")} rows={3} placeholder="What you'd like to use IamCandidate for" {...register("message")} />
       </Field>
     </>
   )
@@ -108,7 +108,7 @@ export function RequestAccessDialog({ onOpenChange }: { onOpenChange: (open: boo
       open
       onOpenChange={onOpenChange}
       title="Request access"
-      description="iamcandidate is in development. Ask for an account and the admin will review it."
+      description="IamCandidate is in development. Ask for an account and the admin will review it."
       submitLabel="Send request"
       pendingLabel="Sending…"
       pending={pending}

@@ -2,7 +2,7 @@ import Link from "next/link"
 import { ArrowRightIcon } from "lucide-react"
 import { cn } from "cn"
 
-import { BrandMark } from "@/components/layout/brand"
+import { BrandMark, BrandName } from "@/components/layout/brand"
 import { buttonVariants } from "@/components/ui/button"
 
 export const CONTACT_EMAIL = "ganeshguru8681@gmail.com"
@@ -21,7 +21,7 @@ export function SiteHeader() {
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
         <Link href="/" className="flex items-center gap-2.5">
           <BrandMark />
-          <span className="text-[15px] font-semibold tracking-tight">iamcandidate</span>
+          <BrandName className="text-[15px] font-semibold tracking-tight" />
         </Link>
         <nav className="hidden items-center gap-1 md:flex">
           {NAV.map((item) => (
@@ -72,7 +72,7 @@ export function SiteFooter() {
         <div>
           <div className="flex items-center gap-2.5">
             <BrandMark />
-            <span className="text-[15px] font-semibold tracking-tight">iamcandidate</span>
+            <BrandName className="text-[15px] font-semibold tracking-tight" />
           </div>
           <p className="mt-3 max-w-xs text-sm text-muted-foreground">
             A personal operating system for your job search, documents and knowledge.
@@ -101,7 +101,7 @@ export function SiteFooter() {
       </div>
       <div className="border-t">
         <div className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-5 text-xs text-muted-foreground sm:flex-row sm:justify-between sm:px-6">
-          <p>© 2026 iamcandidate. All rights reserved.</p>
+          <p>© 2026 IamCandidate. All rights reserved.</p>
           <p>Built with Next.js, AWS Lambda and DynamoDB.</p>
         </div>
       </div>

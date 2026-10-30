@@ -36,9 +36,9 @@ import { AppShowcase } from "@/features/marketing/showcase"
 import { WorkflowTabs } from "@/features/marketing/workflow-tabs"
 
 export const metadata: Metadata = {
-  title: { absolute: "iamcandidate — your job search, untangled" },
+  title: { absolute: "IamCandidate — your job search, untangled" },
   description:
-    "Track applications, referrals, interviews, resumes, documents and notes in one calm place. Paste a job or profile link into Chat, capture jobs with the browser extension, and install iamcandidate on your iPhone.",
+    "Track applications, referrals, interviews, resumes, documents and notes in one calm place. Paste a job or profile link into Chat, capture jobs with the browser extension, and install IamCandidate on your iPhone.",
 }
 
 export default function LandingPage() {
@@ -141,7 +141,7 @@ function Hero() {
           </div>
           <div className="hero-in lg:pb-2" style={{ "--reveal-delay": "180ms" } as React.CSSProperties}>
             <p className="text-base text-pretty text-muted-foreground sm:text-lg">
-              iamcandidate ties applications, people, interviews, resumes and documents together — and reads every job link you
+              IamCandidate ties applications, people, interviews, resumes and documents together — and reads every job link you
               paste, so the busywork is done before you start.
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
@@ -219,7 +219,7 @@ function Capture() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeading
           eyebrow="Capture"
-          title="Paste a link. iamcandidate fills in the rest."
+          title="Paste a link. IamCandidate fills in the rest."
           text="Job postings and profiles become applications and contacts in seconds — from Chat, from the browser, or from your phone."
         />
         <Reveal className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
@@ -312,7 +312,7 @@ function Tour() {
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeading
           eyebrow="The workspace"
-          title="Run your whole search, with iamcandidate in every step"
+          title="Run your whole search, with IamCandidate in every step"
           text="From the first saved posting to the signed offer: a dashboard, a pipeline, your referrers and your interview calendar, always in sync."
         />
         <AppShowcase className="mt-14" />
@@ -330,7 +330,7 @@ function Workflows() {
         <SectionHeading
           eyebrow="Less busywork"
           title="Take care of the small things that move a search forward"
-          text="The follow-ups, the outreach, the tailored resumes — iamcandidate handles the dozens of small tasks between “applied” and “offer”."
+          text="The follow-ups, the outreach, the tailored resumes — IamCandidate handles the dozens of small tasks between “applied” and “offer”."
         />
         <WorkflowTabs />
       </div>
@@ -419,9 +419,9 @@ function Mobile() {
           <Eyebrow className="inline-flex items-center gap-2">
             <SmartphoneIcon className="size-4" /> On your phone
           </Eyebrow>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">Install iamcandidate like an app.</h2>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">Install IamCandidate like an app.</h2>
           <p className="mt-4 text-base text-pretty text-muted-foreground">
-            Add iamcandidate to your iPhone&apos;s home screen from Safari and it opens full screen, with its own icon and
+            Add IamCandidate to your iPhone&apos;s home screen from Safari and it opens full screen, with its own icon and
             launch screen. Your four favourite pages sit in a glass tab bar; everything else is one tap away.
           </p>
           <CheckList
@@ -501,7 +501,7 @@ const SECURITY = [
   {
     icon: ShieldCheckIcon,
     title: "Read-only Drive",
-    text: "The Google Drive connection can only read. iamcandidate never writes to, or deletes from, your Drive.",
+    text: "The Google Drive connection can only read. IamCandidate never writes to, or deletes from, your Drive.",
   },
 ]
 
@@ -512,7 +512,7 @@ function Proof() {
         <SectionHeading
           eyebrow="Private by design"
           title="A career archive deserves care"
-          text="Resumes, offer letters and contacts are personal. iamcandidate is built so they stay that way."
+          text="Resumes, offer letters and contacts are personal. IamCandidate is built so they stay that way."
         />
         <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {STATS.map((stat, index) => (
@@ -616,7 +616,7 @@ function ClosingCta() {
           </p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Link href="/dashboard" className={cn(buttonVariants({ size: "lg" }), PILL)}>
-              Open iamcandidate <ArrowRightIcon />
+              Open IamCandidate <ArrowRightIcon />
             </Link>
           </div>
         </div>

@@ -28,12 +28,22 @@ export function BrandMark({ className }: { className?: string }) {
   )
 }
 
+/** The wordmark: "Iam" in the theme teal, "Candidate" in ink. */
+export function BrandName({ className }: { className?: string }) {
+  return (
+    <span className={className}>
+      <span className="text-brand">Iam</span>
+      <span className="text-foreground">Candidate</span>
+    </span>
+  )
+}
+
 export function Brand({ collapsed = false, compact = false }: { collapsed?: boolean; compact?: boolean }) {
   if (compact) {
     return (
       <div className="flex items-center gap-2">
         <BrandMark className="size-5 rounded-md [&_svg]:size-3" />
-        <p className="text-[13px] font-semibold tracking-tight">iamcandidate</p>
+        <BrandName className="text-[13px] font-semibold tracking-tight" />
       </div>
     )
   }
@@ -42,7 +52,7 @@ export function Brand({ collapsed = false, compact = false }: { collapsed?: bool
       <BrandMark />
       {!collapsed && (
         <div className="leading-tight">
-          <p className="text-sm font-semibold tracking-tight">iamcandidate</p>
+          <BrandName className="block text-sm font-semibold tracking-tight" />
           <p className="text-[11px] text-muted-foreground">Command center</p>
         </div>
       )}

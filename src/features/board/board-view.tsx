@@ -144,7 +144,7 @@ export function BoardView() {
       {!isApiMode && (
         <p className="mb-3 flex items-center gap-2 text-xs text-muted-foreground">
           <CloudOffIcon className="size-3.5 shrink-0" />
-          Demo mode: the board stays in this browser. Connect iamcandidate to the API to sync it across systems.
+          Demo mode: the board stays in this browser. Connect IamCandidate to the API to sync it across systems.
         </p>
       )}
 

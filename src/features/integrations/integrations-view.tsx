@@ -55,9 +55,9 @@ const LABELS: Partial<Record<IntegrationId, { account: string; synced: string }>
 const DISCONNECT_TEXT: Partial<Record<IntegrationId, string>> = {
   smtp: "You won't be able to send emails until you reconnect.",
   google_drive: "Drive files will no longer be browsable or importable.",
-  google_calendar: "iamcandidate stops updating your calendar. Events it already added stay; remove them from the Google Calendar page instead.",
-  github: "iamcandidate forgets your token. Projects keep their repository links.",
-  aws: "iamcandidate forgets the access key. Backups already in your bucket stay there.",
+  google_calendar: "IamCandidate stops updating your calendar. Events it already added stay; remove them from the Google Calendar page instead.",
+  github: "IamCandidate forgets your token. Projects keep their repository links.",
+  aws: "IamCandidate forgets the access key. Backups already in your bucket stay there.",
 }
 
 /** The main action for a connected integration, besides Disconnect. */

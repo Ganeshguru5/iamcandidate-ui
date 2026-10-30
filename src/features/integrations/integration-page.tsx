@@ -89,7 +89,7 @@ export function ApiOnlyNotice({ name }: { name: string }) {
   return (
     <EmptyState
       icon={ServerIcon}
-      title={`${name} needs the iamcandidate server`}
+      title={`${name} needs the IamCandidate server`}
       description="This prototype is running on demo data. Set NEXT_PUBLIC_API_MODE=api and connect to iamcandidate-server to use this integration."
     />
   )

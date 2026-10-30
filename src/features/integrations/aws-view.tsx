@@ -71,7 +71,7 @@ function AwsBackup() {
       <IntegrationPageHeader
         id="aws"
         title="AWS S3 backup"
-        description="Keep your own copy of everything in iamcandidate: a JSON export of all your data plus every document file, in an S3 bucket you control."
+        description="Keep your own copy of everything in IamCandidate: a JSON export of all your data plus every document file, in an S3 bucket you control."
         connected={status?.connected}
         actions={
           status?.connected && !editing ? (
@@ -106,7 +106,7 @@ function AwsBackup() {
         open={disconnecting}
         onOpenChange={setDisconnecting}
         title="Disconnect S3 backup?"
-        description="iamcandidate forgets the access key. Backups already in your bucket stay there."
+        description="IamCandidate forgets the access key. Backups already in your bucket stay there."
         confirmLabel="Disconnect"
         onConfirm={() => disconnect.mutate()}
       />
@@ -133,7 +133,7 @@ function BucketForm({
   const [copied, setCopied] = useState(false)
   const save = useMutation((input: AwsBackupInput) => integrationsApi.aws.connect(input), {
     onSuccess: onSaved,
-    success: "Bucket connected — iamcandidate wrote a test file to it",
+    success: "Bucket connected — IamCandidate wrote a test file to it",
     error: "Couldn't connect the bucket",
   })
   const set = (key: keyof AwsBackupInput) => (event: React.ChangeEvent<HTMLInputElement>) =>
@@ -169,7 +169,7 @@ function BucketForm({
           <Field
             label="Secret access key"
             htmlFor="aws-secret"
-            hint={status.connected ? "Leave empty to keep the saved secret." : "Stored encrypted on the iamcandidate server."}
+            hint={status.connected ? "Leave empty to keep the saved secret." : "Stored encrypted on the IamCandidate server."}
           >
             <Input id="aws-secret" type="password" autoComplete="off" value={values.secretAccessKey} onChange={set("secretAccessKey")} />
           </Field>
@@ -186,7 +186,7 @@ function BucketForm({
         </form>
       </Panel>
       <Panel
-        title="Create a key for iamcandidate"
+        title="Create a key for IamCandidate"
         description="Use an IAM user that can only write backups. Not your root keys."
         action={
           <Button

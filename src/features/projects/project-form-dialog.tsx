@@ -77,7 +77,7 @@ export function ProjectFormDialog({
       onSubmit={onSubmit}
     >
       <Field label="Name" htmlFor="p-name" error={errors.name?.message}>
-        <Input id="p-name" placeholder="iamcandidate" aria-invalid={!!errors.name} {...register("name")} />
+        <Input id="p-name" placeholder="IamCandidate" aria-invalid={!!errors.name} {...register("name")} />
       </Field>
       <Field label="Description" htmlFor="p-desc">
         <Textarea id="p-desc" rows={3} {...register("description")} />

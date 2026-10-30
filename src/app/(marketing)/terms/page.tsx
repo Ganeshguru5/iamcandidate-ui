@@ -5,8 +5,8 @@ import { LegalDocument, type LegalSection } from "@/features/marketing/legal-doc
 import { CONTACT_EMAIL } from "@/features/marketing/site-chrome"
 
 export const metadata: Metadata = {
-  title: { absolute: "Terms & conditions · iamcandidate" },
-  description: "The rules for using iamcandidate, its browser extension and API.",
+  title: { absolute: "Terms & conditions · IamCandidate" },
+  description: "The rules for using IamCandidate, its browser extension and API.",
 }
 
 const mail = <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
@@ -18,8 +18,8 @@ const SECTIONS: LegalSection[] = [
     body: (
       <>
         <p>
-          These terms are an agreement between you and the developer of iamcandidate (&ldquo;we&rdquo;, &ldquo;us&rdquo;)
-          covering the iamcandidate web app, API and browser extension (the &ldquo;Service&rdquo;). By using the Service you
+          These terms are an agreement between you and the developer of IamCandidate (&ldquo;we&rdquo;, &ldquo;us&rdquo;)
+          covering the IamCandidate web app, API and browser extension (the &ldquo;Service&rdquo;). By using the Service you
           accept these terms and our <Link href="/privacy">privacy policy</Link>. If you don&apos;t agree, please
           don&apos;t use the Service.
         </p>
@@ -48,7 +48,7 @@ const SECTIONS: LegalSection[] = [
     body: (
       <>
         <p>
-          You own everything you add to iamcandidate — applications, resumes, documents, notes, contacts and the rest
+          You own everything you add to IamCandidate — applications, resumes, documents, notes, contacts and the rest
           (&ldquo;Your Content&rdquo;). You give us a limited permission to store, process, display and transmit Your
           Content only as needed to run the Service for you, for example to compile your resume or send an email you
           wrote.
@@ -92,12 +92,12 @@ const SECTIONS: LegalSection[] = [
     body: (
       <>
         <p>
-          iamcandidate can work with services you connect, such as your SMTP mailbox and Google Drive. Your use of those
+          IamCandidate can work with services you connect, such as your SMTP mailbox and Google Drive. Your use of those
           services is governed by their own terms. Emails are sent from your mailbox, so you are the sender and are
           responsible for their content and for your provider&apos;s sending limits.
         </p>
         <p>
-          We are not responsible for third-party services, their availability, or changes they make that affect iamcandidate
+          We are not responsible for third-party services, their availability, or changes they make that affect IamCandidate
           — for example, a job site changing its layout so a field is no longer detected.
         </p>
       </>
@@ -108,7 +108,7 @@ const SECTIONS: LegalSection[] = [
     title: "The browser extension",
     body: (
       <p>
-        The extension is provided for saving job postings and referrals to your own iamcandidate account. It reads a page only
+        The extension is provided for saving job postings and referrals to your own IamCandidate account. It reads a page only
         when you open it and shows you what it found before anything is saved. Detected details may be incomplete or
         wrong; please check them before saving.
       </p>
@@ -131,11 +131,11 @@ const SECTIONS: LegalSection[] = [
     body: (
       <>
         <p>
-          We work to keep iamcandidate available and your data safe, but the Service may be interrupted for maintenance, by
+          We work to keep IamCandidate available and your data safe, but the Service may be interrupted for maintenance, by
           failures, or by events outside our control. Features may be added, changed or removed.
         </p>
         <p>
-          <strong>Keep your own copies</strong> of important documents. iamcandidate is a workspace, not a guaranteed backup
+          <strong>Keep your own copies</strong> of important documents. IamCandidate is a workspace, not a guaranteed backup
           service.
         </p>
       </>
@@ -157,7 +157,7 @@ const SECTIONS: LegalSection[] = [
     body: (
       <>
         <p>
-          You may stop using iamcandidate at any time and ask us to delete your account at {mail}. We may suspend or close an
+          You may stop using IamCandidate at any time and ask us to delete your account at {mail}. We may suspend or close an
           account that breaches these terms or puts the Service or other users at risk, and, where reasonable, we will
           tell you why first.
         </p>
@@ -176,7 +176,7 @@ const SECTIONS: LegalSection[] = [
       <p>
         The Service is provided <strong>&ldquo;as is&rdquo; and &ldquo;as available&rdquo;</strong>, without warranties
         of any kind, whether express or implied, including merchantability, fitness for a particular purpose and
-        non-infringement. iamcandidate helps you organise your job search; it does not guarantee interviews, offers or any
+        non-infringement. IamCandidate helps you organise your job search; it does not guarantee interviews, offers or any
         employment outcome, and it is not career, legal or financial advice.
       </p>
     ),
@@ -241,16 +241,16 @@ export default function TermsPage() {
       updated="October 21, 2026"
       intro={
         <p>
-          The ground rules for using iamcandidate, written to be read. In short: your content is yours, use the Service fairly,
+          The ground rules for using IamCandidate, written to be read. In short: your content is yours, use the Service fairly,
           and keep copies of anything you can&apos;t afford to lose.
         </p>
       }
       highlights={[
-        "You own everything you add to iamcandidate.",
+        "You own everything you add to IamCandidate.",
         "We use your content only to run the Service for you.",
         "No spam, scraping at scale, or attempts to access others' data.",
         "Emails go out from your own mailbox, so you're the sender.",
-        "iamcandidate is free today; any paid feature would need your agreement first.",
+        "IamCandidate is free today; any paid feature would need your agreement first.",
         "Provided as is — keep your own copies of important files.",
       ]}
       sections={SECTIONS}

@@ -57,7 +57,7 @@ export function seedPricing(): PricingConfig {
           "Priority support",
         ],
         ctaLabel: "Contact us",
-        ctaHref: "mailto:hello@example.com?subject=iamcandidate%20Coach",
+        ctaHref: "mailto:hello@example.com?subject=IamCandidate%20Coach",
         highlighted: false,
         visible: true,
       },

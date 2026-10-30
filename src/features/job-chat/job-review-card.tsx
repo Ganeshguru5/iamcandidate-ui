@@ -201,7 +201,7 @@ function ReviewForm({
 
         {duplicate && (
           <DuplicateNotice>
-            Already in iamcandidate: {duplicate.role} ({applicationStatus(duplicate.status).label}).{" "}
+            Already in IamCandidate: {duplicate.role} ({applicationStatus(duplicate.status).label}).{" "}
             <Link
               href={`/career/applications/${encodeURIComponent(duplicate.id)}`}
               className="font-medium text-brand hover:underline"

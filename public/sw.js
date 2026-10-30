@@ -1,4 +1,4 @@
-// iamcandidate service worker: makes the app installable and keeps it usable on a
+// IamCandidate service worker: makes the app installable and keeps it usable on a
 // flaky connection. Pages always come from the network (data is per-user and
 // lives behind the API), with an offline screen when that fails; hashed build
 // assets and icons are cached so the shell loads instantly. API requests go to

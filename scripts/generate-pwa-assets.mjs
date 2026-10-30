@@ -1,5 +1,5 @@
 /**
- * Renders the PWA icons and iOS launch screens from the iamcandidate brand mark
+ * Renders the PWA icons and iOS launch screens from the IamCandidate brand mark
  * (src/components/layout/brand.tsx). Re-run after changing the mark:
  *
  *   npm run pwa:assets

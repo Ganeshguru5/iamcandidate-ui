@@ -405,7 +405,7 @@ export interface ComposeEmailInput {
 
 export type TemplateCategory = "referral" | "outreach" | "follow_up" | "interview" | "other"
 
-/** Email templates are sent from iamcandidate; LinkedIn ones are copied into LinkedIn. */
+/** Email templates are sent from IamCandidate; LinkedIn ones are copied into LinkedIn. */
 export type TemplateChannel = "email" | "linkedin"
 
 export interface EmailTemplate extends Entity {
@@ -737,7 +737,7 @@ export interface GitHubRepo {
   stars: number
   defaultBranch: string
   pushedAt?: ISODate
-  /** iamcandidate project linked to this repository. */
+  /** IamCandidate project linked to this repository. */
   projectId?: ID
 }
 
@@ -940,7 +940,7 @@ export interface PortfolioTestimonial {
   linkedin: string
 }
 
-/** Which iamcandidate resume the site's "Download résumé" links were synced from. */
+/** Which IamCandidate resume the site's "Download résumé" links were synced from. */
 export interface PortfolioResumeLink {
   resumeId: ID
   title: string

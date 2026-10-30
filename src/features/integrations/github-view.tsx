@@ -47,7 +47,7 @@ import { GitHubActivitySheet } from "./github-activity-sheet"
 import { ApiOnlyNotice, IntegrationPageHeader, IQK, useGitHubRepos, useGitHubStatus } from "./integration-page"
 
 const TOKEN_URL =
-  "https://github.com/settings/personal-access-tokens/new?name=iamcandidate&description=Read+repositories+for+iamcandidate"
+  "https://github.com/settings/personal-access-tokens/new?name=IamCandidate&description=Read+repositories+for+IamCandidate"
 
 export function GitHubView() {
   if (!isApiMode) {
@@ -103,7 +103,7 @@ function GitHub() {
         open={disconnecting}
         onOpenChange={setDisconnecting}
         title="Disconnect GitHub?"
-        description="iamcandidate forgets your token. Projects keep their repository links. Delete the token on GitHub too if you no longer need it."
+        description="IamCandidate forgets your token. Projects keep their repository links. Delete the token on GitHub too if you no longer need it."
         confirmLabel="Disconnect"
         onConfirm={() => disconnect.mutate()}
       />
@@ -128,7 +128,7 @@ function ConnectForm({ onConnected }: { onConnected: (s: GitHubStatus) => void }
             if (token.trim()) void connect.mutate(token.trim())
           }}
         >
-          <Field label="Token" htmlFor="gh-token" hint="Stored encrypted on the iamcandidate server. Never shown again." error={connect.error ?? undefined}>
+          <Field label="Token" htmlFor="gh-token" hint="Stored encrypted on the IamCandidate server. Never shown again." error={connect.error ?? undefined}>
             <Input
               id="gh-token"
               type="password"
@@ -152,14 +152,14 @@ function ConnectForm({ onConnected }: { onConnected: (s: GitHubStatus) => void }
             </a>
             .
           </li>
-          <li>Choose the repositories iamcandidate may see (all, or only some).</li>
+          <li>Choose the repositories IamCandidate may see (all, or only some).</li>
           <li>
             Under Repository permissions, set <span className="text-foreground">Contents</span>,{" "}
             <span className="text-foreground">Metadata</span> and <span className="text-foreground">Pull requests</span> to Read-only.
           </li>
           <li>Generate the token and paste it here.</li>
         </ol>
-        <p className="mt-3 text-xs text-muted-foreground">iamcandidate only reads. It never pushes code or changes your repositories.</p>
+        <p className="mt-3 text-xs text-muted-foreground">IamCandidate only reads. It never pushes code or changes your repositories.</p>
       </Panel>
     </div>
   )
