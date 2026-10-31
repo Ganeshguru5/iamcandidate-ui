@@ -436,6 +436,18 @@ export interface AutofillAnswer {
   updatedAt?: ISODate
 }
 
+/** One job in an autofill work history; dates are "YYYY-MM", "" when not set. */
+export interface AutofillJob {
+  title: string
+  company: string
+  location: string
+  startDate: string
+  endDate: string
+  /** Still working here: the end date is left empty. */
+  current: boolean
+  description: string
+}
+
 /** What the browser extension types into job application forms. Same shape as the server's. */
 export interface AutofillProfile {
   firstName: string
@@ -471,6 +483,8 @@ export interface AutofillProfile {
   veteran: string
   summary: string
   coverLetter: string
+  /** Every job, latest first, for forms that ask for your work history. */
+  experience: AutofillJob[]
   answers: AutofillAnswer[]
   updatedAt?: ISODate
 }

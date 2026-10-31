@@ -199,7 +199,7 @@ export class MockSettingsService implements SettingsService {
   async getAutofill(): Promise<AutofillProfile> {
     await delay(200)
     const saved = read("autofill")
-    if (saved) return saved
+    if (saved) return { ...EMPTY_AUTOFILL, ...saved }
     const profile = read("profile")
     const [firstName = "", ...rest] = profile.name.trim().split(/\s+/)
     return {

@@ -1,24 +1,35 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import { Controller, useFieldArray, useForm, useWatch, type FieldErrors, type UseFormRegister } from "react-hook-form"
+import {
+  Controller,
+  useFieldArray,
+  useForm,
+  useWatch,
+  type Control,
+  type FieldErrors,
+  type UseFormRegister,
+} from "react-hook-form"
 import { FileTextIcon, Loader2Icon, PlusIcon, SaveIcon, SearchIcon, Trash2Icon, WandSparklesIcon } from "lucide-react"
 import { toast } from "sonner"
 import { z } from "zod"
 
+import { ErrorState } from "@/components/shared/empty-state"
 import { Field, SimpleSelect } from "@/components/shared/form"
 import { PageHeader } from "@/components/shared/page-header"
 import { Panel } from "@/components/shared/panel"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { Progress } from "@/components/ui/progress"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Textarea } from "@/components/ui/textarea"
-import { detailsFromResume, EMPTY_AUTOFILL, type AutofillTextField } from "@/lib/autofill"
+import { detailsFromResume, EMPTY_AUTOFILL, EMPTY_JOB, jobsFromResume, type AutofillTextField } from "@/lib/autofill"
 import { settingsService } from "@/lib/services"
 import { QK, useAutofill, useResumes } from "@/lib/store/queries"
 import { setQueryData, useMutation } from "@/lib/store/query"
-import type { AutofillProfile } from "@/lib/types"
+import type { AutofillJob, AutofillProfile } from "@/lib/types"
 import { zodResolver } from "@/lib/utils/zod-resolver"
 
 const optionalUrl = z
@@ -27,6 +38,8 @@ const optionalUrl = z
   .refine((value) => !value || /^https?:\/\/\S+$/i.test(value), "Enter a full link starting with https://")
 
 const yesNo = z.enum(["yes", "no", ""])
+
+const yearMonth = z.string().refine((value) => !value || /^(19|20)\d{2}-(0[1-9]|1[0-2])$/.test(value), "Pick a month")
 
 const schema = z.object({
   firstName: z.string().trim(),
@@ -62,6 +75,23 @@ const schema = z.object({
   veteran: z.string().trim(),
   summary: z.string().max(5000, "Keep it under 5,000 characters"),
   coverLetter: z.string().max(20_000, "Keep it under 20,000 characters"),
+  experience: z.array(
+    z
+      .object({
+        title: z.string().trim(),
+        company: z.string().trim(),
+        location: z.string().trim(),
+        startDate: yearMonth,
+        endDate: yearMonth,
+        current: z.boolean(),
+        description: z.string().max(5000, "Keep it under 5,000 characters"),
+      })
+      .refine((job) => job.title || job.company, { message: "Add a title or company", path: ["title"] })
+      .refine((job) => job.current || !job.startDate || !job.endDate || job.endDate >= job.startDate, {
+        message: "Ends before it starts",
+        path: ["endDate"],
+      }),
+  ),
   answers: z.array(
     z.object({
       id: z.string().optional(),
@@ -98,19 +128,22 @@ function toValues(profile: AutofillProfile): Values {
   return {
     ...EMPTY_AUTOFILL,
     ...profile,
+    experience: (profile.experience ?? []).map((job) => ({ ...EMPTY_JOB, ...job })),
     answers: profile.answers.map(({ id, question, answer }) => ({ id, question, answer })),
   }
 }
 
 export function AutofillView() {
-  const { data: profile } = useAutofill()
+  const { data: profile, error, refetch } = useAutofill()
   return (
     <div>
       <PageHeader
         title="Autofill"
         description="What the IamCandidate browser extension types into job application forms. Fill it once; every application uses it."
       />
-      {profile ? (
+      {error ? (
+        <ErrorState message={error} onRetry={refetch} />
+      ) : profile ? (
         <AutofillForm key={profile.updatedAt ?? "new"} profile={profile} />
       ) : (
         <Skeleton className="h-[32rem] max-w-3xl rounded-xl" />
@@ -130,17 +163,19 @@ function AutofillForm({ profile }: { profile: AutofillProfile }) {
     defaultValues: toValues(profile),
   })
   const answers = useFieldArray({ control, name: "answers" })
+  const jobs = useFieldArray({ control, name: "experience" })
   const errors = formState.errors
   const values = useWatch({ control }) as Values
   const filled = CORE_FIELDS.filter((key) => String(values[key] ?? "").trim()).length
 
   const onSubmit = handleSubmit(async (next) => {
-    const result = await save.mutate({ ...EMPTY_AUTOFILL, ...next })
+    const experience = next.experience.map((job) => ({ ...job, endDate: job.current ? "" : job.endDate }))
+    const result = await save.mutate({ ...EMPTY_AUTOFILL, ...next, experience })
     if (result) reset(toValues(result))
   })
 
-  /** Copies what the resume says into fields that are still empty. */
-  const fillFrom = (details: Partial<Record<AutofillTextField, string>>, title: string) => {
+  /** Copies what the resume says into fields that are still empty, and its jobs into an empty work history. */
+  const fillFrom = (details: Partial<Record<AutofillTextField, string>>, history: AutofillJob[], title: string) => {
     const current = getValues()
     const changed = Object.entries(details).filter(
       ([key, value]) => value?.trim() && !String(current[key as AutofillTextField] ?? "").trim(),
@@ -148,8 +183,14 @@ function AutofillForm({ profile }: { profile: AutofillProfile }) {
     for (const [key, value] of changed) {
       setValue(key as AutofillTextField, value as never, { shouldDirty: true })
     }
-    if (changed.length) {
-      toast.success(`Filled ${changed.length} field${changed.length === 1 ? "" : "s"} from “${title}”`, {
+    const addJobs = !current.experience.length && history.length > 0
+    if (addJobs) jobs.replace(history)
+    const parts = [
+      changed.length ? `${changed.length} field${changed.length === 1 ? "" : "s"}` : "",
+      addJobs ? `${history.length} job${history.length === 1 ? "" : "s"}` : "",
+    ].filter(Boolean)
+    if (parts.length) {
+      toast.success(`Filled ${parts.join(" and ")} from “${title}”`, {
         description: "Check them, then save.",
       })
     } else {
@@ -243,6 +284,16 @@ function AutofillForm({ profile }: { profile: AutofillProfile }) {
         </div>
       </Panel>
 
+      <WorkHistoryPanel
+        fields={jobs.fields}
+        control={control}
+        register={register}
+        errors={errors.experience}
+        values={values.experience}
+        onAdd={() => jobs.append({ ...EMPTY_JOB })}
+        onRemove={jobs.remove}
+      />
+
       <Panel title="Work eligibility" description="Answers to the yes/no questions most applications ask.">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           {choice("workAuthorization", "Authorized to work where you're applying?")}
@@ -310,8 +361,12 @@ function AutofillForm({ profile }: { profile: AutofillProfile }) {
   )
 }
 
-/** Picks a resume and copies its role, experience, education and summary into empty fields. */
-function ResumeFill({ onFill }: { onFill: (details: Partial<Record<AutofillTextField, string>>, title: string) => void }) {
+/** Picks a resume and copies its role, jobs, education and summary into empty fields. */
+function ResumeFill({
+  onFill,
+}: {
+  onFill: (details: Partial<Record<AutofillTextField, string>>, jobs: AutofillJob[], title: string) => void
+}) {
   const { data: resumes } = useResumes()
   const usable = useMemo(
     () => (resumes ?? []).filter((r) => r.experience.length || r.education.length || r.summary.trim()),
@@ -337,10 +392,112 @@ function ResumeFill({ onFill }: { onFill: (details: Partial<Record<AutofillTextF
           options={usable.map((r) => ({ value: r.id, label: r.title }))}
         />
       )}
-      <Button type="button" variant="outline" size="sm" onClick={() => onFill(detailsFromResume(resume), resume.title)}>
+      <Button type="button" variant="outline" size="sm" onClick={() => onFill(detailsFromResume(resume), jobsFromResume(resume), resume.title)}>
         <WandSparklesIcon /> Fill empty fields from resume
       </Button>
     </div>
+  )
+}
+
+/** Every job, each with its own dates, for forms that ask for experience one job at a time. */
+function WorkHistoryPanel({
+  fields,
+  control,
+  register,
+  errors,
+  values,
+  onAdd,
+  onRemove,
+}: {
+  fields: Array<{ id: string }>
+  control: Control<Values>
+  register: UseFormRegister<Values>
+  errors: FieldErrors<Values>["experience"]
+  values: Values["experience"]
+  onAdd: () => void
+  onRemove: (index: number) => void
+}) {
+  return (
+    <Panel
+      title={`Work history${fields.length ? ` · ${fields.length}` : ""}`}
+      description="Every job, latest first, for forms that ask for your experience one job at a time."
+      action={
+        <Button type="button" variant="outline" size="sm" onClick={onAdd}>
+          <PlusIcon /> Add job
+        </Button>
+      }
+    >
+      {!fields.length ? (
+        <p className="text-sm text-muted-foreground">No jobs yet. Add each one, or fill them from a resume above.</p>
+      ) : (
+        <ol className="divide-y">
+          {fields.map((field, index) => {
+            const job = values?.[index]
+            const error = errors?.[index]
+            const id = (name: string) => `af-job-${field.id}-${name}`
+            return (
+              <li key={field.id} className="space-y-4 py-5 first:pt-0 last:pb-0">
+                <div className="flex items-center justify-between gap-2">
+                  <p className="truncate text-sm font-medium">
+                    {[job?.title, job?.company].filter((part) => part?.trim()).join(" · ") || `Job ${index + 1}`}
+                  </p>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon-sm"
+                    className="text-muted-foreground"
+                    aria-label="Delete this job"
+                    onClick={() => onRemove(index)}
+                  >
+                    <Trash2Icon />
+                  </Button>
+                </div>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <Field label="Title" htmlFor={id("title")} error={error?.title?.message}>
+                    <Input id={id("title")} aria-invalid={!!error?.title} {...register(`experience.${index}.title`)} />
+                  </Field>
+                  <Field label="Company" htmlFor={id("company")}>
+                    <Input id={id("company")} {...register(`experience.${index}.company`)} />
+                  </Field>
+                  <Field label="Location" htmlFor={id("location")} className="sm:col-span-2">
+                    <Input id={id("location")} placeholder="e.g. Chennai, India" {...register(`experience.${index}.location`)} />
+                  </Field>
+                  <Field label="Start" htmlFor={id("start")} error={error?.startDate?.message}>
+                    <Input id={id("start")} type="month" {...register(`experience.${index}.startDate`)} />
+                  </Field>
+                  <Field label="End" htmlFor={id("end")} error={error?.endDate?.message}>
+                    <Input id={id("end")} type="month" disabled={job?.current} {...register(`experience.${index}.endDate`)} />
+                  </Field>
+                  <Controller
+                    control={control}
+                    name={`experience.${index}.current`}
+                    render={({ field: current }) => (
+                      <Label className="text-sm font-normal sm:col-span-2">
+                        <Checkbox checked={current.value} onCheckedChange={(checked) => current.onChange(!!checked)} />
+                        I currently work here
+                      </Label>
+                    )}
+                  />
+                  <Field
+                    label="Description"
+                    htmlFor={id("description")}
+                    error={error?.description?.message}
+                    className="sm:col-span-2"
+                  >
+                    <Textarea
+                      id={id("description")}
+                      rows={3}
+                      placeholder="What you did there; some forms ask for it."
+                      {...register(`experience.${index}.description`)}
+                    />
+                  </Field>
+                </div>
+              </li>
+            )
+          })}
+        </ol>
+      )}
+    </Panel>
   )
 }
 

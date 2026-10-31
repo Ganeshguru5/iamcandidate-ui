@@ -1,4 +1,4 @@
-import type { AutofillProfile, Resume } from "@/lib/types"
+import type { AutofillJob, AutofillProfile, Resume } from "@/lib/types"
 
 /** A profile with nothing filled in. */
 export const EMPTY_AUTOFILL: AutofillProfile = {
@@ -35,10 +35,21 @@ export const EMPTY_AUTOFILL: AutofillProfile = {
   veteran: "",
   summary: "",
   coverLetter: "",
+  experience: [],
   answers: [],
 }
 
-export type AutofillTextField = Exclude<keyof AutofillProfile, "answers" | "updatedAt">
+export type AutofillTextField = Exclude<keyof AutofillProfile, "answers" | "experience" | "updatedAt">
+
+export const EMPTY_JOB: AutofillJob = {
+  title: "",
+  company: "",
+  location: "",
+  startDate: "",
+  endDate: "",
+  current: false,
+  description: "",
+}
 
 const MONTHS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]
 
@@ -54,9 +65,11 @@ function monthOf(text: string, now: Date): number | undefined {
   return year * 12 + (named >= 0 ? named : numeric ? numeric - 1 : 0)
 }
 
+const splitPeriod = (period: string) => period.split(/\s+(?:-|–|—|to)\s+|\s*[–—]\s*/i)
+
 /** "Jan 2021 – Present" → [start, end] in months; undefined if it can't be read. */
 function spanOf(period: string, now: Date): [number, number] | undefined {
-  const [from = "", to = ""] = period.split(/\s+(?:-|–|—|to)\s+|\s*[–—]\s*/i)
+  const [from = "", to = ""] = splitPeriod(period)
   const start = monthOf(from, now)
   const end = to ? monthOf(to, now) : start
   return start !== undefined && end !== undefined && end >= start ? [start, end] : undefined
@@ -101,4 +114,30 @@ export function detailsFromResume(resume: Resume): Partial<Record<AutofillTextFi
     graduationYear: graduated,
     summary: resume.summary,
   }
+}
+
+const PRESENT = /present|current|now|today/i
+
+/** Months since year 0 as "YYYY-MM". */
+const yearMonth = (months: number) => `${Math.floor(months / 12)}-${String((months % 12) + 1).padStart(2, "0")}`
+
+/** The resume's experience entries as a work history, in the resume's order (latest first by convention). */
+export function jobsFromResume(resume: Resume, now = new Date()): AutofillJob[] {
+  return resume.experience
+    .filter((e) => e.title.trim() || e.company.trim())
+    .map((e) => {
+      const [from = "", to = ""] = splitPeriod(e.period)
+      const current = PRESENT.test(to || from)
+      const start = PRESENT.test(from) ? undefined : monthOf(from, now)
+      const end = current ? undefined : monthOf(to, now)
+      return {
+        ...EMPTY_JOB,
+        title: e.title.trim(),
+        company: e.company.trim(),
+        startDate: start !== undefined ? yearMonth(start) : "",
+        endDate: end !== undefined ? yearMonth(end) : "",
+        current,
+        description: e.highlights.filter((h) => h.trim()).map((h) => `• ${h.trim()}`).join("\n"),
+      }
+    })
 }
