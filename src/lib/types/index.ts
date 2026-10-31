@@ -426,6 +426,55 @@ export type EmailTemplateInput = Pick<
   "name" | "category" | "channel" | "subject" | "body"
 >
 
+/** "yes" / "no" answers to common application questions; "" when not set. */
+export type YesNo = "yes" | "no" | ""
+
+export interface AutofillAnswer {
+  id?: ID
+  question: string
+  answer: string
+  updatedAt?: ISODate
+}
+
+/** What the browser extension types into job application forms. Same shape as the server's. */
+export interface AutofillProfile {
+  firstName: string
+  lastName: string
+  preferredName: string
+  email: string
+  phone: string
+  pronouns: string
+  addressLine: string
+  city: string
+  state: string
+  postalCode: string
+  country: string
+  linkedin: string
+  github: string
+  portfolio: string
+  currentTitle: string
+  currentCompany: string
+  experienceYears: string
+  noticePeriod: string
+  currentSalary: string
+  expectedSalary: string
+  workAuthorization: YesNo
+  needsSponsorship: YesNo
+  willingToRelocate: YesNo
+  school: string
+  degree: string
+  fieldOfStudy: string
+  graduationYear: string
+  gender: string
+  ethnicity: string
+  disability: string
+  veteran: string
+  summary: string
+  coverLetter: string
+  answers: AutofillAnswer[]
+  updatedAt?: ISODate
+}
+
 export type SmtpEncryption = "tls" | "ssl" | "none"
 
 export interface SmtpConfig {

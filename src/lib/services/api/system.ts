@@ -2,6 +2,7 @@ import { apiClient, tzQuery } from "@/lib/api/client"
 import type {
   Activity,
   AppNotification,
+  AutofillProfile,
   DashboardSummary,
   NotificationPreferences,
   UserProfile,
@@ -55,6 +56,19 @@ export class ApiSettingsService implements SettingsService {
 
   updateNotificationPreferences(prefs: NotificationPreferences): Promise<NotificationPreferences> {
     return apiClient.put("/settings/notifications", prefs)
+  }
+
+  getAutofill(): Promise<AutofillProfile> {
+    return apiClient.get("/settings/autofill")
+  }
+
+  updateAutofill(profile: AutofillProfile): Promise<AutofillProfile> {
+    // The server sets the timestamps; undefined keys are left out of the JSON.
+    return apiClient.put("/settings/autofill", {
+      ...profile,
+      updatedAt: undefined,
+      answers: profile.answers.map(({ id, question, answer }) => ({ id, question, answer })),
+    })
   }
 
   async resetDemoData(): Promise<void> {

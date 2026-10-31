@@ -1,5 +1,6 @@
 import type {
   Activity,
+  AutofillProfile,
   Application,
   Bookmark,
   Certification,
@@ -66,6 +67,8 @@ export interface MockDatabase {
   integrations: Integration[]
   smtp: SmtpConfig
   profile: UserProfile
+  /** Null until saved once, like the API. */
+  autofill: AutofillProfile | null
   notificationPreferences: NotificationPreferences
   pricing: PricingConfig
   /** Null until saved once, like the API. */
@@ -96,6 +99,7 @@ export function createSeedDatabase(): MockDatabase {
     integrations: seedIntegrations(),
     smtp: seedSmtpConfig(),
     profile: { ...mockUser },
+    autofill: null,
     notificationPreferences: { ...mockNotificationPreferences },
     pricing: seedPricing(),
     portfolio: null,

@@ -5,6 +5,7 @@
  * interface and be swapped in `./index.ts` without touching any UI code.
  */
 import type {
+  AutofillProfile,
   PortfolioContent,
   PricingConfig,
   AccessRequest,
@@ -253,6 +254,9 @@ export interface SettingsService {
   updateProfile(profile: UserProfile): Promise<UserProfile>
   getNotificationPreferences(): Promise<NotificationPreferences>
   updateNotificationPreferences(prefs: NotificationPreferences): Promise<NotificationPreferences>
+  /** Details the browser extension fills application forms with. */
+  getAutofill(): Promise<AutofillProfile>
+  updateAutofill(profile: AutofillProfile): Promise<AutofillProfile>
   /** Mock mode only — the API backend keeps real data. */
   resetDemoData(): Promise<void>
 }

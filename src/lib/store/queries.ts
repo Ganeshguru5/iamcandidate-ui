@@ -58,6 +58,7 @@ export const QK = {
   notifications: "notifications",
   integrations: "integrations",
   profile: "profile",
+  autofill: "autofill",
   notificationPreferences: "notificationPreferences",
   users: "users",
   accessRequests: "accessRequests",
@@ -88,6 +89,7 @@ const fetchers = {
   notifications: () => notificationService.getNotifications(),
   integrations: () => integrationService.getIntegrations(),
   profile: () => settingsService.getProfile(),
+  autofill: () => settingsService.getAutofill(),
   notificationPreferences: () => settingsService.getNotificationPreferences(),
   users: () => userService.list(),
   accessRequests: () => userService.listAccessRequests(),
@@ -132,6 +134,7 @@ export const useDashboard = () => useQuery(QK.dashboard, fetchers.dashboard)
 export const useNotifications = () => useQuery(QK.notifications, fetchers.notifications)
 export const useIntegrations = () => useQuery(QK.integrations, fetchers.integrations)
 export const useProfile = () => useQuery(QK.profile, fetchers.profile)
+export const useAutofill = () => useQuery(QK.autofill, fetchers.autofill)
 export const useNotificationPreferences = () =>
   useQuery(QK.notificationPreferences, fetchers.notificationPreferences)
 

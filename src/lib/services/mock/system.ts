@@ -3,12 +3,14 @@ import type {
   AccessRequest,
   Activity,
   AppUser,
+  AutofillProfile,
   Integration,
   IntegrationId,
   NotificationPreferences,
   Session,
   UserProfile,
 } from "@/lib/types"
+import { EMPTY_AUTOFILL } from "@/lib/autofill"
 import { delay, networkDelay } from "@/lib/utils/delay"
 import { createId } from "@/lib/utils/id"
 
@@ -192,6 +194,36 @@ export class MockSettingsService implements SettingsService {
     await delay(350)
     write("notificationPreferences", prefs)
     return prefs
+  }
+
+  async getAutofill(): Promise<AutofillProfile> {
+    await delay(200)
+    const saved = read("autofill")
+    if (saved) return saved
+    const profile = read("profile")
+    const [firstName = "", ...rest] = profile.name.trim().split(/\s+/)
+    return {
+      ...EMPTY_AUTOFILL,
+      firstName,
+      lastName: rest.join(" "),
+      email: profile.email,
+      city: profile.location,
+      currentTitle: profile.role,
+      summary: profile.bio,
+    }
+  }
+
+  async updateAutofill(profile: AutofillProfile): Promise<AutofillProfile> {
+    await networkDelay()
+    const now = new Date().toISOString()
+    const next = {
+      ...profile,
+      answers: profile.answers.map((a) => ({ ...a, id: a.id ?? createId("ans"), updatedAt: a.updatedAt ?? now })),
+      updatedAt: now,
+    }
+    write("autofill", next)
+    logActivity({ type: "settings_updated", title: "Autofill profile updated" })
+    return next
   }
 
   async resetDemoData(): Promise<void> {

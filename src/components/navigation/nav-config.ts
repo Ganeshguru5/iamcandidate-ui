@@ -23,6 +23,7 @@ import {
   StickyNoteIcon,
   UserCogIcon,
   UsersIcon,
+  WandSparklesIcon,
   type LucideIcon,
 } from "lucide-react"
 
@@ -56,6 +57,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { title: "Referrals", href: "/career/referrals", icon: HandshakeIcon },
       { title: "Interviews", href: "/career/interviews", icon: CalendarClockIcon },
       { title: "Resumes", href: "/career/resumes", icon: FileTextIcon },
+      { title: "Autofill", href: "/career/autofill", icon: WandSparklesIcon },
     ],
   },
   {
